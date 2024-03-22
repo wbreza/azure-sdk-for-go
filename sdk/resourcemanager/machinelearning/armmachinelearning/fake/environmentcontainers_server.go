@@ -16,14 +16,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
 )
 
 // EnvironmentContainersServer is a fake server for instances of the armmachinelearning.EnvironmentContainersClient type.
-type EnvironmentContainersServer struct {
+type EnvironmentContainersServer struct{
 	// CreateOrUpdate is the fake for method EnvironmentContainersClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	CreateOrUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearning.EnvironmentContainer, options *armmachinelearning.EnvironmentContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearning.EnvironmentContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
@@ -39,6 +39,7 @@ type EnvironmentContainersServer struct {
 	// NewListPager is the fake for method EnvironmentContainersClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(resourceGroupName string, workspaceName string, options *armmachinelearning.EnvironmentContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearning.EnvironmentContainersClientListResponse])
+
 }
 
 // NewEnvironmentContainersServerTransport creates a new instance of EnvironmentContainersServerTransport with the provided implementation.
@@ -46,7 +47,7 @@ type EnvironmentContainersServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewEnvironmentContainersServerTransport(srv *EnvironmentContainersServer) *EnvironmentContainersServerTransport {
 	return &EnvironmentContainersServerTransport{
-		srv:          srv,
+		srv: srv,
 		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.EnvironmentContainersClientListResponse]](),
 	}
 }
@@ -54,7 +55,7 @@ func NewEnvironmentContainersServerTransport(srv *EnvironmentContainersServer) *
 // EnvironmentContainersServerTransport connects instances of armmachinelearning.EnvironmentContainersClient to instances of EnvironmentContainersServer.
 // Don't use this type directly, use NewEnvironmentContainersServerTransport instead.
 type EnvironmentContainersServerTransport struct {
-	srv          *EnvironmentContainersServer
+	srv *EnvironmentContainersServer
 	newListPager *tracker[azfake.PagerResponder[armmachinelearning.EnvironmentContainersClientListResponse]]
 }
 
@@ -210,39 +211,39 @@ func (e *EnvironmentContainersServerTransport) dispatchNewListPager(req *http.Re
 	}
 	newListPager := e.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/environments`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 3 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/environments`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	qp := req.URL.Query()
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
+	if err != nil {
+		return nil, err
+	}
+	skipParam := getOptional(skipUnescaped)
+	listViewTypeUnescaped, err := url.QueryUnescape(qp.Get("listViewType"))
+	if err != nil {
+		return nil, err
+	}
+	listViewTypeParam := getOptional(armmachinelearning.ListViewType(listViewTypeUnescaped))
+	var options *armmachinelearning.EnvironmentContainersClientListOptions
+	if skipParam != nil || listViewTypeParam != nil {
+		options = &armmachinelearning.EnvironmentContainersClientListOptions{
+			Skip: skipParam,
+			ListViewType: listViewTypeParam,
 		}
-		qp := req.URL.Query()
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
-		if err != nil {
-			return nil, err
-		}
-		skipParam := getOptional(skipUnescaped)
-		listViewTypeUnescaped, err := url.QueryUnescape(qp.Get("listViewType"))
-		if err != nil {
-			return nil, err
-		}
-		listViewTypeParam := getOptional(armmachinelearning.ListViewType(listViewTypeUnescaped))
-		var options *armmachinelearning.EnvironmentContainersClientListOptions
-		if skipParam != nil || listViewTypeParam != nil {
-			options = &armmachinelearning.EnvironmentContainersClientListOptions{
-				Skip:         skipParam,
-				ListViewType: listViewTypeParam,
-			}
-		}
-		resp := e.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, options)
+	}
+resp := e.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, options)
 		newListPager = &resp
 		e.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armmachinelearning.EnvironmentContainersClientListResponse, createLink func() string) {
@@ -262,3 +263,4 @@ func (e *EnvironmentContainersServerTransport) dispatchNewListPager(req *http.Re
 	}
 	return resp, nil
 }
+

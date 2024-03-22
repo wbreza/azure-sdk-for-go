@@ -32,22 +32,22 @@ func NewOperationsClient(credential azcore.TokenCredential, options *arm.ClientO
 		return nil, err
 	}
 	client := &OperationsClient{
-		internal: cl,
+	internal: cl,
 	}
 	return client, nil
 }
 
-// NewListPager - Lists all of the available Azure Machine Learning Workspaces REST API operations.
+// NewListPager - Lists all of the available Azure Machine Learning Workspaces REST API operations
 //
-// Generated from API version 2022-10-01
+// Generated from API version 2024-01-01-preview
 //   - options - OperationsClientListOptions contains the optional parameters for the OperationsClient.NewListPager method.
-func (client *OperationsClient) NewListPager(options *OperationsClientListOptions) *runtime.Pager[OperationsClientListResponse] {
+func (client *OperationsClient) NewListPager(options *OperationsClientListOptions) (*runtime.Pager[OperationsClientListResponse]) {
 	return runtime.NewPager(runtime.PagingHandler[OperationsClientListResponse]{
 		More: func(page OperationsClientListResponse) bool {
 			return false
 		},
 		Fetcher: func(ctx context.Context, page *OperationsClientListResponse) (OperationsClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OperationsClient.NewListPager")
+		ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "OperationsClient.NewListPager")
 			req, err := client.listCreateRequest(ctx, options)
 			if err != nil {
 				return OperationsClientListResponse{}, err
@@ -73,7 +73,7 @@ func (client *OperationsClient) listCreateRequest(ctx context.Context, options *
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-10-01")
+	reqQP.Set("api-version", "2024-01-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -82,8 +82,9 @@ func (client *OperationsClient) listCreateRequest(ctx context.Context, options *
 // listHandleResponse handles the List response.
 func (client *OperationsClient) listHandleResponse(resp *http.Response) (OperationsClientListResponse, error) {
 	result := OperationsClientListResponse{}
-	if err := runtime.UnmarshalAsJSON(resp, &result.AmlOperationListResult); err != nil {
+	if err := runtime.UnmarshalAsJSON(resp, &result.OperationListResult); err != nil {
 		return OperationsClientListResponse{}, err
 	}
 	return result, nil
 }
+

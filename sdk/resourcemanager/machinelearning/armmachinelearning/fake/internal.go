@@ -10,11 +10,13 @@ package fake
 
 import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
+	"io"
 	"net/http"
 	"reflect"
 	"strings"
 	"sync"
 )
+
 
 type nonRetriableError struct {
 	error
@@ -59,6 +61,18 @@ func parseWithCast[T any](v string, parse func(v string) (T, error)) (T, error) 
 	return t, err
 }
 
+func readRequestBody(req *http.Request) ([]byte, error) {
+	if req.Body == nil {
+		return nil, nil
+	}
+	body, err := io.ReadAll(req.Body)
+	if err != nil {
+		return nil, err
+	}
+	req.Body.Close()
+	return body, nil
+}
+
 func splitHelper(s, sep string) []string {
 	if s == "" {
 		return nil
@@ -74,7 +88,7 @@ func newTracker[T any]() *tracker[T] {
 
 type tracker[T any] struct {
 	items map[string]*T
-	mu    sync.Mutex
+	mu sync.Mutex
 }
 
 func (p *tracker[T]) get(req *http.Request) *T {

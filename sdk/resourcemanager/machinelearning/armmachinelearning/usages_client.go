@@ -23,7 +23,7 @@ import (
 // UsagesClient contains the methods for the Usages group.
 // Don't use this type directly, use NewUsagesClient() instead.
 type UsagesClient struct {
-	internal       *arm.Client
+	internal *arm.Client
 	subscriptionID string
 }
 
@@ -38,23 +38,23 @@ func NewUsagesClient(subscriptionID string, credential azcore.TokenCredential, o
 	}
 	client := &UsagesClient{
 		subscriptionID: subscriptionID,
-		internal:       cl,
+	internal: cl,
 	}
 	return client, nil
 }
 
 // NewListPager - Gets the current usage information as well as limits for AML resources for given subscription and location.
 //
-// Generated from API version 2022-10-01
+// Generated from API version 2024-01-01-preview
 //   - location - The location for which resource usage is queried.
 //   - options - UsagesClientListOptions contains the optional parameters for the UsagesClient.NewListPager method.
-func (client *UsagesClient) NewListPager(location string, options *UsagesClientListOptions) *runtime.Pager[UsagesClientListResponse] {
+func (client *UsagesClient) NewListPager(location string, options *UsagesClientListOptions) (*runtime.Pager[UsagesClientListResponse]) {
 	return runtime.NewPager(runtime.PagingHandler[UsagesClientListResponse]{
 		More: func(page UsagesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *UsagesClientListResponse) (UsagesClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "UsagesClient.NewListPager")
+		ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "UsagesClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -66,7 +66,7 @@ func (client *UsagesClient) NewListPager(location string, options *UsagesClientL
 				return UsagesClientListResponse{}, err
 			}
 			return client.listHandleResponse(resp)
-		},
+			},
 		Tracer: client.internal.Tracer(),
 	})
 }
@@ -87,7 +87,7 @@ func (client *UsagesClient) listCreateRequest(ctx context.Context, location stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-10-01")
+	reqQP.Set("api-version", "2024-01-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -101,3 +101,4 @@ func (client *UsagesClient) listHandleResponse(resp *http.Response) (UsagesClien
 	}
 	return result, nil
 }
+

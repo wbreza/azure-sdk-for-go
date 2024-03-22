@@ -16,7 +16,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -24,7 +24,7 @@ import (
 )
 
 // ModelContainersServer is a fake server for instances of the armmachinelearning.ModelContainersClient type.
-type ModelContainersServer struct {
+type ModelContainersServer struct{
 	// CreateOrUpdate is the fake for method ModelContainersClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	CreateOrUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearning.ModelContainer, options *armmachinelearning.ModelContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearning.ModelContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
@@ -40,6 +40,7 @@ type ModelContainersServer struct {
 	// NewListPager is the fake for method ModelContainersClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(resourceGroupName string, workspaceName string, options *armmachinelearning.ModelContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearning.ModelContainersClientListResponse])
+
 }
 
 // NewModelContainersServerTransport creates a new instance of ModelContainersServerTransport with the provided implementation.
@@ -47,7 +48,7 @@ type ModelContainersServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewModelContainersServerTransport(srv *ModelContainersServer) *ModelContainersServerTransport {
 	return &ModelContainersServerTransport{
-		srv:          srv,
+		srv: srv,
 		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.ModelContainersClientListResponse]](),
 	}
 }
@@ -55,7 +56,7 @@ func NewModelContainersServerTransport(srv *ModelContainersServer) *ModelContain
 // ModelContainersServerTransport connects instances of armmachinelearning.ModelContainersClient to instances of ModelContainersServer.
 // Don't use this type directly, use NewModelContainersServerTransport instead.
 type ModelContainersServerTransport struct {
-	srv          *ModelContainersServer
+	srv *ModelContainersServer
 	newListPager *tracker[azfake.PagerResponder[armmachinelearning.ModelContainersClientListResponse]]
 }
 
@@ -211,54 +212,54 @@ func (m *ModelContainersServerTransport) dispatchNewListPager(req *http.Request)
 	}
 	newListPager := m.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/models`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 3 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/models`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	qp := req.URL.Query()
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
+	if err != nil {
+		return nil, err
+	}
+	skipParam := getOptional(skipUnescaped)
+	countUnescaped, err := url.QueryUnescape(qp.Get("count"))
+	if err != nil {
+		return nil, err
+	}
+	countParam, err := parseOptional(countUnescaped, func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
-		qp := req.URL.Query()
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	listViewTypeUnescaped, err := url.QueryUnescape(qp.Get("listViewType"))
+	if err != nil {
+		return nil, err
+	}
+	listViewTypeParam := getOptional(armmachinelearning.ListViewType(listViewTypeUnescaped))
+	var options *armmachinelearning.ModelContainersClientListOptions
+	if skipParam != nil || countParam != nil || listViewTypeParam != nil {
+		options = &armmachinelearning.ModelContainersClientListOptions{
+			Skip: skipParam,
+			Count: countParam,
+			ListViewType: listViewTypeParam,
 		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
-		if err != nil {
-			return nil, err
-		}
-		skipParam := getOptional(skipUnescaped)
-		countUnescaped, err := url.QueryUnescape(qp.Get("count"))
-		if err != nil {
-			return nil, err
-		}
-		countParam, err := parseOptional(countUnescaped, func(v string) (int32, error) {
-			p, parseErr := strconv.ParseInt(v, 10, 32)
-			if parseErr != nil {
-				return 0, parseErr
-			}
-			return int32(p), nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		listViewTypeUnescaped, err := url.QueryUnescape(qp.Get("listViewType"))
-		if err != nil {
-			return nil, err
-		}
-		listViewTypeParam := getOptional(armmachinelearning.ListViewType(listViewTypeUnescaped))
-		var options *armmachinelearning.ModelContainersClientListOptions
-		if skipParam != nil || countParam != nil || listViewTypeParam != nil {
-			options = &armmachinelearning.ModelContainersClientListOptions{
-				Skip:         skipParam,
-				Count:        countParam,
-				ListViewType: listViewTypeParam,
-			}
-		}
-		resp := m.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, options)
+	}
+resp := m.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, options)
 		newListPager = &resp
 		m.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armmachinelearning.ModelContainersClientListResponse, createLink func() string) {
@@ -278,3 +279,4 @@ func (m *ModelContainersServerTransport) dispatchNewListPager(req *http.Request)
 	}
 	return resp, nil
 }
+

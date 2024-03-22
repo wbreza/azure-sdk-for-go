@@ -15,17 +15,18 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
 )
 
 // VirtualMachineSizesServer is a fake server for instances of the armmachinelearning.VirtualMachineSizesClient type.
-type VirtualMachineSizesServer struct {
+type VirtualMachineSizesServer struct{
 	// List is the fake for method VirtualMachineSizesClient.List
 	// HTTP status codes to indicate success: http.StatusOK
 	List func(ctx context.Context, location string, options *armmachinelearning.VirtualMachineSizesClientListOptions) (resp azfake.Responder[armmachinelearning.VirtualMachineSizesClientListResponse], errResp azfake.ErrorResponder)
+
 }
 
 // NewVirtualMachineSizesServerTransport creates a new instance of VirtualMachineSizesServerTransport with the provided implementation.
@@ -94,3 +95,4 @@ func (v *VirtualMachineSizesServerTransport) dispatchList(req *http.Request) (*h
 	}
 	return resp, nil
 }
+

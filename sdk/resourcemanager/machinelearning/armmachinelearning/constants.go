@@ -9,9 +9,23 @@
 package armmachinelearning
 
 const (
-	moduleName    = "github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning"
+	moduleName = "github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning"
 	moduleVersion = "v3.2.0"
 )
+
+// ActionType - Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+type ActionType string
+
+const (
+	ActionTypeInternal ActionType = "Internal"
+)
+
+// PossibleActionTypeValues returns the possible values for the ActionType const type.
+func PossibleActionTypeValues() []ActionType {
+	return []ActionType{	
+		ActionTypeInternal,
+	}
+}
 
 // AllocationState - Allocation state of the compute. Possible values are: steady - Indicates that the compute is not resizing.
 // There are no changes to the number of compute nodes in the compute in progress. A compute
@@ -22,12 +36,12 @@ type AllocationState string
 
 const (
 	AllocationStateResizing AllocationState = "Resizing"
-	AllocationStateSteady   AllocationState = "Steady"
+	AllocationStateSteady AllocationState = "Steady"
 )
 
 // PossibleAllocationStateValues returns the possible values for the AllocationState const type.
 func PossibleAllocationStateValues() []AllocationState {
-	return []AllocationState{
+	return []AllocationState{	
 		AllocationStateResizing,
 		AllocationStateSteady,
 	}
@@ -40,14 +54,67 @@ type ApplicationSharingPolicy string
 
 const (
 	ApplicationSharingPolicyPersonal ApplicationSharingPolicy = "Personal"
-	ApplicationSharingPolicyShared   ApplicationSharingPolicy = "Shared"
+	ApplicationSharingPolicyShared ApplicationSharingPolicy = "Shared"
 )
 
 // PossibleApplicationSharingPolicyValues returns the possible values for the ApplicationSharingPolicy const type.
 func PossibleApplicationSharingPolicyValues() []ApplicationSharingPolicy {
-	return []ApplicationSharingPolicy{
+	return []ApplicationSharingPolicy{	
 		ApplicationSharingPolicyPersonal,
 		ApplicationSharingPolicyShared,
+	}
+}
+
+// AssetProvisioningState - Provisioning state of registry asset.
+type AssetProvisioningState string
+
+const (
+	AssetProvisioningStateCanceled AssetProvisioningState = "Canceled"
+	AssetProvisioningStateCreating AssetProvisioningState = "Creating"
+	AssetProvisioningStateDeleting AssetProvisioningState = "Deleting"
+	AssetProvisioningStateFailed AssetProvisioningState = "Failed"
+	AssetProvisioningStateSucceeded AssetProvisioningState = "Succeeded"
+	AssetProvisioningStateUpdating AssetProvisioningState = "Updating"
+)
+
+// PossibleAssetProvisioningStateValues returns the possible values for the AssetProvisioningState const type.
+func PossibleAssetProvisioningStateValues() []AssetProvisioningState {
+	return []AssetProvisioningState{	
+		AssetProvisioningStateCanceled,
+		AssetProvisioningStateCreating,
+		AssetProvisioningStateDeleting,
+		AssetProvisioningStateFailed,
+		AssetProvisioningStateSucceeded,
+		AssetProvisioningStateUpdating,
+	}
+}
+
+// AuthMode - Enum to determine endpoint authentication mode.
+type AuthMode string
+
+const (
+	AuthModeAAD AuthMode = "AAD"
+)
+
+// PossibleAuthModeValues returns the possible values for the AuthMode const type.
+func PossibleAuthModeValues() []AuthMode {
+	return []AuthMode{	
+		AuthModeAAD,
+	}
+}
+
+type AutoDeleteCondition string
+
+const (
+	AutoDeleteConditionCreatedGreaterThan AutoDeleteCondition = "CreatedGreaterThan"
+	AutoDeleteConditionLastAccessedGreaterThan AutoDeleteCondition = "LastAccessedGreaterThan"
+)
+
+// PossibleAutoDeleteConditionValues returns the possible values for the AutoDeleteCondition const type.
+func PossibleAutoDeleteConditionValues() []AutoDeleteCondition {
+	return []AutoDeleteCondition{	
+		AutoDeleteConditionCreatedGreaterThan,
+		AutoDeleteConditionLastAccessedGreaterThan,
 	}
 }
 
@@ -55,13 +122,13 @@ func PossibleApplicationSharingPolicyValues() []ApplicationSharingPolicy {
 type AutoRebuildSetting string
 
 const (
-	AutoRebuildSettingDisabled          AutoRebuildSetting = "Disabled"
+	AutoRebuildSettingDisabled AutoRebuildSetting = "Disabled"
 	AutoRebuildSettingOnBaseImageUpdate AutoRebuildSetting = "OnBaseImageUpdate"
 )
 
 // PossibleAutoRebuildSettingValues returns the possible values for the AutoRebuildSetting const type.
 func PossibleAutoRebuildSettingValues() []AutoRebuildSetting {
-	return []AutoRebuildSetting{
+	return []AutoRebuildSetting{	
 		AutoRebuildSettingDisabled,
 		AutoRebuildSettingOnBaseImageUpdate,
 	}
@@ -71,17 +138,47 @@ func PossibleAutoRebuildSettingValues() []AutoRebuildSetting {
 type Autosave string
 
 const (
-	AutosaveLocal  Autosave = "Local"
-	AutosaveNone   Autosave = "None"
+	AutosaveLocal Autosave = "Local"
+	AutosaveNone Autosave = "None"
 	AutosaveRemote Autosave = "Remote"
 )
 
 // PossibleAutosaveValues returns the possible values for the Autosave const type.
 func PossibleAutosaveValues() []Autosave {
-	return []Autosave{
+	return []Autosave{	
 		AutosaveLocal,
 		AutosaveNone,
 		AutosaveRemote,
+	}
+}
+
+// BaseEnvironmentSourceType - Base environment type.
+type BaseEnvironmentSourceType string
+
+const (
+	BaseEnvironmentSourceTypeEnvironmentAsset BaseEnvironmentSourceType = "EnvironmentAsset"
+)
+
+// PossibleBaseEnvironmentSourceTypeValues returns the possible values for the BaseEnvironmentSourceType const type.
+func PossibleBaseEnvironmentSourceTypeValues() []BaseEnvironmentSourceType {
+	return []BaseEnvironmentSourceType{	
+		BaseEnvironmentSourceTypeEnvironmentAsset,
+	}
+}
+
+// BatchDeploymentConfigurationType - The enumerated property types for batch deployments.
+type BatchDeploymentConfigurationType string
+
+const (
+	BatchDeploymentConfigurationTypeModel BatchDeploymentConfigurationType = "Model"
+	BatchDeploymentConfigurationTypePipelineComponent BatchDeploymentConfigurationType = "PipelineComponent"
+)
+
+// PossibleBatchDeploymentConfigurationTypeValues returns the possible values for the BatchDeploymentConfigurationType const type.
+func PossibleBatchDeploymentConfigurationTypeValues() []BatchDeploymentConfigurationType {
+	return []BatchDeploymentConfigurationType{	
+		BatchDeploymentConfigurationTypeModel,
+		BatchDeploymentConfigurationTypePipelineComponent,
 	}
 }
 
@@ -90,14 +187,14 @@ func PossibleAutosaveValues() []Autosave {
 type BatchLoggingLevel string
 
 const (
-	BatchLoggingLevelDebug   BatchLoggingLevel = "Debug"
-	BatchLoggingLevelInfo    BatchLoggingLevel = "Info"
+	BatchLoggingLevelDebug BatchLoggingLevel = "Debug"
+	BatchLoggingLevelInfo BatchLoggingLevel = "Info"
 	BatchLoggingLevelWarning BatchLoggingLevel = "Warning"
 )
 
 // PossibleBatchLoggingLevelValues returns the possible values for the BatchLoggingLevel const type.
 func PossibleBatchLoggingLevelValues() []BatchLoggingLevel {
-	return []BatchLoggingLevel{
+	return []BatchLoggingLevel{	
 		BatchLoggingLevelDebug,
 		BatchLoggingLevelInfo,
 		BatchLoggingLevelWarning,
@@ -108,13 +205,13 @@ func PossibleBatchLoggingLevelValues() []BatchLoggingLevel {
 type BatchOutputAction string
 
 const (
-	BatchOutputActionAppendRow   BatchOutputAction = "AppendRow"
+	BatchOutputActionAppendRow BatchOutputAction = "AppendRow"
 	BatchOutputActionSummaryOnly BatchOutputAction = "SummaryOnly"
 )
 
 // PossibleBatchOutputActionValues returns the possible values for the BatchOutputAction const type.
 func PossibleBatchOutputActionValues() []BatchOutputAction {
-	return []BatchOutputAction{
+	return []BatchOutputAction{	
 		BatchOutputActionAppendRow,
 		BatchOutputActionSummaryOnly,
 	}
@@ -129,7 +226,7 @@ const (
 
 // PossibleBillingCurrencyValues returns the possible values for the BillingCurrency const type.
 func PossibleBillingCurrencyValues() []BillingCurrency {
-	return []BillingCurrency{
+	return []BillingCurrency{	
 		BillingCurrencyUSD,
 	}
 }
@@ -143,22 +240,22 @@ const (
 	// BlockedTransformersCountVectorizer - Count Vectorizer converts a collection of text documents to a matrix of token counts.
 	BlockedTransformersCountVectorizer BlockedTransformers = "CountVectorizer"
 	// BlockedTransformersHashOneHotEncoder - Hashing One Hot Encoder can turn categorical variables into a limited number of
-	// new features. This is often used for high-cardinality categorical features.
+// new features. This is often used for high-cardinality categorical features.
 	BlockedTransformersHashOneHotEncoder BlockedTransformers = "HashOneHotEncoder"
 	// BlockedTransformersLabelEncoder - Label encoder converts labels/categorical variables in a numerical form.
 	BlockedTransformersLabelEncoder BlockedTransformers = "LabelEncoder"
 	// BlockedTransformersNaiveBayes - Naive Bayes is a classified that is used for classification of discrete features that are
-	// categorically distributed.
+// categorically distributed.
 	BlockedTransformersNaiveBayes BlockedTransformers = "NaiveBayes"
 	// BlockedTransformersOneHotEncoder - Ohe hot encoding creates a binary feature transformation.
 	BlockedTransformersOneHotEncoder BlockedTransformers = "OneHotEncoder"
 	// BlockedTransformersTextTargetEncoder - Target encoding for text data.
 	BlockedTransformersTextTargetEncoder BlockedTransformers = "TextTargetEncoder"
 	// BlockedTransformersTfIdf - Tf-Idf stands for, term-frequency times inverse document-frequency. This is a common term weighting
-	// scheme for identifying information from documents.
+// scheme for identifying information from documents.
 	BlockedTransformersTfIdf BlockedTransformers = "TfIdf"
 	// BlockedTransformersWoETargetEncoder - Weight of Evidence encoding is a technique used to encode categorical variables.
-	// It uses the natural log of the P(1)/P(0) to create weights.
+// It uses the natural log of the P(1)/P(0) to create weights.
 	BlockedTransformersWoETargetEncoder BlockedTransformers = "WoETargetEncoder"
 	// BlockedTransformersWordEmbedding - Word embedding helps represents words or phrases as a vector, or a series of numbers.
 	BlockedTransformersWordEmbedding BlockedTransformers = "WordEmbedding"
@@ -166,7 +263,7 @@ const (
 
 // PossibleBlockedTransformersValues returns the possible values for the BlockedTransformers const type.
 func PossibleBlockedTransformersValues() []BlockedTransformers {
-	return []BlockedTransformers{
+	return []BlockedTransformers{	
 		BlockedTransformersCatTargetEncoder,
 		BlockedTransformersCountVectorizer,
 		BlockedTransformersHashOneHotEncoder,
@@ -184,17 +281,97 @@ func PossibleBlockedTransformersValues() []BlockedTransformers {
 type Caching string
 
 const (
-	CachingNone      Caching = "None"
-	CachingReadOnly  Caching = "ReadOnly"
+	CachingNone Caching = "None"
+	CachingReadOnly Caching = "ReadOnly"
 	CachingReadWrite Caching = "ReadWrite"
 )
 
 // PossibleCachingValues returns the possible values for the Caching const type.
 func PossibleCachingValues() []Caching {
-	return []Caching{
+	return []Caching{	
 		CachingNone,
 		CachingReadOnly,
 		CachingReadWrite,
+	}
+}
+
+type CategoricalDataDriftMetric string
+
+const (
+	// CategoricalDataDriftMetricJensenShannonDistance - The Jensen Shannon Distance (JSD) metric.
+	CategoricalDataDriftMetricJensenShannonDistance CategoricalDataDriftMetric = "JensenShannonDistance"
+	// CategoricalDataDriftMetricPearsonsChiSquaredTest - The Pearsons Chi Squared Test metric.
+	CategoricalDataDriftMetricPearsonsChiSquaredTest CategoricalDataDriftMetric = "PearsonsChiSquaredTest"
+	// CategoricalDataDriftMetricPopulationStabilityIndex - The Population Stability Index (PSI) metric.
+	CategoricalDataDriftMetricPopulationStabilityIndex CategoricalDataDriftMetric = "PopulationStabilityIndex"
+)
+
+// PossibleCategoricalDataDriftMetricValues returns the possible values for the CategoricalDataDriftMetric const type.
+func PossibleCategoricalDataDriftMetricValues() []CategoricalDataDriftMetric {
+	return []CategoricalDataDriftMetric{	
+		CategoricalDataDriftMetricJensenShannonDistance,
+		CategoricalDataDriftMetricPearsonsChiSquaredTest,
+		CategoricalDataDriftMetricPopulationStabilityIndex,
+	}
+}
+
+type CategoricalDataQualityMetric string
+
+const (
+	// CategoricalDataQualityMetricDataTypeErrorRate - Calculates the rate of data type errors.
+	CategoricalDataQualityMetricDataTypeErrorRate CategoricalDataQualityMetric = "DataTypeErrorRate"
+	// CategoricalDataQualityMetricNullValueRate - Calculates the rate of null values.
+	CategoricalDataQualityMetricNullValueRate CategoricalDataQualityMetric = "NullValueRate"
+	// CategoricalDataQualityMetricOutOfBoundsRate - Calculates the rate values are out of bounds.
+	CategoricalDataQualityMetricOutOfBoundsRate CategoricalDataQualityMetric = "OutOfBoundsRate"
+)
+
+// PossibleCategoricalDataQualityMetricValues returns the possible values for the CategoricalDataQualityMetric const type.
+func PossibleCategoricalDataQualityMetricValues() []CategoricalDataQualityMetric {
+	return []CategoricalDataQualityMetric{	
+		CategoricalDataQualityMetricDataTypeErrorRate,
+		CategoricalDataQualityMetricNullValueRate,
+		CategoricalDataQualityMetricOutOfBoundsRate,
+	}
+}
+
+type CategoricalPredictionDriftMetric string
+
+const (
+	// CategoricalPredictionDriftMetricJensenShannonDistance - The Jensen Shannon Distance (JSD) metric.
+	CategoricalPredictionDriftMetricJensenShannonDistance CategoricalPredictionDriftMetric = "JensenShannonDistance"
+	// CategoricalPredictionDriftMetricPearsonsChiSquaredTest - The Pearsons Chi Squared Test metric.
+	CategoricalPredictionDriftMetricPearsonsChiSquaredTest CategoricalPredictionDriftMetric = "PearsonsChiSquaredTest"
+	// CategoricalPredictionDriftMetricPopulationStabilityIndex - The Population Stability Index (PSI) metric.
+	CategoricalPredictionDriftMetricPopulationStabilityIndex CategoricalPredictionDriftMetric = "PopulationStabilityIndex"
+)
+
+// PossibleCategoricalPredictionDriftMetricValues returns the possible values for the CategoricalPredictionDriftMetric const type.
+func PossibleCategoricalPredictionDriftMetricValues() []CategoricalPredictionDriftMetric {
+	return []CategoricalPredictionDriftMetric{	
+		CategoricalPredictionDriftMetricJensenShannonDistance,
+		CategoricalPredictionDriftMetricPearsonsChiSquaredTest,
+		CategoricalPredictionDriftMetricPopulationStabilityIndex,
+	}
+}
+
+type ClassificationModelPerformanceMetric string
+
+const (
+	// ClassificationModelPerformanceMetricAccuracy - Calculates the accuracy of the model predictions.
+	ClassificationModelPerformanceMetricAccuracy ClassificationModelPerformanceMetric = "Accuracy"
+	// ClassificationModelPerformanceMetricPrecision - Calculates the precision of the model predictions.
+	ClassificationModelPerformanceMetricPrecision ClassificationModelPerformanceMetric = "Precision"
+	// ClassificationModelPerformanceMetricRecall - Calculates the recall of the model predictions.
+	ClassificationModelPerformanceMetricRecall ClassificationModelPerformanceMetric = "Recall"
+)
+
+// PossibleClassificationModelPerformanceMetricValues returns the possible values for the ClassificationModelPerformanceMetric const type.
+func PossibleClassificationModelPerformanceMetricValues() []ClassificationModelPerformanceMetric {
+	return []ClassificationModelPerformanceMetric{	
+		ClassificationModelPerformanceMetricAccuracy,
+		ClassificationModelPerformanceMetricPrecision,
+		ClassificationModelPerformanceMetricRecall,
 	}
 }
 
@@ -205,58 +382,58 @@ const (
 	// ClassificationModelsBernoulliNaiveBayes - Naive Bayes classifier for multivariate Bernoulli models.
 	ClassificationModelsBernoulliNaiveBayes ClassificationModels = "BernoulliNaiveBayes"
 	// ClassificationModelsDecisionTree - Decision Trees are a non-parametric supervised learning method used for both classification
-	// and regression tasks.
-	// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from
-	// the data features.
+// and regression tasks.
+// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from
+// the data features.
 	ClassificationModelsDecisionTree ClassificationModels = "DecisionTree"
 	// ClassificationModelsExtremeRandomTrees - Extreme Trees is an ensemble machine learning algorithm that combines the predictions
-	// from many decision trees. It is related to the widely used random forest algorithm.
+// from many decision trees. It is related to the widely used random forest algorithm.
 	ClassificationModelsExtremeRandomTrees ClassificationModels = "ExtremeRandomTrees"
 	// ClassificationModelsGradientBoosting - The technique of transiting week learners into a strong learner is called Boosting.
-	// The gradient boosting algorithm process works on this theory of execution.
+// The gradient boosting algorithm process works on this theory of execution.
 	ClassificationModelsGradientBoosting ClassificationModels = "GradientBoosting"
 	// ClassificationModelsKNN - K-nearest neighbors (KNN) algorithm uses 'feature similarity' to predict the values of new datapoints
-	// which further means that the new data point will be assigned a value based on how closely it matches the points in the
-	// training set.
+// which further means that the new data point will be assigned a value based on how closely it matches the points in the
+// training set.
 	ClassificationModelsKNN ClassificationModels = "KNN"
 	// ClassificationModelsLightGBM - LightGBM is a gradient boosting framework that uses tree based learning algorithms.
 	ClassificationModelsLightGBM ClassificationModels = "LightGBM"
 	// ClassificationModelsLinearSVM - A support vector machine (SVM) is a supervised machine learning model that uses classification
-	// algorithms for two-group classification problems.
-	// After giving an SVM model sets of labeled training data for each category, they're able to categorize new text.
-	// Linear SVM performs best when input data is linear, i.e., data can be easily classified by drawing the straight line between
-	// classified values on a plotted graph.
+// algorithms for two-group classification problems.
+// After giving an SVM model sets of labeled training data for each category, they're able to categorize new text.
+// Linear SVM performs best when input data is linear, i.e., data can be easily classified by drawing the straight line between
+// classified values on a plotted graph.
 	ClassificationModelsLinearSVM ClassificationModels = "LinearSVM"
 	// ClassificationModelsLogisticRegression - Logistic regression is a fundamental classification technique.
-	// It belongs to the group of linear classifiers and is somewhat similar to polynomial and linear regression.
-	// Logistic regression is fast and relatively uncomplicated, and it's convenient for you to interpret the results.
-	// Although it's essentially a method for binary classification, it can also be applied to multiclass problems.
+// It belongs to the group of linear classifiers and is somewhat similar to polynomial and linear regression.
+// Logistic regression is fast and relatively uncomplicated, and it's convenient for you to interpret the results.
+// Although it's essentially a method for binary classification, it can also be applied to multiclass problems.
 	ClassificationModelsLogisticRegression ClassificationModels = "LogisticRegression"
 	// ClassificationModelsMultinomialNaiveBayes - The multinomial Naive Bayes classifier is suitable for classification with
-	// discrete features (e.g., word counts for text classification).
-	// The multinomial distribution normally requires integer feature counts. However, in practice, fractional counts such as
-	// tf-idf may also work.
+// discrete features (e.g., word counts for text classification).
+// The multinomial distribution normally requires integer feature counts. However, in practice, fractional counts such as
+// tf-idf may also work.
 	ClassificationModelsMultinomialNaiveBayes ClassificationModels = "MultinomialNaiveBayes"
 	// ClassificationModelsRandomForest - Random forest is a supervised learning algorithm.
-	// The "forest" it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
-	// The general idea of the bagging method is that a combination of learning models increases the overall result.
+// The "forest" it builds, is an ensemble of decision trees, usually trained with the bagging method.
+// The general idea of the bagging method is that a combination of learning models increases the overall result.
 	ClassificationModelsRandomForest ClassificationModels = "RandomForest"
 	// ClassificationModelsSGD - SGD: Stochastic gradient descent is an optimization algorithm often used in machine learning
-	// applications
-	// to find the model parameters that correspond to the best fit between predicted and actual outputs.
+// applications
+// to find the model parameters that correspond to the best fit between predicted and actual outputs.
 	ClassificationModelsSGD ClassificationModels = "SGD"
 	// ClassificationModelsSVM - A support vector machine (SVM) is a supervised machine learning model that uses classification
-	// algorithms for two-group classification problems.
-	// After giving an SVM model sets of labeled training data for each category, they're able to categorize new text.
+// algorithms for two-group classification problems.
+// After giving an SVM model sets of labeled training data for each category, they're able to categorize new text.
 	ClassificationModelsSVM ClassificationModels = "SVM"
 	// ClassificationModelsXGBoostClassifier - XGBoost: Extreme Gradient Boosting Algorithm. This algorithm is used for structured
-	// data where target column values can be divided into distinct class values.
+// data where target column values can be divided into distinct class values.
 	ClassificationModelsXGBoostClassifier ClassificationModels = "XGBoostClassifier"
 )
 
 // PossibleClassificationModelsValues returns the possible values for the ClassificationModels const type.
 func PossibleClassificationModelsValues() []ClassificationModels {
-	return []ClassificationModels{
+	return []ClassificationModels{	
 		ClassificationModelsBernoulliNaiveBayes,
 		ClassificationModelsDecisionTree,
 		ClassificationModelsExtremeRandomTrees,
@@ -278,30 +455,30 @@ type ClassificationMultilabelPrimaryMetrics string
 
 const (
 	// ClassificationMultilabelPrimaryMetricsAUCWeighted - AUC is the Area under the curve.
-	// This metric represents arithmetic mean of the score for each class,
-	// weighted by the number of true instances in each class.
+// This metric represents arithmetic mean of the score for each class,
+// weighted by the number of true instances in each class.
 	ClassificationMultilabelPrimaryMetricsAUCWeighted ClassificationMultilabelPrimaryMetrics = "AUCWeighted"
 	// ClassificationMultilabelPrimaryMetricsAccuracy - Accuracy is the ratio of predictions that exactly match the true class
-	// labels.
+// labels.
 	ClassificationMultilabelPrimaryMetricsAccuracy ClassificationMultilabelPrimaryMetrics = "Accuracy"
 	// ClassificationMultilabelPrimaryMetricsAveragePrecisionScoreWeighted - The arithmetic mean of the average precision score
-	// for each class, weighted by
-	// the number of true instances in each class.
+// for each class, weighted by
+// the number of true instances in each class.
 	ClassificationMultilabelPrimaryMetricsAveragePrecisionScoreWeighted ClassificationMultilabelPrimaryMetrics = "AveragePrecisionScoreWeighted"
 	// ClassificationMultilabelPrimaryMetricsIOU - Intersection Over Union. Intersection of predictions divided by union of predictions.
 	ClassificationMultilabelPrimaryMetricsIOU ClassificationMultilabelPrimaryMetrics = "IOU"
 	// ClassificationMultilabelPrimaryMetricsNormMacroRecall - Normalized macro recall is recall macro-averaged and normalized,
-	// so that random
-	// performance has a score of 0, and perfect performance has a score of 1.
+// so that random
+// performance has a score of 0, and perfect performance has a score of 1.
 	ClassificationMultilabelPrimaryMetricsNormMacroRecall ClassificationMultilabelPrimaryMetrics = "NormMacroRecall"
 	// ClassificationMultilabelPrimaryMetricsPrecisionScoreWeighted - The arithmetic mean of precision for each class, weighted
-	// by number of true instances in each class.
+// by number of true instances in each class.
 	ClassificationMultilabelPrimaryMetricsPrecisionScoreWeighted ClassificationMultilabelPrimaryMetrics = "PrecisionScoreWeighted"
 )
 
 // PossibleClassificationMultilabelPrimaryMetricsValues returns the possible values for the ClassificationMultilabelPrimaryMetrics const type.
 func PossibleClassificationMultilabelPrimaryMetricsValues() []ClassificationMultilabelPrimaryMetrics {
-	return []ClassificationMultilabelPrimaryMetrics{
+	return []ClassificationMultilabelPrimaryMetrics{	
 		ClassificationMultilabelPrimaryMetricsAUCWeighted,
 		ClassificationMultilabelPrimaryMetricsAccuracy,
 		ClassificationMultilabelPrimaryMetricsAveragePrecisionScoreWeighted,
@@ -316,27 +493,27 @@ type ClassificationPrimaryMetrics string
 
 const (
 	// ClassificationPrimaryMetricsAUCWeighted - AUC is the Area under the curve.
-	// This metric represents arithmetic mean of the score for each class,
-	// weighted by the number of true instances in each class.
+// This metric represents arithmetic mean of the score for each class,
+// weighted by the number of true instances in each class.
 	ClassificationPrimaryMetricsAUCWeighted ClassificationPrimaryMetrics = "AUCWeighted"
 	// ClassificationPrimaryMetricsAccuracy - Accuracy is the ratio of predictions that exactly match the true class labels.
 	ClassificationPrimaryMetricsAccuracy ClassificationPrimaryMetrics = "Accuracy"
 	// ClassificationPrimaryMetricsAveragePrecisionScoreWeighted - The arithmetic mean of the average precision score for each
-	// class, weighted by
-	// the number of true instances in each class.
+// class, weighted by
+// the number of true instances in each class.
 	ClassificationPrimaryMetricsAveragePrecisionScoreWeighted ClassificationPrimaryMetrics = "AveragePrecisionScoreWeighted"
 	// ClassificationPrimaryMetricsNormMacroRecall - Normalized macro recall is recall macro-averaged and normalized, so that
-	// random
-	// performance has a score of 0, and perfect performance has a score of 1.
+// random
+// performance has a score of 0, and perfect performance has a score of 1.
 	ClassificationPrimaryMetricsNormMacroRecall ClassificationPrimaryMetrics = "NormMacroRecall"
 	// ClassificationPrimaryMetricsPrecisionScoreWeighted - The arithmetic mean of precision for each class, weighted by number
-	// of true instances in each class.
+// of true instances in each class.
 	ClassificationPrimaryMetricsPrecisionScoreWeighted ClassificationPrimaryMetrics = "PrecisionScoreWeighted"
 )
 
 // PossibleClassificationPrimaryMetricsValues returns the possible values for the ClassificationPrimaryMetrics const type.
 func PossibleClassificationPrimaryMetricsValues() []ClassificationPrimaryMetrics {
-	return []ClassificationPrimaryMetrics{
+	return []ClassificationPrimaryMetrics{	
 		ClassificationPrimaryMetricsAUCWeighted,
 		ClassificationPrimaryMetricsAccuracy,
 		ClassificationPrimaryMetricsAveragePrecisionScoreWeighted,
@@ -350,13 +527,13 @@ type ClusterPurpose string
 
 const (
 	ClusterPurposeDenseProd ClusterPurpose = "DenseProd"
-	ClusterPurposeDevTest   ClusterPurpose = "DevTest"
-	ClusterPurposeFastProd  ClusterPurpose = "FastProd"
+	ClusterPurposeDevTest ClusterPurpose = "DevTest"
+	ClusterPurposeFastProd ClusterPurpose = "FastProd"
 )
 
 // PossibleClusterPurposeValues returns the possible values for the ClusterPurpose const type.
 func PossibleClusterPurposeValues() []ClusterPurpose {
-	return []ClusterPurpose{
+	return []ClusterPurpose{	
 		ClusterPurposeDenseProd,
 		ClusterPurposeDevTest,
 		ClusterPurposeFastProd,
@@ -372,7 +549,7 @@ const (
 
 // PossibleComputeInstanceAuthorizationTypeValues returns the possible values for the ComputeInstanceAuthorizationType const type.
 func PossibleComputeInstanceAuthorizationTypeValues() []ComputeInstanceAuthorizationType {
-	return []ComputeInstanceAuthorizationType{
+	return []ComputeInstanceAuthorizationType{	
 		ComputeInstanceAuthorizationTypePersonal,
 	}
 }
@@ -381,30 +558,32 @@ func PossibleComputeInstanceAuthorizationTypeValues() []ComputeInstanceAuthoriza
 type ComputeInstanceState string
 
 const (
-	ComputeInstanceStateCreateFailed    ComputeInstanceState = "CreateFailed"
-	ComputeInstanceStateCreating        ComputeInstanceState = "Creating"
-	ComputeInstanceStateDeleting        ComputeInstanceState = "Deleting"
-	ComputeInstanceStateJobRunning      ComputeInstanceState = "JobRunning"
-	ComputeInstanceStateRestarting      ComputeInstanceState = "Restarting"
-	ComputeInstanceStateRunning         ComputeInstanceState = "Running"
-	ComputeInstanceStateSettingUp       ComputeInstanceState = "SettingUp"
-	ComputeInstanceStateSetupFailed     ComputeInstanceState = "SetupFailed"
-	ComputeInstanceStateStarting        ComputeInstanceState = "Starting"
-	ComputeInstanceStateStopped         ComputeInstanceState = "Stopped"
-	ComputeInstanceStateStopping        ComputeInstanceState = "Stopping"
-	ComputeInstanceStateUnknown         ComputeInstanceState = "Unknown"
-	ComputeInstanceStateUnusable        ComputeInstanceState = "Unusable"
-	ComputeInstanceStateUserSettingUp   ComputeInstanceState = "UserSettingUp"
+	ComputeInstanceStateCreateFailed ComputeInstanceState = "CreateFailed"
+	ComputeInstanceStateCreating ComputeInstanceState = "Creating"
+	ComputeInstanceStateDeleting ComputeInstanceState = "Deleting"
+	ComputeInstanceStateJobRunning ComputeInstanceState = "JobRunning"
+	ComputeInstanceStateResizing ComputeInstanceState = "Resizing"
+	ComputeInstanceStateRestarting ComputeInstanceState = "Restarting"
+	ComputeInstanceStateRunning ComputeInstanceState = "Running"
+	ComputeInstanceStateSettingUp ComputeInstanceState = "SettingUp"
+	ComputeInstanceStateSetupFailed ComputeInstanceState = "SetupFailed"
+	ComputeInstanceStateStarting ComputeInstanceState = "Starting"
+	ComputeInstanceStateStopped ComputeInstanceState = "Stopped"
+	ComputeInstanceStateStopping ComputeInstanceState = "Stopping"
+	ComputeInstanceStateUnknown ComputeInstanceState = "Unknown"
+	ComputeInstanceStateUnusable ComputeInstanceState = "Unusable"
+	ComputeInstanceStateUserSettingUp ComputeInstanceState = "UserSettingUp"
 	ComputeInstanceStateUserSetupFailed ComputeInstanceState = "UserSetupFailed"
 )
 
 // PossibleComputeInstanceStateValues returns the possible values for the ComputeInstanceState const type.
 func PossibleComputeInstanceStateValues() []ComputeInstanceState {
-	return []ComputeInstanceState{
+	return []ComputeInstanceState{	
 		ComputeInstanceStateCreateFailed,
 		ComputeInstanceStateCreating,
 		ComputeInstanceStateDeleting,
 		ComputeInstanceStateJobRunning,
+		ComputeInstanceStateResizing,
 		ComputeInstanceStateRestarting,
 		ComputeInstanceStateRunning,
 		ComputeInstanceStateSettingUp,
@@ -419,19 +598,61 @@ func PossibleComputeInstanceStateValues() []ComputeInstanceState {
 	}
 }
 
-// ComputePowerAction - The compute power action.
+// ComputePowerAction - [Required] The compute power action.
 type ComputePowerAction string
 
 const (
 	ComputePowerActionStart ComputePowerAction = "Start"
-	ComputePowerActionStop  ComputePowerAction = "Stop"
+	ComputePowerActionStop ComputePowerAction = "Stop"
 )
 
 // PossibleComputePowerActionValues returns the possible values for the ComputePowerAction const type.
 func PossibleComputePowerActionValues() []ComputePowerAction {
-	return []ComputePowerAction{
+	return []ComputePowerAction{	
 		ComputePowerActionStart,
 		ComputePowerActionStop,
+	}
+}
+
+// ComputeRecurrenceFrequency - Enum to describe the frequency of a compute recurrence schedule
+type ComputeRecurrenceFrequency string
+
+const (
+	// ComputeRecurrenceFrequencyDay - Day frequency
+	ComputeRecurrenceFrequencyDay ComputeRecurrenceFrequency = "Day"
+	// ComputeRecurrenceFrequencyHour - Hour frequency
+	ComputeRecurrenceFrequencyHour ComputeRecurrenceFrequency = "Hour"
+	// ComputeRecurrenceFrequencyMinute - Minute frequency
+	ComputeRecurrenceFrequencyMinute ComputeRecurrenceFrequency = "Minute"
+	// ComputeRecurrenceFrequencyMonth - Month frequency
+	ComputeRecurrenceFrequencyMonth ComputeRecurrenceFrequency = "Month"
+	// ComputeRecurrenceFrequencyWeek - Week frequency
+	ComputeRecurrenceFrequencyWeek ComputeRecurrenceFrequency = "Week"
+)
+
+// PossibleComputeRecurrenceFrequencyValues returns the possible values for the ComputeRecurrenceFrequency const type.
+func PossibleComputeRecurrenceFrequencyValues() []ComputeRecurrenceFrequency {
+	return []ComputeRecurrenceFrequency{	
+		ComputeRecurrenceFrequencyDay,
+		ComputeRecurrenceFrequencyHour,
+		ComputeRecurrenceFrequencyMinute,
+		ComputeRecurrenceFrequencyMonth,
+		ComputeRecurrenceFrequencyWeek,
+	}
+}
+
+type ComputeTriggerType string
+
+const (
+	ComputeTriggerTypeCron ComputeTriggerType = "Cron"
+	ComputeTriggerTypeRecurrence ComputeTriggerType = "Recurrence"
+)
+
+// PossibleComputeTriggerTypeValues returns the possible values for the ComputeTriggerType const type.
+func PossibleComputeTriggerTypeValues() []ComputeTriggerType {
+	return []ComputeTriggerType{	
+		ComputeTriggerTypeCron,
+		ComputeTriggerTypeRecurrence,
 	}
 }
 
@@ -439,21 +660,21 @@ func PossibleComputePowerActionValues() []ComputePowerAction {
 type ComputeType string
 
 const (
-	ComputeTypeAKS               ComputeType = "AKS"
-	ComputeTypeAmlCompute        ComputeType = "AmlCompute"
-	ComputeTypeComputeInstance   ComputeType = "ComputeInstance"
-	ComputeTypeDataFactory       ComputeType = "DataFactory"
+	ComputeTypeAKS ComputeType = "AKS"
+	ComputeTypeAmlCompute ComputeType = "AmlCompute"
+	ComputeTypeComputeInstance ComputeType = "ComputeInstance"
+	ComputeTypeDataFactory ComputeType = "DataFactory"
 	ComputeTypeDataLakeAnalytics ComputeType = "DataLakeAnalytics"
-	ComputeTypeDatabricks        ComputeType = "Databricks"
-	ComputeTypeHDInsight         ComputeType = "HDInsight"
-	ComputeTypeKubernetes        ComputeType = "Kubernetes"
-	ComputeTypeSynapseSpark      ComputeType = "SynapseSpark"
-	ComputeTypeVirtualMachine    ComputeType = "VirtualMachine"
+	ComputeTypeDatabricks ComputeType = "Databricks"
+	ComputeTypeHDInsight ComputeType = "HDInsight"
+	ComputeTypeKubernetes ComputeType = "Kubernetes"
+	ComputeTypeSynapseSpark ComputeType = "SynapseSpark"
+	ComputeTypeVirtualMachine ComputeType = "VirtualMachine"
 )
 
 // PossibleComputeTypeValues returns the possible values for the ComputeType const type.
 func PossibleComputeTypeValues() []ComputeType {
-	return []ComputeType{
+	return []ComputeType{	
 		ComputeTypeAKS,
 		ComputeTypeAmlCompute,
 		ComputeTypeComputeInstance,
@@ -467,24 +688,71 @@ func PossibleComputeTypeValues() []ComputeType {
 	}
 }
 
+// ComputeWeekDay - Enum of weekday
+type ComputeWeekDay string
+
+const (
+	// ComputeWeekDayFriday - Friday weekday
+	ComputeWeekDayFriday ComputeWeekDay = "Friday"
+	// ComputeWeekDayMonday - Monday weekday
+	ComputeWeekDayMonday ComputeWeekDay = "Monday"
+	// ComputeWeekDaySaturday - Saturday weekday
+	ComputeWeekDaySaturday ComputeWeekDay = "Saturday"
+	// ComputeWeekDaySunday - Sunday weekday
+	ComputeWeekDaySunday ComputeWeekDay = "Sunday"
+	// ComputeWeekDayThursday - Thursday weekday
+	ComputeWeekDayThursday ComputeWeekDay = "Thursday"
+	// ComputeWeekDayTuesday - Tuesday weekday
+	ComputeWeekDayTuesday ComputeWeekDay = "Tuesday"
+	// ComputeWeekDayWednesday - Wednesday weekday
+	ComputeWeekDayWednesday ComputeWeekDay = "Wednesday"
+)
+
+// PossibleComputeWeekDayValues returns the possible values for the ComputeWeekDay const type.
+func PossibleComputeWeekDayValues() []ComputeWeekDay {
+	return []ComputeWeekDay{	
+		ComputeWeekDayFriday,
+		ComputeWeekDayMonday,
+		ComputeWeekDaySaturday,
+		ComputeWeekDaySunday,
+		ComputeWeekDayThursday,
+		ComputeWeekDayTuesday,
+		ComputeWeekDayWednesday,
+	}
+}
+
 // ConnectionAuthType - Authentication type of the connection target
 type ConnectionAuthType string
 
 const (
-	ConnectionAuthTypeManagedIdentity  ConnectionAuthType = "ManagedIdentity"
-	ConnectionAuthTypeNone             ConnectionAuthType = "None"
-	ConnectionAuthTypePAT              ConnectionAuthType = "PAT"
-	ConnectionAuthTypeSAS              ConnectionAuthType = "SAS"
+	ConnectionAuthTypeAAD ConnectionAuthType = "AAD"
+	ConnectionAuthTypeAPIKey ConnectionAuthType = "ApiKey"
+	ConnectionAuthTypeAccessKey ConnectionAuthType = "AccessKey"
+	ConnectionAuthTypeAccountKey ConnectionAuthType = "AccountKey"
+	ConnectionAuthTypeCustomKeys ConnectionAuthType = "CustomKeys"
+	ConnectionAuthTypeManagedIdentity ConnectionAuthType = "ManagedIdentity"
+	ConnectionAuthTypeNone ConnectionAuthType = "None"
+	ConnectionAuthTypeOAuth2 ConnectionAuthType = "OAuth2"
+	ConnectionAuthTypePAT ConnectionAuthType = "PAT"
+	ConnectionAuthTypeSAS ConnectionAuthType = "SAS"
+	ConnectionAuthTypeServicePrincipal ConnectionAuthType = "ServicePrincipal"
 	ConnectionAuthTypeUsernamePassword ConnectionAuthType = "UsernamePassword"
 )
 
 // PossibleConnectionAuthTypeValues returns the possible values for the ConnectionAuthType const type.
 func PossibleConnectionAuthTypeValues() []ConnectionAuthType {
-	return []ConnectionAuthType{
+	return []ConnectionAuthType{	
+		ConnectionAuthTypeAAD,
+		ConnectionAuthTypeAPIKey,
+		ConnectionAuthTypeAccessKey,
+		ConnectionAuthTypeAccountKey,
+		ConnectionAuthTypeCustomKeys,
 		ConnectionAuthTypeManagedIdentity,
 		ConnectionAuthTypeNone,
+		ConnectionAuthTypeOAuth2,
 		ConnectionAuthTypePAT,
 		ConnectionAuthTypeSAS,
+		ConnectionAuthTypeServicePrincipal,
 		ConnectionAuthTypeUsernamePassword,
 	}
 }
@@ -493,31 +761,251 @@ func PossibleConnectionAuthTypeValues() []ConnectionAuthType {
 type ConnectionCategory string
 
 const (
+	ConnectionCategoryADLSGen2 ConnectionCategory = "ADLSGen2"
+	ConnectionCategoryAPIKey ConnectionCategory = "ApiKey"
+	ConnectionCategoryAmazonMws ConnectionCategory = "AmazonMws"
+	ConnectionCategoryAmazonRdsForOracle ConnectionCategory = "AmazonRdsForOracle"
+	ConnectionCategoryAmazonRdsForSQLServer ConnectionCategory = "AmazonRdsForSqlServer"
+	ConnectionCategoryAmazonRedshift ConnectionCategory = "AmazonRedshift"
+	ConnectionCategoryAmazonS3Compatible ConnectionCategory = "AmazonS3Compatible"
+	ConnectionCategoryAzureBlob ConnectionCategory = "AzureBlob"
+	ConnectionCategoryAzureDataExplorer ConnectionCategory = "AzureDataExplorer"
+	ConnectionCategoryAzureDatabricksDeltaLake ConnectionCategory = "AzureDatabricksDeltaLake"
+	ConnectionCategoryAzureMariaDb ConnectionCategory = "AzureMariaDb"
+	ConnectionCategoryAzureMySQLDb ConnectionCategory = "AzureMySqlDb"
+	ConnectionCategoryAzureOneLake ConnectionCategory = "AzureOneLake"
+	ConnectionCategoryAzureOpenAI ConnectionCategory = "AzureOpenAI"
+	ConnectionCategoryAzurePostgresDb ConnectionCategory = "AzurePostgresDb"
+	ConnectionCategoryAzureSQLDb ConnectionCategory = "AzureSqlDb"
+	ConnectionCategoryAzureSQLMi ConnectionCategory = "AzureSqlMi"
+	ConnectionCategoryAzureSynapseAnalytics ConnectionCategory = "AzureSynapseAnalytics"
+	ConnectionCategoryAzureTableStorage ConnectionCategory = "AzureTableStorage"
+	ConnectionCategoryCassandra ConnectionCategory = "Cassandra"
+	ConnectionCategoryCognitiveSearch ConnectionCategory = "CognitiveSearch"
+	ConnectionCategoryCognitiveService ConnectionCategory = "CognitiveService"
+	ConnectionCategoryConcur ConnectionCategory = "Concur"
 	ConnectionCategoryContainerRegistry ConnectionCategory = "ContainerRegistry"
-	ConnectionCategoryGit               ConnectionCategory = "Git"
-	ConnectionCategoryPythonFeed        ConnectionCategory = "PythonFeed"
+	ConnectionCategoryCosmosDb ConnectionCategory = "CosmosDb"
+	ConnectionCategoryCosmosDbMongoDbAPI ConnectionCategory = "CosmosDbMongoDbApi"
+	ConnectionCategoryCouchbase ConnectionCategory = "Couchbase"
+	ConnectionCategoryCustomKeys ConnectionCategory = "CustomKeys"
+	ConnectionCategoryDb2 ConnectionCategory = "Db2"
+	ConnectionCategoryDrill ConnectionCategory = "Drill"
+	ConnectionCategoryDynamics ConnectionCategory = "Dynamics"
+	ConnectionCategoryDynamicsAx ConnectionCategory = "DynamicsAx"
+	ConnectionCategoryDynamicsCrm ConnectionCategory = "DynamicsCrm"
+	ConnectionCategoryEloqua ConnectionCategory = "Eloqua"
+	ConnectionCategoryFileServer ConnectionCategory = "FileServer"
+	ConnectionCategoryFtpServer ConnectionCategory = "FtpServer"
+	ConnectionCategoryGenericContainerRegistry ConnectionCategory = "GenericContainerRegistry"
+	ConnectionCategoryGenericHTTP ConnectionCategory = "GenericHttp"
+	ConnectionCategoryGenericRest ConnectionCategory = "GenericRest"
+	ConnectionCategoryGit ConnectionCategory = "Git"
+	ConnectionCategoryGoogleAdWords ConnectionCategory = "GoogleAdWords"
+	ConnectionCategoryGoogleBigQuery ConnectionCategory = "GoogleBigQuery"
+	ConnectionCategoryGoogleCloudStorage ConnectionCategory = "GoogleCloudStorage"
+	ConnectionCategoryGreenplum ConnectionCategory = "Greenplum"
+	ConnectionCategoryHbase ConnectionCategory = "Hbase"
+	ConnectionCategoryHdfs ConnectionCategory = "Hdfs"
+	ConnectionCategoryHive ConnectionCategory = "Hive"
+	ConnectionCategoryHubspot ConnectionCategory = "Hubspot"
+	ConnectionCategoryImpala ConnectionCategory = "Impala"
+	ConnectionCategoryInformix ConnectionCategory = "Informix"
+	ConnectionCategoryJira ConnectionCategory = "Jira"
+	ConnectionCategoryMagento ConnectionCategory = "Magento"
+	ConnectionCategoryMariaDb ConnectionCategory = "MariaDb"
+	ConnectionCategoryMarketo ConnectionCategory = "Marketo"
+	ConnectionCategoryMicrosoftAccess ConnectionCategory = "MicrosoftAccess"
+	ConnectionCategoryMongoDbAtlas ConnectionCategory = "MongoDbAtlas"
+	ConnectionCategoryMongoDbV2 ConnectionCategory = "MongoDbV2"
+	ConnectionCategoryMySQL ConnectionCategory = "MySql"
+	ConnectionCategoryNetezza ConnectionCategory = "Netezza"
+	ConnectionCategoryODataRest ConnectionCategory = "ODataRest"
+	ConnectionCategoryOdbc ConnectionCategory = "Odbc"
+	ConnectionCategoryOffice365 ConnectionCategory = "Office365"
+	ConnectionCategoryOracle ConnectionCategory = "Oracle"
+	ConnectionCategoryOracleCloudStorage ConnectionCategory = "OracleCloudStorage"
+	ConnectionCategoryOracleServiceCloud ConnectionCategory = "OracleServiceCloud"
+	ConnectionCategoryPayPal ConnectionCategory = "PayPal"
+	ConnectionCategoryPhoenix ConnectionCategory = "Phoenix"
+	ConnectionCategoryPostgreSQL ConnectionCategory = "PostgreSql"
+	ConnectionCategoryPresto ConnectionCategory = "Presto"
+	ConnectionCategoryPythonFeed ConnectionCategory = "PythonFeed"
+	ConnectionCategoryQuickBooks ConnectionCategory = "QuickBooks"
+	ConnectionCategoryRedis ConnectionCategory = "Redis"
+	ConnectionCategoryResponsys ConnectionCategory = "Responsys"
+	ConnectionCategoryS3 ConnectionCategory = "S3"
+	ConnectionCategorySQLServer ConnectionCategory = "SqlServer"
+	ConnectionCategorySalesforce ConnectionCategory = "Salesforce"
+	ConnectionCategorySalesforceMarketingCloud ConnectionCategory = "SalesforceMarketingCloud"
+	ConnectionCategorySalesforceServiceCloud ConnectionCategory = "SalesforceServiceCloud"
+	ConnectionCategorySapBw ConnectionCategory = "SapBw"
+	ConnectionCategorySapCloudForCustomer ConnectionCategory = "SapCloudForCustomer"
+	ConnectionCategorySapEcc ConnectionCategory = "SapEcc"
+	ConnectionCategorySapHana ConnectionCategory = "SapHana"
+	ConnectionCategorySapOpenHub ConnectionCategory = "SapOpenHub"
+	ConnectionCategorySapTable ConnectionCategory = "SapTable"
+	ConnectionCategoryServiceNow ConnectionCategory = "ServiceNow"
+	ConnectionCategorySftp ConnectionCategory = "Sftp"
+	ConnectionCategorySharePointOnlineList ConnectionCategory = "SharePointOnlineList"
+	ConnectionCategoryShopify ConnectionCategory = "Shopify"
+	ConnectionCategorySnowflake ConnectionCategory = "Snowflake"
+	ConnectionCategorySpark ConnectionCategory = "Spark"
+	ConnectionCategorySquare ConnectionCategory = "Square"
+	ConnectionCategorySybase ConnectionCategory = "Sybase"
+	ConnectionCategoryTeradata ConnectionCategory = "Teradata"
+	ConnectionCategoryVertica ConnectionCategory = "Vertica"
+	ConnectionCategoryWebTable ConnectionCategory = "WebTable"
+	ConnectionCategoryXero ConnectionCategory = "Xero"
+	ConnectionCategoryZoho ConnectionCategory = "Zoho"
 )
 
 // PossibleConnectionCategoryValues returns the possible values for the ConnectionCategory const type.
 func PossibleConnectionCategoryValues() []ConnectionCategory {
-	return []ConnectionCategory{
+	return []ConnectionCategory{	
+		ConnectionCategoryADLSGen2,
+		ConnectionCategoryAPIKey,
+		ConnectionCategoryAmazonMws,
+		ConnectionCategoryAmazonRdsForOracle,
+		ConnectionCategoryAmazonRdsForSQLServer,
+		ConnectionCategoryAmazonRedshift,
+		ConnectionCategoryAmazonS3Compatible,
+		ConnectionCategoryAzureBlob,
+		ConnectionCategoryAzureDataExplorer,
+		ConnectionCategoryAzureDatabricksDeltaLake,
+		ConnectionCategoryAzureMariaDb,
+		ConnectionCategoryAzureMySQLDb,
+		ConnectionCategoryAzureOneLake,
+		ConnectionCategoryAzureOpenAI,
+		ConnectionCategoryAzurePostgresDb,
+		ConnectionCategoryAzureSQLDb,
+		ConnectionCategoryAzureSQLMi,
+		ConnectionCategoryAzureSynapseAnalytics,
+		ConnectionCategoryAzureTableStorage,
+		ConnectionCategoryCassandra,
+		ConnectionCategoryCognitiveSearch,
+		ConnectionCategoryCognitiveService,
+		ConnectionCategoryConcur,
 		ConnectionCategoryContainerRegistry,
+		ConnectionCategoryCosmosDb,
+		ConnectionCategoryCosmosDbMongoDbAPI,
+		ConnectionCategoryCouchbase,
+		ConnectionCategoryCustomKeys,
+		ConnectionCategoryDb2,
+		ConnectionCategoryDrill,
+		ConnectionCategoryDynamics,
+		ConnectionCategoryDynamicsAx,
+		ConnectionCategoryDynamicsCrm,
+		ConnectionCategoryEloqua,
+		ConnectionCategoryFileServer,
+		ConnectionCategoryFtpServer,
+		ConnectionCategoryGenericContainerRegistry,
+		ConnectionCategoryGenericHTTP,
+		ConnectionCategoryGenericRest,
 		ConnectionCategoryGit,
+		ConnectionCategoryGoogleAdWords,
+		ConnectionCategoryGoogleBigQuery,
+		ConnectionCategoryGoogleCloudStorage,
+		ConnectionCategoryGreenplum,
+		ConnectionCategoryHbase,
+		ConnectionCategoryHdfs,
+		ConnectionCategoryHive,
+		ConnectionCategoryHubspot,
+		ConnectionCategoryImpala,
+		ConnectionCategoryInformix,
+		ConnectionCategoryJira,
+		ConnectionCategoryMagento,
+		ConnectionCategoryMariaDb,
+		ConnectionCategoryMarketo,
+		ConnectionCategoryMicrosoftAccess,
+		ConnectionCategoryMongoDbAtlas,
+		ConnectionCategoryMongoDbV2,
+		ConnectionCategoryMySQL,
+		ConnectionCategoryNetezza,
+		ConnectionCategoryODataRest,
+		ConnectionCategoryOdbc,
+		ConnectionCategoryOffice365,
+		ConnectionCategoryOracle,
+		ConnectionCategoryOracleCloudStorage,
+		ConnectionCategoryOracleServiceCloud,
+		ConnectionCategoryPayPal,
+		ConnectionCategoryPhoenix,
+		ConnectionCategoryPostgreSQL,
+		ConnectionCategoryPresto,
 		ConnectionCategoryPythonFeed,
+		ConnectionCategoryQuickBooks,
+		ConnectionCategoryRedis,
+		ConnectionCategoryResponsys,
+		ConnectionCategoryS3,
+		ConnectionCategorySQLServer,
+		ConnectionCategorySalesforce,
+		ConnectionCategorySalesforceMarketingCloud,
+		ConnectionCategorySalesforceServiceCloud,
+		ConnectionCategorySapBw,
+		ConnectionCategorySapCloudForCustomer,
+		ConnectionCategorySapEcc,
+		ConnectionCategorySapHana,
+		ConnectionCategorySapOpenHub,
+		ConnectionCategorySapTable,
+		ConnectionCategoryServiceNow,
+		ConnectionCategorySftp,
+		ConnectionCategorySharePointOnlineList,
+		ConnectionCategoryShopify,
+		ConnectionCategorySnowflake,
+		ConnectionCategorySpark,
+		ConnectionCategorySquare,
+		ConnectionCategorySybase,
+		ConnectionCategoryTeradata,
+		ConnectionCategoryVertica,
+		ConnectionCategoryWebTable,
+		ConnectionCategoryXero,
+		ConnectionCategoryZoho,
 	}
 }
 
+// ConnectionGroup - Group based on connection category
+type ConnectionGroup string
+
+const (
+	ConnectionGroupAzure ConnectionGroup = "Azure"
+	ConnectionGroupAzureAI ConnectionGroup = "AzureAI"
+	ConnectionGroupDatabase ConnectionGroup = "Database"
+	ConnectionGroupFile ConnectionGroup = "File"
+	ConnectionGroupGenericProtocol ConnectionGroup = "GenericProtocol"
+	ConnectionGroupNoSQL ConnectionGroup = "NoSQL"
+	ConnectionGroupServicesAndApps ConnectionGroup = "ServicesAndApps"
+)
+
+// PossibleConnectionGroupValues returns the possible values for the ConnectionGroup const type.
+func PossibleConnectionGroupValues() []ConnectionGroup {
+	return []ConnectionGroup{	
+		ConnectionGroupAzure,
+		ConnectionGroupAzureAI,
+		ConnectionGroupDatabase,
+		ConnectionGroupFile,
+		ConnectionGroupGenericProtocol,
+		ConnectionGroupNoSQL,
+		ConnectionGroupServicesAndApps,
+	}
+}
+
+// ContainerType - The type of container to retrieve logs from.
 type ContainerType string
 
 const (
-	ContainerTypeInferenceServer    ContainerType = "InferenceServer"
+	// ContainerTypeInferenceServer - The container used to serve user's request.
+	ContainerTypeInferenceServer ContainerType = "InferenceServer"
+	// ContainerTypeModelDataCollector - The container used to collect payload and custom logging when mdc is enabled.
+	ContainerTypeModelDataCollector ContainerType = "ModelDataCollector"
+	// ContainerTypeStorageInitializer - The container used to download models and score script.
 	ContainerTypeStorageInitializer ContainerType = "StorageInitializer"
 )
 
 // PossibleContainerTypeValues returns the possible values for the ContainerType const type.
 func PossibleContainerTypeValues() []ContainerType {
-	return []ContainerType{
+	return []ContainerType{	
 		ContainerTypeInferenceServer,
+		ContainerTypeModelDataCollector,
 		ContainerTypeStorageInitializer,
 	}
 }
@@ -526,15 +1014,15 @@ func PossibleContainerTypeValues() []ContainerType {
 type CreatedByType string
 
 const (
-	CreatedByTypeApplication     CreatedByType = "Application"
-	CreatedByTypeKey             CreatedByType = "Key"
+	CreatedByTypeApplication CreatedByType = "Application"
+	CreatedByTypeKey CreatedByType = "Key"
 	CreatedByTypeManagedIdentity CreatedByType = "ManagedIdentity"
-	CreatedByTypeUser            CreatedByType = "User"
+	CreatedByTypeUser CreatedByType = "User"
 )
 
 // PossibleCreatedByTypeValues returns the possible values for the CreatedByType const type.
 func PossibleCreatedByTypeValues() []CreatedByType {
-	return []CreatedByType{
+	return []CreatedByType{	
 		CreatedByTypeApplication,
 		CreatedByTypeKey,
 		CreatedByTypeManagedIdentity,
@@ -546,21 +1034,95 @@ func PossibleCreatedByTypeValues() []CreatedByType {
 type CredentialsType string
 
 const (
-	CredentialsTypeAccountKey       CredentialsType = "AccountKey"
-	CredentialsTypeCertificate      CredentialsType = "Certificate"
-	CredentialsTypeNone             CredentialsType = "None"
-	CredentialsTypeSas              CredentialsType = "Sas"
+	CredentialsTypeAccountKey CredentialsType = "AccountKey"
+	CredentialsTypeCertificate CredentialsType = "Certificate"
+	CredentialsTypeKerberosKeytab CredentialsType = "KerberosKeytab"
+	CredentialsTypeKerberosPassword CredentialsType = "KerberosPassword"
+	CredentialsTypeNone CredentialsType = "None"
+	CredentialsTypeSas CredentialsType = "Sas"
 	CredentialsTypeServicePrincipal CredentialsType = "ServicePrincipal"
 )
 
 // PossibleCredentialsTypeValues returns the possible values for the CredentialsType const type.
 func PossibleCredentialsTypeValues() []CredentialsType {
-	return []CredentialsType{
+	return []CredentialsType{	
 		CredentialsTypeAccountKey,
 		CredentialsTypeCertificate,
+		CredentialsTypeKerberosKeytab,
+		CredentialsTypeKerberosPassword,
 		CredentialsTypeNone,
 		CredentialsTypeSas,
 		CredentialsTypeServicePrincipal,
+	}
+}
+
+type DataAvailabilityStatus string
+
+const (
+	DataAvailabilityStatusComplete DataAvailabilityStatus = "Complete"
+	DataAvailabilityStatusIncomplete DataAvailabilityStatus = "Incomplete"
+	DataAvailabilityStatusNone DataAvailabilityStatus = "None"
+	DataAvailabilityStatusPending DataAvailabilityStatus = "Pending"
+)
+
+// PossibleDataAvailabilityStatusValues returns the possible values for the DataAvailabilityStatus const type.
+func PossibleDataAvailabilityStatusValues() []DataAvailabilityStatus {
+	return []DataAvailabilityStatus{	
+		DataAvailabilityStatusComplete,
+		DataAvailabilityStatusIncomplete,
+		DataAvailabilityStatusNone,
+		DataAvailabilityStatusPending,
+	}
+}
+
+type DataCollectionMode string
+
+const (
+	DataCollectionModeDisabled DataCollectionMode = "Disabled"
+	DataCollectionModeEnabled DataCollectionMode = "Enabled"
+)
+
+// PossibleDataCollectionModeValues returns the possible values for the DataCollectionMode const type.
+func PossibleDataCollectionModeValues() []DataCollectionMode {
+	return []DataCollectionMode{	
+		DataCollectionModeDisabled,
+		DataCollectionModeEnabled,
+	}
+}
+
+// DataImportSourceType - Enum to determine the type of data.
+type DataImportSourceType string
+
+const (
+	DataImportSourceTypeDatabase DataImportSourceType = "database"
+	DataImportSourceTypeFileSystem DataImportSourceType = "file_system"
+)
+
+// PossibleDataImportSourceTypeValues returns the possible values for the DataImportSourceType const type.
+func PossibleDataImportSourceTypeValues() []DataImportSourceType {
+	return []DataImportSourceType{	
+		DataImportSourceTypeDatabase,
+		DataImportSourceTypeFileSystem,
+	}
+}
+
+// DataReferenceCredentialType - Enum to determine the DataReference credentials type.
+type DataReferenceCredentialType string
+
+const (
+	DataReferenceCredentialTypeDockerCredentials DataReferenceCredentialType = "DockerCredentials"
+	DataReferenceCredentialTypeManagedIdentity DataReferenceCredentialType = "ManagedIdentity"
+	DataReferenceCredentialTypeNoCredentials DataReferenceCredentialType = "NoCredentials"
+	DataReferenceCredentialTypeSAS DataReferenceCredentialType = "SAS"
+)
+
+// PossibleDataReferenceCredentialTypeValues returns the possible values for the DataReferenceCredentialType const type.
+func PossibleDataReferenceCredentialTypeValues() []DataReferenceCredentialType {
+	return []DataReferenceCredentialType{	
+		DataReferenceCredentialTypeDockerCredentials,
+		DataReferenceCredentialTypeManagedIdentity,
+		DataReferenceCredentialTypeNoCredentials,
+		DataReferenceCredentialTypeSAS,
 	}
 }
 
@@ -568,14 +1130,14 @@ func PossibleCredentialsTypeValues() []CredentialsType {
 type DataType string
 
 const (
-	DataTypeMltable   DataType = "mltable"
-	DataTypeURIFile   DataType = "uri_file"
+	DataTypeMltable DataType = "mltable"
+	DataTypeURIFile DataType = "uri_file"
 	DataTypeURIFolder DataType = "uri_folder"
 )
 
 // PossibleDataTypeValues returns the possible values for the DataType const type.
 func PossibleDataTypeValues() []DataType {
-	return []DataType{
+	return []DataType{	
 		DataTypeMltable,
 		DataTypeURIFile,
 		DataTypeURIFolder,
@@ -586,19 +1148,66 @@ func PossibleDataTypeValues() []DataType {
 type DatastoreType string
 
 const (
-	DatastoreTypeAzureBlob         DatastoreType = "AzureBlob"
+	DatastoreTypeAzureBlob DatastoreType = "AzureBlob"
 	DatastoreTypeAzureDataLakeGen1 DatastoreType = "AzureDataLakeGen1"
 	DatastoreTypeAzureDataLakeGen2 DatastoreType = "AzureDataLakeGen2"
-	DatastoreTypeAzureFile         DatastoreType = "AzureFile"
+	DatastoreTypeAzureFile DatastoreType = "AzureFile"
+	DatastoreTypeHdfs DatastoreType = "Hdfs"
+	DatastoreTypeOneLake DatastoreType = "OneLake"
 )
 
 // PossibleDatastoreTypeValues returns the possible values for the DatastoreType const type.
 func PossibleDatastoreTypeValues() []DatastoreType {
-	return []DatastoreType{
+	return []DatastoreType{	
 		DatastoreTypeAzureBlob,
 		DatastoreTypeAzureDataLakeGen1,
 		DatastoreTypeAzureDataLakeGen2,
 		DatastoreTypeAzureFile,
+		DatastoreTypeHdfs,
+		DatastoreTypeOneLake,
+	}
+}
+
+type DefaultResourceProvisioningState string
+
+const (
+	DefaultResourceProvisioningStateCanceled DefaultResourceProvisioningState = "Canceled"
+	DefaultResourceProvisioningStateCreating DefaultResourceProvisioningState = "Creating"
+	DefaultResourceProvisioningStateDeleting DefaultResourceProvisioningState = "Deleting"
+	DefaultResourceProvisioningStateFailed DefaultResourceProvisioningState = "Failed"
+	DefaultResourceProvisioningStateNotStarted DefaultResourceProvisioningState = "NotStarted"
+	DefaultResourceProvisioningStateSucceeded DefaultResourceProvisioningState = "Succeeded"
+	DefaultResourceProvisioningStateUpdating DefaultResourceProvisioningState = "Updating"
+)
+
+// PossibleDefaultResourceProvisioningStateValues returns the possible values for the DefaultResourceProvisioningState const type.
+func PossibleDefaultResourceProvisioningStateValues() []DefaultResourceProvisioningState {
+	return []DefaultResourceProvisioningState{	
+		DefaultResourceProvisioningStateCanceled,
+		DefaultResourceProvisioningStateCreating,
+		DefaultResourceProvisioningStateDeleting,
+		DefaultResourceProvisioningStateFailed,
+		DefaultResourceProvisioningStateNotStarted,
+		DefaultResourceProvisioningStateSucceeded,
+		DefaultResourceProvisioningStateUpdating,
+	}
+}
+
+// DeploymentModelVersionUpgradeOption - Deployment model version upgrade option.
+type DeploymentModelVersionUpgradeOption string
+
+const (
+	DeploymentModelVersionUpgradeOptionNoAutoUpgrade DeploymentModelVersionUpgradeOption = "NoAutoUpgrade"
+	DeploymentModelVersionUpgradeOptionOnceCurrentVersionExpired DeploymentModelVersionUpgradeOption = "OnceCurrentVersionExpired"
+	DeploymentModelVersionUpgradeOptionOnceNewDefaultVersionAvailable DeploymentModelVersionUpgradeOption = "OnceNewDefaultVersionAvailable"
+)
+
+// PossibleDeploymentModelVersionUpgradeOptionValues returns the possible values for the DeploymentModelVersionUpgradeOption const type.
+func PossibleDeploymentModelVersionUpgradeOptionValues() []DeploymentModelVersionUpgradeOption {
+	return []DeploymentModelVersionUpgradeOption{	
+		DeploymentModelVersionUpgradeOptionNoAutoUpgrade,
+		DeploymentModelVersionUpgradeOptionOnceCurrentVersionExpired,
+		DeploymentModelVersionUpgradeOptionOnceNewDefaultVersionAvailable,
 	}
 }
 
@@ -606,18 +1215,18 @@ func PossibleDatastoreTypeValues() []DatastoreType {
 type DeploymentProvisioningState string
 
 const (
-	DeploymentProvisioningStateCanceled  DeploymentProvisioningState = "Canceled"
-	DeploymentProvisioningStateCreating  DeploymentProvisioningState = "Creating"
-	DeploymentProvisioningStateDeleting  DeploymentProvisioningState = "Deleting"
-	DeploymentProvisioningStateFailed    DeploymentProvisioningState = "Failed"
-	DeploymentProvisioningStateScaling   DeploymentProvisioningState = "Scaling"
+	DeploymentProvisioningStateCanceled DeploymentProvisioningState = "Canceled"
+	DeploymentProvisioningStateCreating DeploymentProvisioningState = "Creating"
+	DeploymentProvisioningStateDeleting DeploymentProvisioningState = "Deleting"
+	DeploymentProvisioningStateFailed DeploymentProvisioningState = "Failed"
+	DeploymentProvisioningStateScaling DeploymentProvisioningState = "Scaling"
 	DeploymentProvisioningStateSucceeded DeploymentProvisioningState = "Succeeded"
-	DeploymentProvisioningStateUpdating  DeploymentProvisioningState = "Updating"
+	DeploymentProvisioningStateUpdating DeploymentProvisioningState = "Updating"
 )
 
 // PossibleDeploymentProvisioningStateValues returns the possible values for the DeploymentProvisioningState const type.
 func PossibleDeploymentProvisioningStateValues() []DeploymentProvisioningState {
-	return []DeploymentProvisioningState{
+	return []DeploymentProvisioningState{	
 		DeploymentProvisioningStateCanceled,
 		DeploymentProvisioningStateCreating,
 		DeploymentProvisioningStateDeleting,
@@ -632,14 +1241,14 @@ func PossibleDeploymentProvisioningStateValues() []DeploymentProvisioningState {
 type DiagnoseResultLevel string
 
 const (
-	DiagnoseResultLevelError       DiagnoseResultLevel = "Error"
+	DiagnoseResultLevelError DiagnoseResultLevel = "Error"
 	DiagnoseResultLevelInformation DiagnoseResultLevel = "Information"
-	DiagnoseResultLevelWarning     DiagnoseResultLevel = "Warning"
+	DiagnoseResultLevelWarning DiagnoseResultLevel = "Warning"
 )
 
 // PossibleDiagnoseResultLevelValues returns the possible values for the DiagnoseResultLevel const type.
 func PossibleDiagnoseResultLevelValues() []DiagnoseResultLevel {
-	return []DiagnoseResultLevel{
+	return []DiagnoseResultLevel{	
 		DiagnoseResultLevelError,
 		DiagnoseResultLevelInformation,
 		DiagnoseResultLevelWarning,
@@ -650,16 +1259,18 @@ func PossibleDiagnoseResultLevelValues() []DiagnoseResultLevel {
 type DistributionType string
 
 const (
-	DistributionTypeMpi        DistributionType = "Mpi"
-	DistributionTypePyTorch    DistributionType = "PyTorch"
+	DistributionTypeMpi DistributionType = "Mpi"
+	DistributionTypePyTorch DistributionType = "PyTorch"
+	DistributionTypeRay DistributionType = "Ray"
 	DistributionTypeTensorFlow DistributionType = "TensorFlow"
 )
 
 // PossibleDistributionTypeValues returns the possible values for the DistributionType const type.
 func PossibleDistributionTypeValues() []DistributionType {
-	return []DistributionType{
+	return []DistributionType{	
 		DistributionTypeMpi,
 		DistributionTypePyTorch,
+		DistributionTypeRay,
 		DistributionTypeTensorFlow,
 	}
 }
@@ -667,14 +1278,14 @@ func PossibleDistributionTypeValues() []DistributionType {
 type EarlyTerminationPolicyType string
 
 const (
-	EarlyTerminationPolicyTypeBandit              EarlyTerminationPolicyType = "Bandit"
-	EarlyTerminationPolicyTypeMedianStopping      EarlyTerminationPolicyType = "MedianStopping"
+	EarlyTerminationPolicyTypeBandit EarlyTerminationPolicyType = "Bandit"
+	EarlyTerminationPolicyTypeMedianStopping EarlyTerminationPolicyType = "MedianStopping"
 	EarlyTerminationPolicyTypeTruncationSelection EarlyTerminationPolicyType = "TruncationSelection"
 )
 
 // PossibleEarlyTerminationPolicyTypeValues returns the possible values for the EarlyTerminationPolicyType const type.
 func PossibleEarlyTerminationPolicyTypeValues() []EarlyTerminationPolicyType {
-	return []EarlyTerminationPolicyType{
+	return []EarlyTerminationPolicyType{	
 		EarlyTerminationPolicyTypeBandit,
 		EarlyTerminationPolicyTypeMedianStopping,
 		EarlyTerminationPolicyTypeTruncationSelection,
@@ -686,14 +1297,32 @@ type EgressPublicNetworkAccessType string
 
 const (
 	EgressPublicNetworkAccessTypeDisabled EgressPublicNetworkAccessType = "Disabled"
-	EgressPublicNetworkAccessTypeEnabled  EgressPublicNetworkAccessType = "Enabled"
+	EgressPublicNetworkAccessTypeEnabled EgressPublicNetworkAccessType = "Enabled"
 )
 
 // PossibleEgressPublicNetworkAccessTypeValues returns the possible values for the EgressPublicNetworkAccessType const type.
 func PossibleEgressPublicNetworkAccessTypeValues() []EgressPublicNetworkAccessType {
-	return []EgressPublicNetworkAccessType{
+	return []EgressPublicNetworkAccessType{	
 		EgressPublicNetworkAccessTypeDisabled,
 		EgressPublicNetworkAccessTypeEnabled,
+	}
+}
+
+// EmailNotificationEnableType - Enum to determine the email notification type.
+type EmailNotificationEnableType string
+
+const (
+	EmailNotificationEnableTypeJobCancelled EmailNotificationEnableType = "JobCancelled"
+	EmailNotificationEnableTypeJobCompleted EmailNotificationEnableType = "JobCompleted"
+	EmailNotificationEnableTypeJobFailed EmailNotificationEnableType = "JobFailed"
+)
+
+// PossibleEmailNotificationEnableTypeValues returns the possible values for the EmailNotificationEnableType const type.
+func PossibleEmailNotificationEnableTypeValues() []EmailNotificationEnableType {
+	return []EmailNotificationEnableType{	
+		EmailNotificationEnableTypeJobCancelled,
+		EmailNotificationEnableTypeJobCompleted,
+		EmailNotificationEnableTypeJobFailed,
 	}
 }
 
@@ -702,12 +1331,12 @@ type EncryptionStatus string
 
 const (
 	EncryptionStatusDisabled EncryptionStatus = "Disabled"
-	EncryptionStatusEnabled  EncryptionStatus = "Enabled"
+	EncryptionStatusEnabled EncryptionStatus = "Enabled"
 )
 
 // PossibleEncryptionStatusValues returns the possible values for the EncryptionStatus const type.
 func PossibleEncryptionStatusValues() []EncryptionStatus {
-	return []EncryptionStatus{
+	return []EncryptionStatus{	
 		EncryptionStatusDisabled,
 		EncryptionStatusEnabled,
 	}
@@ -719,12 +1348,12 @@ type EndpointAuthMode string
 const (
 	EndpointAuthModeAADToken EndpointAuthMode = "AADToken"
 	EndpointAuthModeAMLToken EndpointAuthMode = "AMLToken"
-	EndpointAuthModeKey      EndpointAuthMode = "Key"
+	EndpointAuthModeKey EndpointAuthMode = "Key"
 )
 
 // PossibleEndpointAuthModeValues returns the possible values for the EndpointAuthMode const type.
 func PossibleEndpointAuthModeValues() []EndpointAuthMode {
-	return []EndpointAuthMode{
+	return []EndpointAuthMode{	
 		EndpointAuthModeAADToken,
 		EndpointAuthModeAMLToken,
 		EndpointAuthModeKey,
@@ -736,13 +1365,13 @@ type EndpointComputeType string
 
 const (
 	EndpointComputeTypeAzureMLCompute EndpointComputeType = "AzureMLCompute"
-	EndpointComputeTypeKubernetes     EndpointComputeType = "Kubernetes"
-	EndpointComputeTypeManaged        EndpointComputeType = "Managed"
+	EndpointComputeTypeKubernetes EndpointComputeType = "Kubernetes"
+	EndpointComputeTypeManaged EndpointComputeType = "Managed"
 )
 
 // PossibleEndpointComputeTypeValues returns the possible values for the EndpointComputeType const type.
 func PossibleEndpointComputeTypeValues() []EndpointComputeType {
-	return []EndpointComputeType{
+	return []EndpointComputeType{	
 		EndpointComputeTypeAzureMLCompute,
 		EndpointComputeTypeKubernetes,
 		EndpointComputeTypeManaged,
@@ -753,17 +1382,17 @@ func PossibleEndpointComputeTypeValues() []EndpointComputeType {
 type EndpointProvisioningState string
 
 const (
-	EndpointProvisioningStateCanceled  EndpointProvisioningState = "Canceled"
-	EndpointProvisioningStateCreating  EndpointProvisioningState = "Creating"
-	EndpointProvisioningStateDeleting  EndpointProvisioningState = "Deleting"
-	EndpointProvisioningStateFailed    EndpointProvisioningState = "Failed"
+	EndpointProvisioningStateCanceled EndpointProvisioningState = "Canceled"
+	EndpointProvisioningStateCreating EndpointProvisioningState = "Creating"
+	EndpointProvisioningStateDeleting EndpointProvisioningState = "Deleting"
+	EndpointProvisioningStateFailed EndpointProvisioningState = "Failed"
 	EndpointProvisioningStateSucceeded EndpointProvisioningState = "Succeeded"
-	EndpointProvisioningStateUpdating  EndpointProvisioningState = "Updating"
+	EndpointProvisioningStateUpdating EndpointProvisioningState = "Updating"
 )
 
 // PossibleEndpointProvisioningStateValues returns the possible values for the EndpointProvisioningState const type.
 func PossibleEndpointProvisioningStateValues() []EndpointProvisioningState {
-	return []EndpointProvisioningState{
+	return []EndpointProvisioningState{	
 		EndpointProvisioningStateCanceled,
 		EndpointProvisioningStateCreating,
 		EndpointProvisioningStateDeleting,
@@ -773,19 +1402,154 @@ func PossibleEndpointProvisioningStateValues() []EndpointProvisioningState {
 	}
 }
 
+// EndpointServiceConnectionStatus - Connection status of the service consumer with the service provider
+type EndpointServiceConnectionStatus string
+
+const (
+	EndpointServiceConnectionStatusApproved EndpointServiceConnectionStatus = "Approved"
+	EndpointServiceConnectionStatusDisconnected EndpointServiceConnectionStatus = "Disconnected"
+	EndpointServiceConnectionStatusPending EndpointServiceConnectionStatus = "Pending"
+	EndpointServiceConnectionStatusRejected EndpointServiceConnectionStatus = "Rejected"
+	EndpointServiceConnectionStatusTimeout EndpointServiceConnectionStatus = "Timeout"
+)
+
+// PossibleEndpointServiceConnectionStatusValues returns the possible values for the EndpointServiceConnectionStatus const type.
+func PossibleEndpointServiceConnectionStatusValues() []EndpointServiceConnectionStatus {
+	return []EndpointServiceConnectionStatus{	
+		EndpointServiceConnectionStatusApproved,
+		EndpointServiceConnectionStatusDisconnected,
+		EndpointServiceConnectionStatusPending,
+		EndpointServiceConnectionStatusRejected,
+		EndpointServiceConnectionStatusTimeout,
+	}
+}
+
+// EndpointType - Type of the endpoint.
+type EndpointType string
+
+const (
+	EndpointTypeAzureContentSafety EndpointType = "Azure.ContentSafety"
+	EndpointTypeAzureLlama EndpointType = "Azure.Llama"
+	EndpointTypeAzureOpenAI EndpointType = "Azure.OpenAI"
+	EndpointTypeAzureSpeech EndpointType = "Azure.Speech"
+	EndpointTypeManagedOnlineEndpoint EndpointType = "managedOnlineEndpoint"
+)
+
+// PossibleEndpointTypeValues returns the possible values for the EndpointType const type.
+func PossibleEndpointTypeValues() []EndpointType {
+	return []EndpointType{	
+		EndpointTypeAzureContentSafety,
+		EndpointTypeAzureLlama,
+		EndpointTypeAzureOpenAI,
+		EndpointTypeAzureSpeech,
+		EndpointTypeManagedOnlineEndpoint,
+	}
+}
+
 // EnvironmentType - Environment type is either user created or curated by Azure ML service
 type EnvironmentType string
 
 const (
-	EnvironmentTypeCurated     EnvironmentType = "Curated"
+	EnvironmentTypeCurated EnvironmentType = "Curated"
 	EnvironmentTypeUserCreated EnvironmentType = "UserCreated"
 )
 
 // PossibleEnvironmentTypeValues returns the possible values for the EnvironmentType const type.
 func PossibleEnvironmentTypeValues() []EnvironmentType {
-	return []EnvironmentType{
+	return []EnvironmentType{	
 		EnvironmentTypeCurated,
 		EnvironmentTypeUserCreated,
+	}
+}
+
+// EnvironmentVariableType - Type of the Environment Variable. Possible values are: local - For local variable
+type EnvironmentVariableType string
+
+const (
+	EnvironmentVariableTypeLocal EnvironmentVariableType = "local"
+)
+
+// PossibleEnvironmentVariableTypeValues returns the possible values for the EnvironmentVariableType const type.
+func PossibleEnvironmentVariableTypeValues() []EnvironmentVariableType {
+	return []EnvironmentVariableType{	
+		EnvironmentVariableTypeLocal,
+	}
+}
+
+// ExportFormatType - The format of exported labels.
+type ExportFormatType string
+
+const (
+	ExportFormatTypeCSV ExportFormatType = "CSV"
+	ExportFormatTypeCoco ExportFormatType = "Coco"
+	ExportFormatTypeDataset ExportFormatType = "Dataset"
+)
+
+// PossibleExportFormatTypeValues returns the possible values for the ExportFormatType const type.
+func PossibleExportFormatTypeValues() []ExportFormatType {
+	return []ExportFormatType{	
+		ExportFormatTypeCSV,
+		ExportFormatTypeCoco,
+		ExportFormatTypeDataset,
+	}
+}
+
+type FeatureAttributionMetric string
+
+const (
+	// FeatureAttributionMetricNormalizedDiscountedCumulativeGain - The Normalized Discounted Cumulative Gain metric.
+	FeatureAttributionMetricNormalizedDiscountedCumulativeGain FeatureAttributionMetric = "NormalizedDiscountedCumulativeGain"
+)
+
+// PossibleFeatureAttributionMetricValues returns the possible values for the FeatureAttributionMetric const type.
+func PossibleFeatureAttributionMetricValues() []FeatureAttributionMetric {
+	return []FeatureAttributionMetric{	
+		FeatureAttributionMetricNormalizedDiscountedCumulativeGain,
+	}
+}
+
+type FeatureDataType string
+
+const (
+	FeatureDataTypeBinary FeatureDataType = "Binary"
+	FeatureDataTypeBoolean FeatureDataType = "Boolean"
+	FeatureDataTypeDatetime FeatureDataType = "Datetime"
+	FeatureDataTypeDouble FeatureDataType = "Double"
+	FeatureDataTypeFloat FeatureDataType = "Float"
+	FeatureDataTypeInteger FeatureDataType = "Integer"
+	FeatureDataTypeLong FeatureDataType = "Long"
+	FeatureDataTypeString FeatureDataType = "String"
+)
+
+// PossibleFeatureDataTypeValues returns the possible values for the FeatureDataType const type.
+func PossibleFeatureDataTypeValues() []FeatureDataType {
+	return []FeatureDataType{	
+		FeatureDataTypeBinary,
+		FeatureDataTypeBoolean,
+		FeatureDataTypeDatetime,
+		FeatureDataTypeDouble,
+		FeatureDataTypeFloat,
+		FeatureDataTypeInteger,
+		FeatureDataTypeLong,
+		FeatureDataTypeString,
+	}
+}
+
+// FeatureImportanceMode - The mode of operation for computing feature importance.
+type FeatureImportanceMode string
+
+const (
+	// FeatureImportanceModeDisabled - Disables computing feature importance within a signal.
+	FeatureImportanceModeDisabled FeatureImportanceMode = "Disabled"
+	// FeatureImportanceModeEnabled - Enables computing feature importance within a signal.
+	FeatureImportanceModeEnabled FeatureImportanceMode = "Enabled"
+)
+
+// PossibleFeatureImportanceModeValues returns the possible values for the FeatureImportanceMode const type.
+func PossibleFeatureImportanceModeValues() []FeatureImportanceMode {
+	return []FeatureImportanceMode{	
+		FeatureImportanceModeDisabled,
+		FeatureImportanceModeEnabled,
 	}
 }
 
@@ -801,7 +1565,7 @@ const (
 
 // PossibleFeatureLagsValues returns the possible values for the FeatureLags const type.
 func PossibleFeatureLagsValues() []FeatureLags {
-	return []FeatureLags{
+	return []FeatureLags{	
 		FeatureLagsAuto,
 		FeatureLagsNone,
 	}
@@ -821,10 +1585,43 @@ const (
 
 // PossibleFeaturizationModeValues returns the possible values for the FeaturizationMode const type.
 func PossibleFeaturizationModeValues() []FeaturizationMode {
-	return []FeaturizationMode{
+	return []FeaturizationMode{	
 		FeaturizationModeAuto,
 		FeaturizationModeCustom,
 		FeaturizationModeOff,
+	}
+}
+
+type FineTuningTaskType string
+
+const (
+	FineTuningTaskTypeChatCompletion FineTuningTaskType = "ChatCompletion"
+	FineTuningTaskTypeImageClassification FineTuningTaskType = "ImageClassification"
+	FineTuningTaskTypeImageInstanceSegmentation FineTuningTaskType = "ImageInstanceSegmentation"
+	FineTuningTaskTypeImageObjectDetection FineTuningTaskType = "ImageObjectDetection"
+	FineTuningTaskTypeQuestionAnswering FineTuningTaskType = "QuestionAnswering"
+	FineTuningTaskTypeTextClassification FineTuningTaskType = "TextClassification"
+	FineTuningTaskTypeTextCompletion FineTuningTaskType = "TextCompletion"
+	FineTuningTaskTypeTextSummarization FineTuningTaskType = "TextSummarization"
+	FineTuningTaskTypeTextTranslation FineTuningTaskType = "TextTranslation"
+	FineTuningTaskTypeTokenClassification FineTuningTaskType = "TokenClassification"
+	FineTuningTaskTypeVideoMultiObjectTracking FineTuningTaskType = "VideoMultiObjectTracking"
+)
+
+// PossibleFineTuningTaskTypeValues returns the possible values for the FineTuningTaskType const type.
+func PossibleFineTuningTaskTypeValues() []FineTuningTaskType {
+	return []FineTuningTaskType{	
+		FineTuningTaskTypeChatCompletion,
+		FineTuningTaskTypeImageClassification,
+		FineTuningTaskTypeImageInstanceSegmentation,
+		FineTuningTaskTypeImageObjectDetection,
+		FineTuningTaskTypeQuestionAnswering,
+		FineTuningTaskTypeTextClassification,
+		FineTuningTaskTypeTextCompletion,
+		FineTuningTaskTypeTextSummarization,
+		FineTuningTaskTypeTextTranslation,
+		FineTuningTaskTypeTokenClassification,
+		FineTuningTaskTypeVideoMultiObjectTracking,
 	}
 }
 
@@ -840,7 +1637,7 @@ const (
 
 // PossibleForecastHorizonModeValues returns the possible values for the ForecastHorizonMode const type.
 func PossibleForecastHorizonModeValues() []ForecastHorizonMode {
-	return []ForecastHorizonMode{
+	return []ForecastHorizonMode{	
 		ForecastHorizonModeAuto,
 		ForecastHorizonModeCustom,
 	}
@@ -851,76 +1648,76 @@ type ForecastingModels string
 
 const (
 	// ForecastingModelsArimax - An Autoregressive Integrated Moving Average with Explanatory Variable (ARIMAX) model can be viewed
-	// as a multiple regression model with one or more autoregressive (AR) terms and/or one or more moving average (MA) terms.
-	// This method is suitable for forecasting when data is stationary/non stationary, and multivariate with any type of data
-	// pattern, i.e., level/trend /seasonality/cyclicity.
+// as a multiple regression model with one or more autoregressive (AR) terms and/or one or more moving average (MA) terms.
+// This method is suitable for forecasting when data is stationary/non stationary, and multivariate with any type of data
+// pattern, i.e., level/trend /seasonality/cyclicity.
 	ForecastingModelsArimax ForecastingModels = "Arimax"
 	// ForecastingModelsAutoArima - Auto-Autoregressive Integrated Moving Average (ARIMA) model uses time-series data and statistical
-	// analysis to interpret the data and make future predictions.
-	// This model aims to explain data by using time series data on its past values and uses linear regression to make predictions.
+// analysis to interpret the data and make future predictions.
+// This model aims to explain data by using time series data on its past values and uses linear regression to make predictions.
 	ForecastingModelsAutoArima ForecastingModels = "AutoArima"
 	// ForecastingModelsAverage - The Average forecasting model makes predictions by carrying forward the average of the target
-	// values for each time-series in the training data.
+// values for each time-series in the training data.
 	ForecastingModelsAverage ForecastingModels = "Average"
 	// ForecastingModelsDecisionTree - Decision Trees are a non-parametric supervised learning method used for both classification
-	// and regression tasks.
-	// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from
-	// the data features.
+// and regression tasks.
+// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from
+// the data features.
 	ForecastingModelsDecisionTree ForecastingModels = "DecisionTree"
 	// ForecastingModelsElasticNet - Elastic net is a popular type of regularized linear regression that combines two popular
-	// penalties, specifically the L1 and L2 penalty functions.
+// penalties, specifically the L1 and L2 penalty functions.
 	ForecastingModelsElasticNet ForecastingModels = "ElasticNet"
 	// ForecastingModelsExponentialSmoothing - Exponential smoothing is a time series forecasting method for univariate data that
-	// can be extended to support data with a systematic trend or seasonal component.
+// can be extended to support data with a systematic trend or seasonal component.
 	ForecastingModelsExponentialSmoothing ForecastingModels = "ExponentialSmoothing"
 	// ForecastingModelsExtremeRandomTrees - Extreme Trees is an ensemble machine learning algorithm that combines the predictions
-	// from many decision trees. It is related to the widely used random forest algorithm.
+// from many decision trees. It is related to the widely used random forest algorithm.
 	ForecastingModelsExtremeRandomTrees ForecastingModels = "ExtremeRandomTrees"
 	// ForecastingModelsGradientBoosting - The technique of transiting week learners into a strong learner is called Boosting.
-	// The gradient boosting algorithm process works on this theory of execution.
+// The gradient boosting algorithm process works on this theory of execution.
 	ForecastingModelsGradientBoosting ForecastingModels = "GradientBoosting"
 	// ForecastingModelsKNN - K-nearest neighbors (KNN) algorithm uses 'feature similarity' to predict the values of new datapoints
-	// which further means that the new data point will be assigned a value based on how closely it matches the points in the
-	// training set.
+// which further means that the new data point will be assigned a value based on how closely it matches the points in the
+// training set.
 	ForecastingModelsKNN ForecastingModels = "KNN"
 	// ForecastingModelsLassoLars - Lasso model fit with Least Angle Regression a.k.a. Lars. It is a Linear Model trained with
-	// an L1 prior as regularizer.
+// an L1 prior as regularizer.
 	ForecastingModelsLassoLars ForecastingModels = "LassoLars"
 	// ForecastingModelsLightGBM - LightGBM is a gradient boosting framework that uses tree based learning algorithms.
 	ForecastingModelsLightGBM ForecastingModels = "LightGBM"
 	// ForecastingModelsNaive - The Naive forecasting model makes predictions by carrying forward the latest target value for
-	// each time-series in the training data.
+// each time-series in the training data.
 	ForecastingModelsNaive ForecastingModels = "Naive"
 	// ForecastingModelsProphet - Prophet is a procedure for forecasting time series data based on an additive model where non-linear
-	// trends are fit with yearly, weekly, and daily seasonality, plus holiday effects.
-	// It works best with time series that have strong seasonal effects and several seasons of historical data. Prophet is robust
-	// to missing data and shifts in the trend, and typically handles outliers well.
+// trends are fit with yearly, weekly, and daily seasonality, plus holiday effects.
+// It works best with time series that have strong seasonal effects and several seasons of historical data. Prophet is robust
+// to missing data and shifts in the trend, and typically handles outliers well.
 	ForecastingModelsProphet ForecastingModels = "Prophet"
 	// ForecastingModelsRandomForest - Random forest is a supervised learning algorithm.
-	// The "forest" it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
-	// The general idea of the bagging method is that a combination of learning models increases the overall result.
+// The "forest" it builds, is an ensemble of decision trees, usually trained with the bagging method.
+// The general idea of the bagging method is that a combination of learning models increases the overall result.
 	ForecastingModelsRandomForest ForecastingModels = "RandomForest"
 	// ForecastingModelsSGD - SGD: Stochastic gradient descent is an optimization algorithm often used in machine learning applications
-	// to find the model parameters that correspond to the best fit between predicted and actual outputs.
-	// It's an inexact but powerful technique.
+// to find the model parameters that correspond to the best fit between predicted and actual outputs.
+// It's an inexact but powerful technique.
 	ForecastingModelsSGD ForecastingModels = "SGD"
 	// ForecastingModelsSeasonalAverage - The Seasonal Average forecasting model makes predictions by carrying forward the average
-	// value of the latest season of data for each time-series in the training data.
+// value of the latest season of data for each time-series in the training data.
 	ForecastingModelsSeasonalAverage ForecastingModels = "SeasonalAverage"
 	// ForecastingModelsSeasonalNaive - The Seasonal Naive forecasting model makes predictions by carrying forward the latest
-	// season of target values for each time-series in the training data.
+// season of target values for each time-series in the training data.
 	ForecastingModelsSeasonalNaive ForecastingModels = "SeasonalNaive"
 	// ForecastingModelsTCNForecaster - TCNForecaster: Temporal Convolutional Networks Forecaster. //TODO: Ask forecasting team
-	// for brief intro.
+// for brief intro.
 	ForecastingModelsTCNForecaster ForecastingModels = "TCNForecaster"
 	// ForecastingModelsXGBoostRegressor - XGBoostRegressor: Extreme Gradient Boosting Regressor is a supervised machine learning
-	// model using ensemble of base learners.
+// model using ensemble of base learners.
 	ForecastingModelsXGBoostRegressor ForecastingModels = "XGBoostRegressor"
 )
 
 // PossibleForecastingModelsValues returns the possible values for the ForecastingModels const type.
 func PossibleForecastingModelsValues() []ForecastingModels {
-	return []ForecastingModels{
+	return []ForecastingModels{	
 		ForecastingModelsArimax,
 		ForecastingModelsAutoArima,
 		ForecastingModelsAverage,
@@ -948,26 +1745,74 @@ type ForecastingPrimaryMetrics string
 
 const (
 	// ForecastingPrimaryMetricsNormalizedMeanAbsoluteError - The Normalized Mean Absolute Error (NMAE) is a validation metric
-	// to compare the Mean Absolute Error (MAE) of (time) series with different scales.
+// to compare the Mean Absolute Error (MAE) of (time) series with different scales.
 	ForecastingPrimaryMetricsNormalizedMeanAbsoluteError ForecastingPrimaryMetrics = "NormalizedMeanAbsoluteError"
 	// ForecastingPrimaryMetricsNormalizedRootMeanSquaredError - The Normalized Root Mean Squared Error (NRMSE) the RMSE facilitates
-	// the comparison between models with different scales.
+// the comparison between models with different scales.
 	ForecastingPrimaryMetricsNormalizedRootMeanSquaredError ForecastingPrimaryMetrics = "NormalizedRootMeanSquaredError"
 	// ForecastingPrimaryMetricsR2Score - The R2 score is one of the performance evaluation measures for forecasting-based machine
-	// learning models.
+// learning models.
 	ForecastingPrimaryMetricsR2Score ForecastingPrimaryMetrics = "R2Score"
 	// ForecastingPrimaryMetricsSpearmanCorrelation - The Spearman's rank coefficient of correlation is a non-parametric measure
-	// of rank correlation.
+// of rank correlation.
 	ForecastingPrimaryMetricsSpearmanCorrelation ForecastingPrimaryMetrics = "SpearmanCorrelation"
 )
 
 // PossibleForecastingPrimaryMetricsValues returns the possible values for the ForecastingPrimaryMetrics const type.
 func PossibleForecastingPrimaryMetricsValues() []ForecastingPrimaryMetrics {
-	return []ForecastingPrimaryMetrics{
+	return []ForecastingPrimaryMetrics{	
 		ForecastingPrimaryMetricsNormalizedMeanAbsoluteError,
 		ForecastingPrimaryMetricsNormalizedRootMeanSquaredError,
 		ForecastingPrimaryMetricsR2Score,
 		ForecastingPrimaryMetricsSpearmanCorrelation,
+	}
+}
+
+// GenerationSafetyQualityMetric - Generation safety quality metric enum.
+type GenerationSafetyQualityMetric string
+
+const (
+	GenerationSafetyQualityMetricAcceptableCoherenceScorePerInstance GenerationSafetyQualityMetric = "AcceptableCoherenceScorePerInstance"
+	GenerationSafetyQualityMetricAcceptableFluencyScorePerInstance GenerationSafetyQualityMetric = "AcceptableFluencyScorePerInstance"
+	GenerationSafetyQualityMetricAcceptableGroundednessScorePerInstance GenerationSafetyQualityMetric = "AcceptableGroundednessScorePerInstance"
+	GenerationSafetyQualityMetricAcceptableRelevanceScorePerInstance GenerationSafetyQualityMetric = "AcceptableRelevanceScorePerInstance"
+	GenerationSafetyQualityMetricAcceptableSimilarityScorePerInstance GenerationSafetyQualityMetric = "AcceptableSimilarityScorePerInstance"
+	GenerationSafetyQualityMetricAggregatedCoherencePassRate GenerationSafetyQualityMetric = "AggregatedCoherencePassRate"
+	GenerationSafetyQualityMetricAggregatedFluencyPassRate GenerationSafetyQualityMetric = "AggregatedFluencyPassRate"
+	GenerationSafetyQualityMetricAggregatedGroundednessPassRate GenerationSafetyQualityMetric = "AggregatedGroundednessPassRate"
+	GenerationSafetyQualityMetricAggregatedRelevancePassRate GenerationSafetyQualityMetric = "AggregatedRelevancePassRate"
+	GenerationSafetyQualityMetricAggregatedSimilarityPassRate GenerationSafetyQualityMetric = "AggregatedSimilarityPassRate"
+)
+
+// PossibleGenerationSafetyQualityMetricValues returns the possible values for the GenerationSafetyQualityMetric const type.
+func PossibleGenerationSafetyQualityMetricValues() []GenerationSafetyQualityMetric {
+	return []GenerationSafetyQualityMetric{	
+		GenerationSafetyQualityMetricAcceptableCoherenceScorePerInstance,
+		GenerationSafetyQualityMetricAcceptableFluencyScorePerInstance,
+		GenerationSafetyQualityMetricAcceptableGroundednessScorePerInstance,
+		GenerationSafetyQualityMetricAcceptableRelevanceScorePerInstance,
+		GenerationSafetyQualityMetricAcceptableSimilarityScorePerInstance,
+		GenerationSafetyQualityMetricAggregatedCoherencePassRate,
+		GenerationSafetyQualityMetricAggregatedFluencyPassRate,
+		GenerationSafetyQualityMetricAggregatedGroundednessPassRate,
+		GenerationSafetyQualityMetricAggregatedRelevancePassRate,
+		GenerationSafetyQualityMetricAggregatedSimilarityPassRate,
+	}
+}
+
+// GenerationTokenUsageMetric - Generation token statistics metric enum.
+type GenerationTokenUsageMetric string
+
+const (
+	GenerationTokenUsageMetricTotalTokenCount GenerationTokenUsageMetric = "TotalTokenCount"
+	GenerationTokenUsageMetricTotalTokenCountPerGroup GenerationTokenUsageMetric = "TotalTokenCountPerGroup"
+)
+
+// PossibleGenerationTokenUsageMetricValues returns the possible values for the GenerationTokenUsageMetric const type.
+func PossibleGenerationTokenUsageMetricValues() []GenerationTokenUsageMetric {
+	return []GenerationTokenUsageMetric{	
+		GenerationTokenUsageMetricTotalTokenCount,
+		GenerationTokenUsageMetricTotalTokenCountPerGroup,
 	}
 }
 
@@ -981,7 +1826,7 @@ const (
 
 // PossibleGoalValues returns the possible values for the Goal const type.
 func PossibleGoalValues() []Goal {
-	return []Goal{
+	return []Goal{	
 		GoalMaximize,
 		GoalMinimize,
 	}
@@ -991,17 +1836,88 @@ func PossibleGoalValues() []Goal {
 type IdentityConfigurationType string
 
 const (
-	IdentityConfigurationTypeAMLToken     IdentityConfigurationType = "AMLToken"
-	IdentityConfigurationTypeManaged      IdentityConfigurationType = "Managed"
+	IdentityConfigurationTypeAMLToken IdentityConfigurationType = "AMLToken"
+	IdentityConfigurationTypeManaged IdentityConfigurationType = "Managed"
 	IdentityConfigurationTypeUserIdentity IdentityConfigurationType = "UserIdentity"
 )
 
 // PossibleIdentityConfigurationTypeValues returns the possible values for the IdentityConfigurationType const type.
 func PossibleIdentityConfigurationTypeValues() []IdentityConfigurationType {
-	return []IdentityConfigurationType{
+	return []IdentityConfigurationType{	
 		IdentityConfigurationTypeAMLToken,
 		IdentityConfigurationTypeManaged,
 		IdentityConfigurationTypeUserIdentity,
+	}
+}
+
+// ImageAnnotationType - Annotation type of image data.
+type ImageAnnotationType string
+
+const (
+	ImageAnnotationTypeBoundingBox ImageAnnotationType = "BoundingBox"
+	ImageAnnotationTypeClassification ImageAnnotationType = "Classification"
+	ImageAnnotationTypeInstanceSegmentation ImageAnnotationType = "InstanceSegmentation"
+)
+
+// PossibleImageAnnotationTypeValues returns the possible values for the ImageAnnotationType const type.
+func PossibleImageAnnotationTypeValues() []ImageAnnotationType {
+	return []ImageAnnotationType{	
+		ImageAnnotationTypeBoundingBox,
+		ImageAnnotationTypeClassification,
+		ImageAnnotationTypeInstanceSegmentation,
+	}
+}
+
+// ImageType - Type of the image. Possible values are: docker - For docker images. azureml - For AzureML Environment images
+// (custom and curated)
+type ImageType string
+
+const (
+	ImageTypeAzureml ImageType = "azureml"
+	ImageTypeDocker ImageType = "docker"
+)
+
+// PossibleImageTypeValues returns the possible values for the ImageType const type.
+func PossibleImageTypeValues() []ImageType {
+	return []ImageType{	
+		ImageTypeAzureml,
+		ImageTypeDocker,
+	}
+}
+
+// IncrementalDataRefresh - Whether IncrementalDataRefresh is enabled
+type IncrementalDataRefresh string
+
+const (
+	IncrementalDataRefreshDisabled IncrementalDataRefresh = "Disabled"
+	IncrementalDataRefreshEnabled IncrementalDataRefresh = "Enabled"
+)
+
+// PossibleIncrementalDataRefreshValues returns the possible values for the IncrementalDataRefresh const type.
+func PossibleIncrementalDataRefreshValues() []IncrementalDataRefresh {
+	return []IncrementalDataRefresh{	
+		IncrementalDataRefreshDisabled,
+		IncrementalDataRefreshEnabled,
+	}
+}
+
+// InferencingServerType - Inferencing server type for various targets.
+type InferencingServerType string
+
+const (
+	InferencingServerTypeAzureMLBatch InferencingServerType = "AzureMLBatch"
+	InferencingServerTypeAzureMLOnline InferencingServerType = "AzureMLOnline"
+	InferencingServerTypeCustom InferencingServerType = "Custom"
+	InferencingServerTypeTriton InferencingServerType = "Triton"
+)
+
+// PossibleInferencingServerTypeValues returns the possible values for the InferencingServerType const type.
+func PossibleInferencingServerTypeValues() []InferencingServerType {
+	return []InferencingServerType{	
+		InferencingServerTypeAzureMLBatch,
+		InferencingServerTypeAzureMLOnline,
+		InferencingServerTypeCustom,
+		InferencingServerTypeTriton,
 	}
 }
 
@@ -1009,17 +1925,17 @@ func PossibleIdentityConfigurationTypeValues() []IdentityConfigurationType {
 type InputDeliveryMode string
 
 const (
-	InputDeliveryModeDirect         InputDeliveryMode = "Direct"
-	InputDeliveryModeDownload       InputDeliveryMode = "Download"
-	InputDeliveryModeEvalDownload   InputDeliveryMode = "EvalDownload"
-	InputDeliveryModeEvalMount      InputDeliveryMode = "EvalMount"
-	InputDeliveryModeReadOnlyMount  InputDeliveryMode = "ReadOnlyMount"
+	InputDeliveryModeDirect InputDeliveryMode = "Direct"
+	InputDeliveryModeDownload InputDeliveryMode = "Download"
+	InputDeliveryModeEvalDownload InputDeliveryMode = "EvalDownload"
+	InputDeliveryModeEvalMount InputDeliveryMode = "EvalMount"
+	InputDeliveryModeReadOnlyMount InputDeliveryMode = "ReadOnlyMount"
 	InputDeliveryModeReadWriteMount InputDeliveryMode = "ReadWriteMount"
 )
 
 // PossibleInputDeliveryModeValues returns the possible values for the InputDeliveryMode const type.
 func PossibleInputDeliveryModeValues() []InputDeliveryMode {
-	return []InputDeliveryMode{
+	return []InputDeliveryMode{	
 		InputDeliveryModeDirect,
 		InputDeliveryModeDownload,
 		InputDeliveryModeEvalDownload,
@@ -1029,19 +1945,55 @@ func PossibleInputDeliveryModeValues() []InputDeliveryMode {
 	}
 }
 
+// InputPathType - Input path type for package inputs.
+type InputPathType string
+
+const (
+	InputPathTypePathID InputPathType = "PathId"
+	InputPathTypePathVersion InputPathType = "PathVersion"
+	InputPathTypeURL InputPathType = "Url"
+)
+
+// PossibleInputPathTypeValues returns the possible values for the InputPathType const type.
+func PossibleInputPathTypeValues() []InputPathType {
+	return []InputPathType{	
+		InputPathTypePathID,
+		InputPathTypePathVersion,
+		InputPathTypeURL,
+	}
+}
+
 // InstanceSegmentationPrimaryMetrics - Primary metrics for InstanceSegmentation tasks.
 type InstanceSegmentationPrimaryMetrics string
 
 const (
 	// InstanceSegmentationPrimaryMetricsMeanAveragePrecision - Mean Average Precision (MAP) is the average of AP (Average Precision).
-	// AP is calculated for each class and averaged to get the MAP.
+// AP is calculated for each class and averaged to get the MAP.
 	InstanceSegmentationPrimaryMetricsMeanAveragePrecision InstanceSegmentationPrimaryMetrics = "MeanAveragePrecision"
 )
 
 // PossibleInstanceSegmentationPrimaryMetricsValues returns the possible values for the InstanceSegmentationPrimaryMetrics const type.
 func PossibleInstanceSegmentationPrimaryMetricsValues() []InstanceSegmentationPrimaryMetrics {
-	return []InstanceSegmentationPrimaryMetrics{
+	return []InstanceSegmentationPrimaryMetrics{	
 		InstanceSegmentationPrimaryMetricsMeanAveragePrecision,
+	}
+}
+
+// IsolationMode - Isolation mode for the managed network of a machine learning workspace.
+type IsolationMode string
+
+const (
+	IsolationModeAllowInternetOutbound IsolationMode = "AllowInternetOutbound"
+	IsolationModeAllowOnlyApprovedOutbound IsolationMode = "AllowOnlyApprovedOutbound"
+	IsolationModeDisabled IsolationMode = "Disabled"
+)
+
+// PossibleIsolationModeValues returns the possible values for the IsolationMode const type.
+func PossibleIsolationModeValues() []IsolationMode {
+	return []IsolationMode{	
+		IsolationModeAllowInternetOutbound,
+		IsolationModeAllowOnlyApprovedOutbound,
+		IsolationModeDisabled,
 	}
 }
 
@@ -1050,17 +2002,17 @@ type JobInputType string
 
 const (
 	JobInputTypeCustomModel JobInputType = "custom_model"
-	JobInputTypeLiteral     JobInputType = "literal"
+	JobInputTypeLiteral JobInputType = "literal"
 	JobInputTypeMlflowModel JobInputType = "mlflow_model"
-	JobInputTypeMltable     JobInputType = "mltable"
+	JobInputTypeMltable JobInputType = "mltable"
 	JobInputTypeTritonModel JobInputType = "triton_model"
-	JobInputTypeURIFile     JobInputType = "uri_file"
-	JobInputTypeURIFolder   JobInputType = "uri_folder"
+	JobInputTypeURIFile JobInputType = "uri_file"
+	JobInputTypeURIFolder JobInputType = "uri_folder"
 )
 
 // PossibleJobInputTypeValues returns the possible values for the JobInputType const type.
 func PossibleJobInputTypeValues() []JobInputType {
-	return []JobInputType{
+	return []JobInputType{	
 		JobInputTypeCustomModel,
 		JobInputTypeLiteral,
 		JobInputTypeMlflowModel,
@@ -1075,12 +2027,12 @@ type JobLimitsType string
 
 const (
 	JobLimitsTypeCommand JobLimitsType = "Command"
-	JobLimitsTypeSweep   JobLimitsType = "Sweep"
+	JobLimitsTypeSweep JobLimitsType = "Sweep"
 )
 
 // PossibleJobLimitsTypeValues returns the possible values for the JobLimitsType const type.
 func PossibleJobLimitsTypeValues() []JobLimitsType {
-	return []JobLimitsType{
+	return []JobLimitsType{	
 		JobLimitsTypeCommand,
 		JobLimitsTypeSweep,
 	}
@@ -1092,21 +2044,41 @@ type JobOutputType string
 const (
 	JobOutputTypeCustomModel JobOutputType = "custom_model"
 	JobOutputTypeMlflowModel JobOutputType = "mlflow_model"
-	JobOutputTypeMltable     JobOutputType = "mltable"
+	JobOutputTypeMltable JobOutputType = "mltable"
 	JobOutputTypeTritonModel JobOutputType = "triton_model"
-	JobOutputTypeURIFile     JobOutputType = "uri_file"
-	JobOutputTypeURIFolder   JobOutputType = "uri_folder"
+	JobOutputTypeURIFile JobOutputType = "uri_file"
+	JobOutputTypeURIFolder JobOutputType = "uri_folder"
 )
 
 // PossibleJobOutputTypeValues returns the possible values for the JobOutputType const type.
 func PossibleJobOutputTypeValues() []JobOutputType {
-	return []JobOutputType{
+	return []JobOutputType{	
 		JobOutputTypeCustomModel,
 		JobOutputTypeMlflowModel,
 		JobOutputTypeMltable,
 		JobOutputTypeTritonModel,
 		JobOutputTypeURIFile,
 		JobOutputTypeURIFolder,
+	}
+}
+
+// JobProvisioningState - Enum to determine the job provisioning state.
+type JobProvisioningState string
+
+const (
+	JobProvisioningStateCanceled JobProvisioningState = "Canceled"
+	JobProvisioningStateFailed JobProvisioningState = "Failed"
+	JobProvisioningStateInProgress JobProvisioningState = "InProgress"
+	JobProvisioningStateSucceeded JobProvisioningState = "Succeeded"
+)
+
+// PossibleJobProvisioningStateValues returns the possible values for the JobProvisioningState const type.
+func PossibleJobProvisioningStateValues() []JobProvisioningState {
+	return []JobProvisioningState{	
+		JobProvisioningStateCanceled,
+		JobProvisioningStateFailed,
+		JobProvisioningStateInProgress,
+		JobProvisioningStateSucceeded,
 	}
 }
 
@@ -1119,16 +2091,16 @@ const (
 	// JobStatusCanceled - Following cancellation request, the job is now successfully canceled.
 	JobStatusCanceled JobStatus = "Canceled"
 	// JobStatusCompleted - Job completed successfully. This reflects that both the job itself and output collection states completed
-	// successfully
+// successfully
 	JobStatusCompleted JobStatus = "Completed"
 	// JobStatusFailed - Job failed.
 	JobStatusFailed JobStatus = "Failed"
 	// JobStatusFinalizing - Job is completed in the target. It is in output collection state now.
 	JobStatusFinalizing JobStatus = "Finalizing"
 	// JobStatusNotResponding - When heartbeat is enabled, if the run isn't updating any information to RunHistory then the run
-	// goes to NotResponding state.
-	// NotResponding is the only state that is exempt from strict transition orders. A run can go from NotResponding to any of
-	// the previous states.
+// goes to NotResponding state.
+// NotResponding is the only state that is exempt from strict transition orders. A run can go from NotResponding to any of
+// the previous states.
 	JobStatusNotResponding JobStatus = "NotResponding"
 	// JobStatusNotStarted - Run hasn't started yet.
 	JobStatusNotStarted JobStatus = "NotStarted"
@@ -1139,10 +2111,12 @@ const (
 	// JobStatusProvisioning - (Not used currently) It will be used if ES is creating the compute target.
 	JobStatusProvisioning JobStatus = "Provisioning"
 	// JobStatusQueued - The job is queued in the compute target. For example, in BatchAI the job is in queued state, while waiting
-	// for all required nodes to be ready.
+// for all required nodes to be ready.
 	JobStatusQueued JobStatus = "Queued"
 	// JobStatusRunning - The job started to run in the compute target.
 	JobStatusRunning JobStatus = "Running"
+	// JobStatusScheduled - The job is in a scheduled state. Job is not in any active state.
+	JobStatusScheduled JobStatus = "Scheduled"
 	// JobStatusStarting - Run has started. The user has a run ID.
 	JobStatusStarting JobStatus = "Starting"
 	// JobStatusUnknown - Default job status if not mapped to all other statuses
@@ -1151,7 +2125,7 @@ const (
 
 // PossibleJobStatusValues returns the possible values for the JobStatus const type.
 func PossibleJobStatusValues() []JobStatus {
-	return []JobStatus{
+	return []JobStatus{	
 		JobStatusCancelRequested,
 		JobStatusCanceled,
 		JobStatusCompleted,
@@ -1164,8 +2138,31 @@ func PossibleJobStatusValues() []JobStatus {
 		JobStatusProvisioning,
 		JobStatusQueued,
 		JobStatusRunning,
+		JobStatusScheduled,
 		JobStatusStarting,
 		JobStatusUnknown,
+	}
+}
+
+// JobTier - Enum to determine the job tier.
+type JobTier string
+
+const (
+	JobTierBasic JobTier = "Basic"
+	JobTierNull JobTier = "Null"
+	JobTierPremium JobTier = "Premium"
+	JobTierSpot JobTier = "Spot"
+	JobTierStandard JobTier = "Standard"
+)
+
+// PossibleJobTierValues returns the possible values for the JobTier const type.
+func PossibleJobTierValues() []JobTier {
+	return []JobTier{	
+		JobTierBasic,
+		JobTierNull,
+		JobTierPremium,
+		JobTierSpot,
+		JobTierStandard,
 	}
 }
 
@@ -1173,18 +2170,24 @@ func PossibleJobStatusValues() []JobStatus {
 type JobType string
 
 const (
-	JobTypeAutoML   JobType = "AutoML"
-	JobTypeCommand  JobType = "Command"
+	JobTypeAutoML JobType = "AutoML"
+	JobTypeCommand JobType = "Command"
+	JobTypeFineTuning JobType = "FineTuning"
+	JobTypeLabeling JobType = "Labeling"
 	JobTypePipeline JobType = "Pipeline"
-	JobTypeSweep    JobType = "Sweep"
+	JobTypeSpark JobType = "Spark"
+	JobTypeSweep JobType = "Sweep"
 )
 
 // PossibleJobTypeValues returns the possible values for the JobType const type.
 func PossibleJobTypeValues() []JobType {
-	return []JobType{
+	return []JobType{	
 		JobTypeAutoML,
 		JobTypeCommand,
+		JobTypeFineTuning,
+		JobTypeLabeling,
 		JobTypePipeline,
+		JobTypeSpark,
 		JobTypeSweep,
 	}
 }
@@ -1192,13 +2195,13 @@ func PossibleJobTypeValues() []JobType {
 type KeyType string
 
 const (
-	KeyTypePrimary   KeyType = "Primary"
+	KeyTypePrimary KeyType = "Primary"
 	KeyTypeSecondary KeyType = "Secondary"
 )
 
 // PossibleKeyTypeValues returns the possible values for the KeyType const type.
 func PossibleKeyTypeValues() []KeyType {
-	return []KeyType{
+	return []KeyType{	
 		KeyTypePrimary,
 		KeyTypeSecondary,
 	}
@@ -1218,7 +2221,7 @@ const (
 
 // PossibleLearningRateSchedulerValues returns the possible values for the LearningRateScheduler const type.
 func PossibleLearningRateSchedulerValues() []LearningRateScheduler {
-	return []LearningRateScheduler{
+	return []LearningRateScheduler{	
 		LearningRateSchedulerNone,
 		LearningRateSchedulerStep,
 		LearningRateSchedulerWarmupCosine,
@@ -1228,14 +2231,14 @@ func PossibleLearningRateSchedulerValues() []LearningRateScheduler {
 type ListViewType string
 
 const (
-	ListViewTypeActiveOnly   ListViewType = "ActiveOnly"
-	ListViewTypeAll          ListViewType = "All"
+	ListViewTypeActiveOnly ListViewType = "ActiveOnly"
+	ListViewTypeAll ListViewType = "All"
 	ListViewTypeArchivedOnly ListViewType = "ArchivedOnly"
 )
 
 // PossibleListViewTypeValues returns the possible values for the ListViewType const type.
 func PossibleListViewTypeValues() []ListViewType {
-	return []ListViewType{
+	return []ListViewType{	
 		ListViewTypeActiveOnly,
 		ListViewTypeAll,
 		ListViewTypeArchivedOnly,
@@ -1247,14 +2250,48 @@ type LoadBalancerType string
 
 const (
 	LoadBalancerTypeInternalLoadBalancer LoadBalancerType = "InternalLoadBalancer"
-	LoadBalancerTypePublicIP             LoadBalancerType = "PublicIp"
+	LoadBalancerTypePublicIP LoadBalancerType = "PublicIp"
 )
 
 // PossibleLoadBalancerTypeValues returns the possible values for the LoadBalancerType const type.
 func PossibleLoadBalancerTypeValues() []LoadBalancerType {
-	return []LoadBalancerType{
+	return []LoadBalancerType{	
 		LoadBalancerTypeInternalLoadBalancer,
 		LoadBalancerTypePublicIP,
+	}
+}
+
+type LogTrainingMetrics string
+
+const (
+	// LogTrainingMetricsDisable - Disable compute and log training metrics.
+	LogTrainingMetricsDisable LogTrainingMetrics = "Disable"
+	// LogTrainingMetricsEnable - Enable compute and log training metrics.
+	LogTrainingMetricsEnable LogTrainingMetrics = "Enable"
+)
+
+// PossibleLogTrainingMetricsValues returns the possible values for the LogTrainingMetrics const type.
+func PossibleLogTrainingMetricsValues() []LogTrainingMetrics {
+	return []LogTrainingMetrics{	
+		LogTrainingMetricsDisable,
+		LogTrainingMetricsEnable,
+	}
+}
+
+type LogValidationLoss string
+
+const (
+	// LogValidationLossDisable - Disable compute and log validation metrics.
+	LogValidationLossDisable LogValidationLoss = "Disable"
+	// LogValidationLossEnable - Enable compute and log validation metrics.
+	LogValidationLossEnable LogValidationLoss = "Enable"
+)
+
+// PossibleLogValidationLossValues returns the possible values for the LogValidationLoss const type.
+func PossibleLogValidationLossValues() []LogValidationLoss {
+	return []LogValidationLoss{	
+		LogValidationLossDisable,
+		LogValidationLossEnable,
 	}
 }
 
@@ -1278,7 +2315,7 @@ const (
 
 // PossibleLogVerbosityValues returns the possible values for the LogVerbosity const type.
 func PossibleLogVerbosityValues() []LogVerbosity {
-	return []LogVerbosity{
+	return []LogVerbosity{	
 		LogVerbosityCritical,
 		LogVerbosityDebug,
 		LogVerbosityError,
@@ -1288,23 +2325,211 @@ func PossibleLogVerbosityValues() []LogVerbosity {
 	}
 }
 
+type MLAssistConfigurationType string
+
+const (
+	MLAssistConfigurationTypeDisabled MLAssistConfigurationType = "Disabled"
+	MLAssistConfigurationTypeEnabled MLAssistConfigurationType = "Enabled"
+)
+
+// PossibleMLAssistConfigurationTypeValues returns the possible values for the MLAssistConfigurationType const type.
+func PossibleMLAssistConfigurationTypeValues() []MLAssistConfigurationType {
+	return []MLAssistConfigurationType{	
+		MLAssistConfigurationTypeDisabled,
+		MLAssistConfigurationTypeEnabled,
+	}
+}
+
+// MLFlowAutologgerState - Enum to determine the state of mlflow autologger.
+type MLFlowAutologgerState string
+
+const (
+	MLFlowAutologgerStateDisabled MLFlowAutologgerState = "Disabled"
+	MLFlowAutologgerStateEnabled MLFlowAutologgerState = "Enabled"
+)
+
+// PossibleMLFlowAutologgerStateValues returns the possible values for the MLFlowAutologgerState const type.
+func PossibleMLFlowAutologgerStateValues() []MLFlowAutologgerState {
+	return []MLFlowAutologgerState{	
+		MLFlowAutologgerStateDisabled,
+		MLFlowAutologgerStateEnabled,
+	}
+}
+
+// ManagedNetworkStatus - Status for the managed network of a machine learning workspace.
+type ManagedNetworkStatus string
+
+const (
+	ManagedNetworkStatusActive ManagedNetworkStatus = "Active"
+	ManagedNetworkStatusInactive ManagedNetworkStatus = "Inactive"
+)
+
+// PossibleManagedNetworkStatusValues returns the possible values for the ManagedNetworkStatus const type.
+func PossibleManagedNetworkStatusValues() []ManagedNetworkStatus {
+	return []ManagedNetworkStatus{	
+		ManagedNetworkStatusActive,
+		ManagedNetworkStatusInactive,
+	}
+}
+
 // ManagedServiceIdentityType - Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
 type ManagedServiceIdentityType string
 
 const (
-	ManagedServiceIdentityTypeNone                       ManagedServiceIdentityType = "None"
-	ManagedServiceIdentityTypeSystemAssigned             ManagedServiceIdentityType = "SystemAssigned"
+	ManagedServiceIdentityTypeNone ManagedServiceIdentityType = "None"
+	ManagedServiceIdentityTypeSystemAssigned ManagedServiceIdentityType = "SystemAssigned"
 	ManagedServiceIdentityTypeSystemAssignedUserAssigned ManagedServiceIdentityType = "SystemAssigned,UserAssigned"
-	ManagedServiceIdentityTypeUserAssigned               ManagedServiceIdentityType = "UserAssigned"
+	ManagedServiceIdentityTypeUserAssigned ManagedServiceIdentityType = "UserAssigned"
 )
 
 // PossibleManagedServiceIdentityTypeValues returns the possible values for the ManagedServiceIdentityType const type.
 func PossibleManagedServiceIdentityTypeValues() []ManagedServiceIdentityType {
-	return []ManagedServiceIdentityType{
+	return []ManagedServiceIdentityType{	
 		ManagedServiceIdentityTypeNone,
 		ManagedServiceIdentityTypeSystemAssigned,
 		ManagedServiceIdentityTypeSystemAssignedUserAssigned,
 		ManagedServiceIdentityTypeUserAssigned,
+	}
+}
+
+type MarketplaceSubscriptionProvisioningState string
+
+const (
+	MarketplaceSubscriptionProvisioningStateCanceled MarketplaceSubscriptionProvisioningState = "Canceled"
+	// MarketplaceSubscriptionProvisioningStateCreating - MarketplaceSubscription is being created.
+	MarketplaceSubscriptionProvisioningStateCreating MarketplaceSubscriptionProvisioningState = "Creating"
+	// MarketplaceSubscriptionProvisioningStateDeleting - MarketplaceSubscription is being deleted.
+	MarketplaceSubscriptionProvisioningStateDeleting MarketplaceSubscriptionProvisioningState = "Deleting"
+	// MarketplaceSubscriptionProvisioningStateFailed - MarketplaceSubscription provisioning failed.
+	MarketplaceSubscriptionProvisioningStateFailed MarketplaceSubscriptionProvisioningState = "Failed"
+	// MarketplaceSubscriptionProvisioningStateSucceeded - MarketplaceSubscription is successfully provisioned.
+	MarketplaceSubscriptionProvisioningStateSucceeded MarketplaceSubscriptionProvisioningState = "Succeeded"
+	// MarketplaceSubscriptionProvisioningStateUpdating - MarketplaceSubscription is being updated.
+	MarketplaceSubscriptionProvisioningStateUpdating MarketplaceSubscriptionProvisioningState = "Updating"
+)
+
+// PossibleMarketplaceSubscriptionProvisioningStateValues returns the possible values for the MarketplaceSubscriptionProvisioningState const type.
+func PossibleMarketplaceSubscriptionProvisioningStateValues() []MarketplaceSubscriptionProvisioningState {
+	return []MarketplaceSubscriptionProvisioningState{	
+		MarketplaceSubscriptionProvisioningStateCanceled,
+		MarketplaceSubscriptionProvisioningStateCreating,
+		MarketplaceSubscriptionProvisioningStateDeleting,
+		MarketplaceSubscriptionProvisioningStateFailed,
+		MarketplaceSubscriptionProvisioningStateSucceeded,
+		MarketplaceSubscriptionProvisioningStateUpdating,
+	}
+}
+
+type MarketplaceSubscriptionStatus string
+
+const (
+	// MarketplaceSubscriptionStatusPendingFulfillmentStart - The Marketplace Subscription is being fulfilled.
+	MarketplaceSubscriptionStatusPendingFulfillmentStart MarketplaceSubscriptionStatus = "PendingFulfillmentStart"
+	// MarketplaceSubscriptionStatusSubscribed - The customer can now use the Marketplace Subscription's
+// model and will be billed.
+	MarketplaceSubscriptionStatusSubscribed MarketplaceSubscriptionStatus = "Subscribed"
+	// MarketplaceSubscriptionStatusSuspended - The customer could not be billed for the Marketplace Subscription.
+// The customer will not be able to access the model.
+	MarketplaceSubscriptionStatusSuspended MarketplaceSubscriptionStatus = "Suspended"
+	// MarketplaceSubscriptionStatusUnsubscribed - Marketplace Subscriptions reach this state in response to an explicit customer
+// or CSP action.
+// A Marketplace Subscription can also be canceled implicitly, as a result of nonpayment of dues,
+// after being in the Suspended state for some time.
+	MarketplaceSubscriptionStatusUnsubscribed MarketplaceSubscriptionStatus = "Unsubscribed"
+)
+
+// PossibleMarketplaceSubscriptionStatusValues returns the possible values for the MarketplaceSubscriptionStatus const type.
+func PossibleMarketplaceSubscriptionStatusValues() []MarketplaceSubscriptionStatus {
+	return []MarketplaceSubscriptionStatus{	
+		MarketplaceSubscriptionStatusPendingFulfillmentStart,
+		MarketplaceSubscriptionStatusSubscribed,
+		MarketplaceSubscriptionStatusSuspended,
+		MarketplaceSubscriptionStatusUnsubscribed,
+	}
+}
+
+type MaterializationStoreType string
+
+const (
+	MaterializationStoreTypeNone MaterializationStoreType = "None"
+	MaterializationStoreTypeOffline MaterializationStoreType = "Offline"
+	MaterializationStoreTypeOnline MaterializationStoreType = "Online"
+	MaterializationStoreTypeOnlineAndOffline MaterializationStoreType = "OnlineAndOffline"
+)
+
+// PossibleMaterializationStoreTypeValues returns the possible values for the MaterializationStoreType const type.
+func PossibleMaterializationStoreTypeValues() []MaterializationStoreType {
+	return []MaterializationStoreType{	
+		MaterializationStoreTypeNone,
+		MaterializationStoreTypeOffline,
+		MaterializationStoreTypeOnline,
+		MaterializationStoreTypeOnlineAndOffline,
+	}
+}
+
+// MediaType - Media type of data asset.
+type MediaType string
+
+const (
+	MediaTypeImage MediaType = "Image"
+	MediaTypeText MediaType = "Text"
+)
+
+// PossibleMediaTypeValues returns the possible values for the MediaType const type.
+func PossibleMediaTypeValues() []MediaType {
+	return []MediaType{	
+		MediaTypeImage,
+		MediaTypeText,
+	}
+}
+
+// MlflowAutologger - Indicates whether mlflow autologger is enabled for notebooks.
+type MlflowAutologger string
+
+const (
+	MlflowAutologgerDisabled MlflowAutologger = "Disabled"
+	MlflowAutologgerEnabled MlflowAutologger = "Enabled"
+)
+
+// PossibleMlflowAutologgerValues returns the possible values for the MlflowAutologger const type.
+func PossibleMlflowAutologgerValues() []MlflowAutologger {
+	return []MlflowAutologger{	
+		MlflowAutologgerDisabled,
+		MlflowAutologgerEnabled,
+	}
+}
+
+// ModelLifecycleStatus - Model lifecycle status.
+type ModelLifecycleStatus string
+
+const (
+	ModelLifecycleStatusGenerallyAvailable ModelLifecycleStatus = "GenerallyAvailable"
+	ModelLifecycleStatusPreview ModelLifecycleStatus = "Preview"
+)
+
+// PossibleModelLifecycleStatusValues returns the possible values for the ModelLifecycleStatus const type.
+func PossibleModelLifecycleStatusValues() []ModelLifecycleStatus {
+	return []ModelLifecycleStatus{	
+		ModelLifecycleStatusGenerallyAvailable,
+		ModelLifecycleStatusPreview,
+	}
+}
+
+// ModelProvider - Enum to determine the type of fine tuning.
+type ModelProvider string
+
+const (
+	// ModelProviderAzureOpenAI - Fine tuning using Azure Open AI model.
+	ModelProviderAzureOpenAI ModelProvider = "AzureOpenAI"
+	// ModelProviderCustom - Fine tuning using custom model.
+	ModelProviderCustom ModelProvider = "Custom"
+)
+
+// PossibleModelProviderValues returns the possible values for the ModelProvider const type.
+func PossibleModelProviderValues() []ModelProvider {
+	return []ModelProvider{	
+		ModelProviderAzureOpenAI,
+		ModelProviderCustom,
 	}
 }
 
@@ -1326,7 +2551,7 @@ const (
 
 // PossibleModelSizeValues returns the possible values for the ModelSize const type.
 func PossibleModelSizeValues() []ModelSize {
-	return []ModelSize{
+	return []ModelSize{	
 		ModelSizeExtraLarge,
 		ModelSizeLarge,
 		ModelSizeMedium,
@@ -1335,19 +2560,217 @@ func PossibleModelSizeValues() []ModelSize {
 	}
 }
 
+// ModelTaskType - Model task type enum.
+type ModelTaskType string
+
+const (
+	ModelTaskTypeClassification ModelTaskType = "Classification"
+	ModelTaskTypeQuestionAnswering ModelTaskType = "QuestionAnswering"
+	ModelTaskTypeRegression ModelTaskType = "Regression"
+)
+
+// PossibleModelTaskTypeValues returns the possible values for the ModelTaskType const type.
+func PossibleModelTaskTypeValues() []ModelTaskType {
+	return []ModelTaskType{	
+		ModelTaskTypeClassification,
+		ModelTaskTypeQuestionAnswering,
+		ModelTaskTypeRegression,
+	}
+}
+
+// MonitorComputeIdentityType - Monitor compute identity type enum.
+type MonitorComputeIdentityType string
+
+const (
+	// MonitorComputeIdentityTypeAmlToken - Authenticates through user's AML token.
+	MonitorComputeIdentityTypeAmlToken MonitorComputeIdentityType = "AmlToken"
+	// MonitorComputeIdentityTypeManagedIdentity - Authenticates through a user-provided managed identity.
+	MonitorComputeIdentityTypeManagedIdentity MonitorComputeIdentityType = "ManagedIdentity"
+)
+
+// PossibleMonitorComputeIdentityTypeValues returns the possible values for the MonitorComputeIdentityType const type.
+func PossibleMonitorComputeIdentityTypeValues() []MonitorComputeIdentityType {
+	return []MonitorComputeIdentityType{	
+		MonitorComputeIdentityTypeAmlToken,
+		MonitorComputeIdentityTypeManagedIdentity,
+	}
+}
+
+// MonitorComputeType - Monitor compute type enum.
+type MonitorComputeType string
+
+const (
+	// MonitorComputeTypeServerlessSpark - Serverless Spark compute.
+	MonitorComputeTypeServerlessSpark MonitorComputeType = "ServerlessSpark"
+)
+
+// PossibleMonitorComputeTypeValues returns the possible values for the MonitorComputeType const type.
+func PossibleMonitorComputeTypeValues() []MonitorComputeType {
+	return []MonitorComputeType{	
+		MonitorComputeTypeServerlessSpark,
+	}
+}
+
+type MonitoringFeatureDataType string
+
+const (
+	// MonitoringFeatureDataTypeCategorical - Used for features of categorical data type.
+	MonitoringFeatureDataTypeCategorical MonitoringFeatureDataType = "Categorical"
+	// MonitoringFeatureDataTypeNumerical - Used for features of numerical data type.
+	MonitoringFeatureDataTypeNumerical MonitoringFeatureDataType = "Numerical"
+)
+
+// PossibleMonitoringFeatureDataTypeValues returns the possible values for the MonitoringFeatureDataType const type.
+func PossibleMonitoringFeatureDataTypeValues() []MonitoringFeatureDataType {
+	return []MonitoringFeatureDataType{	
+		MonitoringFeatureDataTypeCategorical,
+		MonitoringFeatureDataTypeNumerical,
+	}
+}
+
+type MonitoringFeatureFilterType string
+
+const (
+	// MonitoringFeatureFilterTypeAllFeatures - Includes all features.
+	MonitoringFeatureFilterTypeAllFeatures MonitoringFeatureFilterType = "AllFeatures"
+	// MonitoringFeatureFilterTypeFeatureSubset - Includes a user-defined subset of features.
+	MonitoringFeatureFilterTypeFeatureSubset MonitoringFeatureFilterType = "FeatureSubset"
+	// MonitoringFeatureFilterTypeTopNByAttribution - Only includes the top contributing features, measured by feature attribution.
+	MonitoringFeatureFilterTypeTopNByAttribution MonitoringFeatureFilterType = "TopNByAttribution"
+)
+
+// PossibleMonitoringFeatureFilterTypeValues returns the possible values for the MonitoringFeatureFilterType const type.
+func PossibleMonitoringFeatureFilterTypeValues() []MonitoringFeatureFilterType {
+	return []MonitoringFeatureFilterType{	
+		MonitoringFeatureFilterTypeAllFeatures,
+		MonitoringFeatureFilterTypeFeatureSubset,
+		MonitoringFeatureFilterTypeTopNByAttribution,
+	}
+}
+
+// MonitoringInputDataType - Monitoring input data type enum.
+type MonitoringInputDataType string
+
+const (
+	// MonitoringInputDataTypeFixed - An input data with tabular format which doesn't require preprocessing.
+	MonitoringInputDataTypeFixed MonitoringInputDataType = "Fixed"
+	// MonitoringInputDataTypeRolling - An input data which rolls relatively to the monitor's current run time.
+	MonitoringInputDataTypeRolling MonitoringInputDataType = "Rolling"
+	// MonitoringInputDataTypeStatic - An input data with a fixed window size.
+	MonitoringInputDataTypeStatic MonitoringInputDataType = "Static"
+)
+
+// PossibleMonitoringInputDataTypeValues returns the possible values for the MonitoringInputDataType const type.
+func PossibleMonitoringInputDataTypeValues() []MonitoringInputDataType {
+	return []MonitoringInputDataType{	
+		MonitoringInputDataTypeFixed,
+		MonitoringInputDataTypeRolling,
+		MonitoringInputDataTypeStatic,
+	}
+}
+
+type MonitoringModelType string
+
+const (
+	// MonitoringModelTypeClassification - A model trained for classification tasks.
+	MonitoringModelTypeClassification MonitoringModelType = "Classification"
+	// MonitoringModelTypeRegression - A model trained for regressions tasks.
+	MonitoringModelTypeRegression MonitoringModelType = "Regression"
+)
+
+// PossibleMonitoringModelTypeValues returns the possible values for the MonitoringModelType const type.
+func PossibleMonitoringModelTypeValues() []MonitoringModelType {
+	return []MonitoringModelType{	
+		MonitoringModelTypeClassification,
+		MonitoringModelTypeRegression,
+	}
+}
+
+type MonitoringNotificationType string
+
+const (
+	// MonitoringNotificationTypeAmlNotification - Enables email notifications through AML notifications.
+	MonitoringNotificationTypeAmlNotification MonitoringNotificationType = "AmlNotification"
+	// MonitoringNotificationTypeAzureMonitor - Enables notifications through Azure Monitor by posting metrics to the workspace's
+// Azure Monitor instance.
+	MonitoringNotificationTypeAzureMonitor MonitoringNotificationType = "AzureMonitor"
+)
+
+// PossibleMonitoringNotificationTypeValues returns the possible values for the MonitoringNotificationType const type.
+func PossibleMonitoringNotificationTypeValues() []MonitoringNotificationType {
+	return []MonitoringNotificationType{	
+		MonitoringNotificationTypeAmlNotification,
+		MonitoringNotificationTypeAzureMonitor,
+	}
+}
+
+type MonitoringSignalType string
+
+const (
+	// MonitoringSignalTypeCustom - Tracks a custom signal provided by users.
+	MonitoringSignalTypeCustom MonitoringSignalType = "Custom"
+	// MonitoringSignalTypeDataDrift - Tracks model input data distribution change, comparing against training data or past production
+// data.
+	MonitoringSignalTypeDataDrift MonitoringSignalType = "DataDrift"
+	// MonitoringSignalTypeDataQuality - Tracks model input data integrity.
+	MonitoringSignalTypeDataQuality MonitoringSignalType = "DataQuality"
+	// MonitoringSignalTypeFeatureAttributionDrift - Tracks feature importance change in production, comparing against feature
+// importance at training time.
+	MonitoringSignalTypeFeatureAttributionDrift MonitoringSignalType = "FeatureAttributionDrift"
+	// MonitoringSignalTypeGenerationSafetyQuality - Tracks the safety and quality of generated content.
+	MonitoringSignalTypeGenerationSafetyQuality MonitoringSignalType = "GenerationSafetyQuality"
+	// MonitoringSignalTypeGenerationTokenStatistics - Tracks the token usage of generative endpoints.
+	MonitoringSignalTypeGenerationTokenStatistics MonitoringSignalType = "GenerationTokenStatistics"
+	// MonitoringSignalTypeModelPerformance - Tracks model performance based on ground truth data.
+	MonitoringSignalTypeModelPerformance MonitoringSignalType = "ModelPerformance"
+	// MonitoringSignalTypePredictionDrift - Tracks prediction result data distribution change, comparing against validation/test
+// label data or past production data.
+	MonitoringSignalTypePredictionDrift MonitoringSignalType = "PredictionDrift"
+)
+
+// PossibleMonitoringSignalTypeValues returns the possible values for the MonitoringSignalType const type.
+func PossibleMonitoringSignalTypeValues() []MonitoringSignalType {
+	return []MonitoringSignalType{	
+		MonitoringSignalTypeCustom,
+		MonitoringSignalTypeDataDrift,
+		MonitoringSignalTypeDataQuality,
+		MonitoringSignalTypeFeatureAttributionDrift,
+		MonitoringSignalTypeGenerationSafetyQuality,
+		MonitoringSignalTypeGenerationTokenStatistics,
+		MonitoringSignalTypeModelPerformance,
+		MonitoringSignalTypePredictionDrift,
+	}
+}
+
 // MountAction - Mount Action.
 type MountAction string
 
 const (
-	MountActionMount   MountAction = "Mount"
+	MountActionMount MountAction = "Mount"
 	MountActionUnmount MountAction = "Unmount"
 )
 
 // PossibleMountActionValues returns the possible values for the MountAction const type.
 func PossibleMountActionValues() []MountAction {
-	return []MountAction{
+	return []MountAction{	
 		MountActionMount,
 		MountActionUnmount,
+	}
+}
+
+// MountMode - Mount Mode.
+type MountMode string
+
+const (
+	MountModeReadOnly MountMode = "ReadOnly"
+	MountModeReadWrite MountMode = "ReadWrite"
+)
+
+// PossibleMountModeValues returns the possible values for the MountMode const type.
+func PossibleMountModeValues() []MountMode {
+	return []MountMode{	
+		MountModeReadOnly,
+		MountModeReadWrite,
 	}
 }
 
@@ -1355,17 +2778,17 @@ func PossibleMountActionValues() []MountAction {
 type MountState string
 
 const (
-	MountStateMountFailed      MountState = "MountFailed"
-	MountStateMountRequested   MountState = "MountRequested"
-	MountStateMounted          MountState = "Mounted"
-	MountStateUnmountFailed    MountState = "UnmountFailed"
+	MountStateMountFailed MountState = "MountFailed"
+	MountStateMountRequested MountState = "MountRequested"
+	MountStateMounted MountState = "Mounted"
+	MountStateUnmountFailed MountState = "UnmountFailed"
 	MountStateUnmountRequested MountState = "UnmountRequested"
-	MountStateUnmounted        MountState = "Unmounted"
+	MountStateUnmounted MountState = "Unmounted"
 )
 
 // PossibleMountStateValues returns the possible values for the MountState const type.
 func PossibleMountStateValues() []MountState {
-	return []MountState{
+	return []MountState{	
 		MountStateMountFailed,
 		MountStateMountRequested,
 		MountStateMounted,
@@ -1375,12 +2798,28 @@ func PossibleMountStateValues() []MountState {
 	}
 }
 
+// MultiSelect - Whether multiSelect is enabled
+type MultiSelect string
+
+const (
+	MultiSelectDisabled MultiSelect = "Disabled"
+	MultiSelectEnabled MultiSelect = "Enabled"
+)
+
+// PossibleMultiSelectValues returns the possible values for the MultiSelect const type.
+func PossibleMultiSelectValues() []MultiSelect {
+	return []MultiSelect{	
+		MultiSelectDisabled,
+		MultiSelectEnabled,
+	}
+}
+
 // NCrossValidationsMode - Determines how N-Cross validations value is determined.
 type NCrossValidationsMode string
 
 const (
 	// NCrossValidationsModeAuto - Determine N-Cross validations value automatically. Supported only for 'Forecasting' AutoML
-	// task.
+// task.
 	NCrossValidationsModeAuto NCrossValidationsMode = "Auto"
 	// NCrossValidationsModeCustom - Use custom N-Cross validations value.
 	NCrossValidationsModeCustom NCrossValidationsMode = "Custom"
@@ -1388,7 +2827,7 @@ const (
 
 // PossibleNCrossValidationsModeValues returns the possible values for the NCrossValidationsMode const type.
 func PossibleNCrossValidationsModeValues() []NCrossValidationsMode {
-	return []NCrossValidationsMode{
+	return []NCrossValidationsMode{	
 		NCrossValidationsModeAuto,
 		NCrossValidationsModeCustom,
 	}
@@ -1399,14 +2838,47 @@ type Network string
 
 const (
 	NetworkBridge Network = "Bridge"
-	NetworkHost   Network = "Host"
+	NetworkHost Network = "Host"
 )
 
 // PossibleNetworkValues returns the possible values for the Network const type.
 func PossibleNetworkValues() []Network {
-	return []Network{
+	return []Network{	
 		NetworkBridge,
 		NetworkHost,
+	}
+}
+
+// NlpLearningRateScheduler - Enum of learning rate schedulers that aligns with those supported by HF
+type NlpLearningRateScheduler string
+
+const (
+	// NlpLearningRateSchedulerConstant - Constant learning rate.
+	NlpLearningRateSchedulerConstant NlpLearningRateScheduler = "Constant"
+	// NlpLearningRateSchedulerConstantWithWarmup - Linear warmup followed by constant value.
+	NlpLearningRateSchedulerConstantWithWarmup NlpLearningRateScheduler = "ConstantWithWarmup"
+	// NlpLearningRateSchedulerCosine - Linear warmup then cosine decay.
+	NlpLearningRateSchedulerCosine NlpLearningRateScheduler = "Cosine"
+	// NlpLearningRateSchedulerCosineWithRestarts - Linear warmup, cosine decay, then restart to initial LR.
+	NlpLearningRateSchedulerCosineWithRestarts NlpLearningRateScheduler = "CosineWithRestarts"
+	// NlpLearningRateSchedulerLinear - Linear warmup and decay.
+	NlpLearningRateSchedulerLinear NlpLearningRateScheduler = "Linear"
+	// NlpLearningRateSchedulerNone - No learning rate schedule.
+	NlpLearningRateSchedulerNone NlpLearningRateScheduler = "None"
+	// NlpLearningRateSchedulerPolynomial - Increase linearly then polynomially decay.
+	NlpLearningRateSchedulerPolynomial NlpLearningRateScheduler = "Polynomial"
+)
+
+// PossibleNlpLearningRateSchedulerValues returns the possible values for the NlpLearningRateScheduler const type.
+func PossibleNlpLearningRateSchedulerValues() []NlpLearningRateScheduler {
+	return []NlpLearningRateScheduler{	
+		NlpLearningRateSchedulerConstant,
+		NlpLearningRateSchedulerConstantWithWarmup,
+		NlpLearningRateSchedulerCosine,
+		NlpLearningRateSchedulerCosineWithRestarts,
+		NlpLearningRateSchedulerLinear,
+		NlpLearningRateSchedulerNone,
+		NlpLearningRateSchedulerPolynomial,
 	}
 }
 
@@ -1414,17 +2886,17 @@ func PossibleNetworkValues() []Network {
 type NodeState string
 
 const (
-	NodeStateIdle      NodeState = "idle"
-	NodeStateLeaving   NodeState = "leaving"
+	NodeStateIdle NodeState = "idle"
+	NodeStateLeaving NodeState = "leaving"
 	NodeStatePreempted NodeState = "preempted"
 	NodeStatePreparing NodeState = "preparing"
-	NodeStateRunning   NodeState = "running"
-	NodeStateUnusable  NodeState = "unusable"
+	NodeStateRunning NodeState = "running"
+	NodeStateUnusable NodeState = "unusable"
 )
 
 // PossibleNodeStateValues returns the possible values for the NodeState const type.
 func PossibleNodeStateValues() []NodeState {
-	return []NodeState{
+	return []NodeState{	
 		NodeStateIdle,
 		NodeStateLeaving,
 		NodeStatePreempted,
@@ -1434,19 +2906,116 @@ func PossibleNodeStateValues() []NodeState {
 	}
 }
 
+// NodesValueType - The enumerated types for the nodes value
+type NodesValueType string
+
+const (
+	NodesValueTypeAll NodesValueType = "All"
+	NodesValueTypeCustom NodesValueType = "Custom"
+)
+
+// PossibleNodesValueTypeValues returns the possible values for the NodesValueType const type.
+func PossibleNodesValueTypeValues() []NodesValueType {
+	return []NodesValueType{	
+		NodesValueTypeAll,
+		NodesValueTypeCustom,
+	}
+}
+
+type NumericalDataDriftMetric string
+
+const (
+	// NumericalDataDriftMetricJensenShannonDistance - The Jensen Shannon Distance (JSD) metric.
+	NumericalDataDriftMetricJensenShannonDistance NumericalDataDriftMetric = "JensenShannonDistance"
+	// NumericalDataDriftMetricNormalizedWassersteinDistance - The Normalized Wasserstein Distance metric.
+	NumericalDataDriftMetricNormalizedWassersteinDistance NumericalDataDriftMetric = "NormalizedWassersteinDistance"
+	// NumericalDataDriftMetricPopulationStabilityIndex - The Population Stability Index (PSI) metric.
+	NumericalDataDriftMetricPopulationStabilityIndex NumericalDataDriftMetric = "PopulationStabilityIndex"
+	// NumericalDataDriftMetricTwoSampleKolmogorovSmirnovTest - The Two Sample Kolmogorov-Smirnov Test (two-sample K–S) metric.
+	NumericalDataDriftMetricTwoSampleKolmogorovSmirnovTest NumericalDataDriftMetric = "TwoSampleKolmogorovSmirnovTest"
+)
+
+// PossibleNumericalDataDriftMetricValues returns the possible values for the NumericalDataDriftMetric const type.
+func PossibleNumericalDataDriftMetricValues() []NumericalDataDriftMetric {
+	return []NumericalDataDriftMetric{	
+		NumericalDataDriftMetricJensenShannonDistance,
+		NumericalDataDriftMetricNormalizedWassersteinDistance,
+		NumericalDataDriftMetricPopulationStabilityIndex,
+		NumericalDataDriftMetricTwoSampleKolmogorovSmirnovTest,
+	}
+}
+
+type NumericalDataQualityMetric string
+
+const (
+	// NumericalDataQualityMetricDataTypeErrorRate - Calculates the rate of data type errors.
+	NumericalDataQualityMetricDataTypeErrorRate NumericalDataQualityMetric = "DataTypeErrorRate"
+	// NumericalDataQualityMetricNullValueRate - Calculates the rate of null values.
+	NumericalDataQualityMetricNullValueRate NumericalDataQualityMetric = "NullValueRate"
+	// NumericalDataQualityMetricOutOfBoundsRate - Calculates the rate values are out of bounds.
+	NumericalDataQualityMetricOutOfBoundsRate NumericalDataQualityMetric = "OutOfBoundsRate"
+)
+
+// PossibleNumericalDataQualityMetricValues returns the possible values for the NumericalDataQualityMetric const type.
+func PossibleNumericalDataQualityMetricValues() []NumericalDataQualityMetric {
+	return []NumericalDataQualityMetric{	
+		NumericalDataQualityMetricDataTypeErrorRate,
+		NumericalDataQualityMetricNullValueRate,
+		NumericalDataQualityMetricOutOfBoundsRate,
+	}
+}
+
+type NumericalPredictionDriftMetric string
+
+const (
+	// NumericalPredictionDriftMetricJensenShannonDistance - The Jensen Shannon Distance (JSD) metric.
+	NumericalPredictionDriftMetricJensenShannonDistance NumericalPredictionDriftMetric = "JensenShannonDistance"
+	// NumericalPredictionDriftMetricNormalizedWassersteinDistance - The Normalized Wasserstein Distance metric.
+	NumericalPredictionDriftMetricNormalizedWassersteinDistance NumericalPredictionDriftMetric = "NormalizedWassersteinDistance"
+	// NumericalPredictionDriftMetricPopulationStabilityIndex - The Population Stability Index (PSI) metric.
+	NumericalPredictionDriftMetricPopulationStabilityIndex NumericalPredictionDriftMetric = "PopulationStabilityIndex"
+	// NumericalPredictionDriftMetricTwoSampleKolmogorovSmirnovTest - The Two Sample Kolmogorov-Smirnov Test (two-sample K–S)
+// metric.
+	NumericalPredictionDriftMetricTwoSampleKolmogorovSmirnovTest NumericalPredictionDriftMetric = "TwoSampleKolmogorovSmirnovTest"
+)
+
+// PossibleNumericalPredictionDriftMetricValues returns the possible values for the NumericalPredictionDriftMetric const type.
+func PossibleNumericalPredictionDriftMetricValues() []NumericalPredictionDriftMetric {
+	return []NumericalPredictionDriftMetric{	
+		NumericalPredictionDriftMetricJensenShannonDistance,
+		NumericalPredictionDriftMetricNormalizedWassersteinDistance,
+		NumericalPredictionDriftMetricPopulationStabilityIndex,
+		NumericalPredictionDriftMetricTwoSampleKolmogorovSmirnovTest,
+	}
+}
+
 // ObjectDetectionPrimaryMetrics - Primary metrics for Image ObjectDetection task.
 type ObjectDetectionPrimaryMetrics string
 
 const (
 	// ObjectDetectionPrimaryMetricsMeanAveragePrecision - Mean Average Precision (MAP) is the average of AP (Average Precision).
-	// AP is calculated for each class and averaged to get the MAP.
+// AP is calculated for each class and averaged to get the MAP.
 	ObjectDetectionPrimaryMetricsMeanAveragePrecision ObjectDetectionPrimaryMetrics = "MeanAveragePrecision"
 )
 
 // PossibleObjectDetectionPrimaryMetricsValues returns the possible values for the ObjectDetectionPrimaryMetrics const type.
 func PossibleObjectDetectionPrimaryMetricsValues() []ObjectDetectionPrimaryMetrics {
-	return []ObjectDetectionPrimaryMetrics{
+	return []ObjectDetectionPrimaryMetrics{	
 		ObjectDetectionPrimaryMetricsMeanAveragePrecision,
+	}
+}
+
+// OneLakeArtifactType - Enum to determine OneLake artifact type.
+type OneLakeArtifactType string
+
+const (
+	OneLakeArtifactTypeLakeHouse OneLakeArtifactType = "LakeHouse"
+)
+
+// PossibleOneLakeArtifactTypeValues returns the possible values for the OneLakeArtifactType const type.
+func PossibleOneLakeArtifactTypeValues() []OneLakeArtifactType {
+	return []OneLakeArtifactType{	
+		OneLakeArtifactTypeLakeHouse,
 	}
 }
 
@@ -1454,13 +3023,13 @@ func PossibleObjectDetectionPrimaryMetricsValues() []ObjectDetectionPrimaryMetri
 type OperatingSystemType string
 
 const (
-	OperatingSystemTypeLinux   OperatingSystemType = "Linux"
+	OperatingSystemTypeLinux OperatingSystemType = "Linux"
 	OperatingSystemTypeWindows OperatingSystemType = "Windows"
 )
 
 // PossibleOperatingSystemTypeValues returns the possible values for the OperatingSystemType const type.
 func PossibleOperatingSystemTypeValues() []OperatingSystemType {
-	return []OperatingSystemType{
+	return []OperatingSystemType{	
 		OperatingSystemTypeLinux,
 		OperatingSystemTypeWindows,
 	}
@@ -1470,20 +3039,22 @@ func PossibleOperatingSystemTypeValues() []OperatingSystemType {
 type OperationName string
 
 const (
-	OperationNameCreate  OperationName = "Create"
-	OperationNameDelete  OperationName = "Delete"
+	OperationNameCreate OperationName = "Create"
+	OperationNameDelete OperationName = "Delete"
 	OperationNameReimage OperationName = "Reimage"
+	OperationNameResize OperationName = "Resize"
 	OperationNameRestart OperationName = "Restart"
-	OperationNameStart   OperationName = "Start"
-	OperationNameStop    OperationName = "Stop"
+	OperationNameStart OperationName = "Start"
+	OperationNameStop OperationName = "Stop"
 )
 
 // PossibleOperationNameValues returns the possible values for the OperationName const type.
 func PossibleOperationNameValues() []OperationName {
-	return []OperationName{
+	return []OperationName{	
 		OperationNameCreate,
 		OperationNameDelete,
 		OperationNameReimage,
+		OperationNameResize,
 		OperationNameRestart,
 		OperationNameStart,
 		OperationNameStop,
@@ -1494,23 +3065,25 @@ func PossibleOperationNameValues() []OperationName {
 type OperationStatus string
 
 const (
-	OperationStatusCreateFailed  OperationStatus = "CreateFailed"
-	OperationStatusDeleteFailed  OperationStatus = "DeleteFailed"
-	OperationStatusInProgress    OperationStatus = "InProgress"
+	OperationStatusCreateFailed OperationStatus = "CreateFailed"
+	OperationStatusDeleteFailed OperationStatus = "DeleteFailed"
+	OperationStatusInProgress OperationStatus = "InProgress"
 	OperationStatusReimageFailed OperationStatus = "ReimageFailed"
+	OperationStatusResizeFailed OperationStatus = "ResizeFailed"
 	OperationStatusRestartFailed OperationStatus = "RestartFailed"
-	OperationStatusStartFailed   OperationStatus = "StartFailed"
-	OperationStatusStopFailed    OperationStatus = "StopFailed"
-	OperationStatusSucceeded     OperationStatus = "Succeeded"
+	OperationStatusStartFailed OperationStatus = "StartFailed"
+	OperationStatusStopFailed OperationStatus = "StopFailed"
+	OperationStatusSucceeded OperationStatus = "Succeeded"
 )
 
 // PossibleOperationStatusValues returns the possible values for the OperationStatus const type.
 func PossibleOperationStatusValues() []OperationStatus {
-	return []OperationStatus{
+	return []OperationStatus{	
 		OperationStatusCreateFailed,
 		OperationStatusDeleteFailed,
 		OperationStatusInProgress,
 		OperationStatusReimageFailed,
+		OperationStatusResizeFailed,
 		OperationStatusRestartFailed,
 		OperationStatusStartFailed,
 		OperationStatusStopFailed,
@@ -1523,13 +3096,13 @@ type OperationTrigger string
 
 const (
 	OperationTriggerIdleShutdown OperationTrigger = "IdleShutdown"
-	OperationTriggerSchedule     OperationTrigger = "Schedule"
-	OperationTriggerUser         OperationTrigger = "User"
+	OperationTriggerSchedule OperationTrigger = "Schedule"
+	OperationTriggerUser OperationTrigger = "User"
 )
 
 // PossibleOperationTriggerValues returns the possible values for the OperationTrigger const type.
 func PossibleOperationTriggerValues() []OperationTrigger {
-	return []OperationTrigger{
+	return []OperationTrigger{	
 		OperationTriggerIdleShutdown,
 		OperationTriggerSchedule,
 		OperationTriggerUser,
@@ -1539,15 +3112,15 @@ func PossibleOperationTriggerValues() []OperationTrigger {
 type OrderString string
 
 const (
-	OrderStringCreatedAtAsc  OrderString = "CreatedAtAsc"
+	OrderStringCreatedAtAsc OrderString = "CreatedAtAsc"
 	OrderStringCreatedAtDesc OrderString = "CreatedAtDesc"
-	OrderStringUpdatedAtAsc  OrderString = "UpdatedAtAsc"
+	OrderStringUpdatedAtAsc OrderString = "UpdatedAtAsc"
 	OrderStringUpdatedAtDesc OrderString = "UpdatedAtDesc"
 )
 
 // PossibleOrderStringValues returns the possible values for the OrderString const type.
 func PossibleOrderStringValues() []OrderString {
-	return []OrderString{
+	return []OrderString{	
 		OrderStringCreatedAtAsc,
 		OrderStringCreatedAtDesc,
 		OrderStringUpdatedAtAsc,
@@ -1555,17 +3128,36 @@ func PossibleOrderStringValues() []OrderString {
 	}
 }
 
+// Origin - The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default
+// value is "user,system"
+type Origin string
+
+const (
+	OriginSystem Origin = "system"
+	OriginUser Origin = "user"
+	OriginUserSystem Origin = "user,system"
+)
+
+// PossibleOriginValues returns the possible values for the Origin const type.
+func PossibleOriginValues() []Origin {
+	return []Origin{	
+		OriginSystem,
+		OriginUser,
+		OriginUserSystem,
+	}
+}
+
 // OsType - Compute OS Type
 type OsType string
 
 const (
-	OsTypeLinux   OsType = "Linux"
+	OsTypeLinux OsType = "Linux"
 	OsTypeWindows OsType = "Windows"
 )
 
 // PossibleOsTypeValues returns the possible values for the OsType const type.
 func PossibleOsTypeValues() []OsType {
-	return []OsType{
+	return []OsType{	
 		OsTypeLinux,
 		OsTypeWindows,
 	}
@@ -1575,15 +3167,145 @@ func PossibleOsTypeValues() []OsType {
 type OutputDeliveryMode string
 
 const (
+	OutputDeliveryModeDirect OutputDeliveryMode = "Direct"
 	OutputDeliveryModeReadWriteMount OutputDeliveryMode = "ReadWriteMount"
-	OutputDeliveryModeUpload         OutputDeliveryMode = "Upload"
+	OutputDeliveryModeUpload OutputDeliveryMode = "Upload"
 )
 
 // PossibleOutputDeliveryModeValues returns the possible values for the OutputDeliveryMode const type.
 func PossibleOutputDeliveryModeValues() []OutputDeliveryMode {
-	return []OutputDeliveryMode{
+	return []OutputDeliveryMode{	
+		OutputDeliveryModeDirect,
 		OutputDeliveryModeReadWriteMount,
 		OutputDeliveryModeUpload,
+	}
+}
+
+// PackageBuildState - Package build state returned in package response.
+type PackageBuildState string
+
+const (
+	PackageBuildStateFailed PackageBuildState = "Failed"
+	PackageBuildStateNotStarted PackageBuildState = "NotStarted"
+	PackageBuildStateRunning PackageBuildState = "Running"
+	PackageBuildStateSucceeded PackageBuildState = "Succeeded"
+)
+
+// PossiblePackageBuildStateValues returns the possible values for the PackageBuildState const type.
+func PossiblePackageBuildStateValues() []PackageBuildState {
+	return []PackageBuildState{	
+		PackageBuildStateFailed,
+		PackageBuildStateNotStarted,
+		PackageBuildStateRunning,
+		PackageBuildStateSucceeded,
+	}
+}
+
+// PackageInputDeliveryMode - Mounting type of the model or the inputs
+type PackageInputDeliveryMode string
+
+const (
+	PackageInputDeliveryModeCopy PackageInputDeliveryMode = "Copy"
+	PackageInputDeliveryModeDownload PackageInputDeliveryMode = "Download"
+)
+
+// PossiblePackageInputDeliveryModeValues returns the possible values for the PackageInputDeliveryMode const type.
+func PossiblePackageInputDeliveryModeValues() []PackageInputDeliveryMode {
+	return []PackageInputDeliveryMode{	
+		PackageInputDeliveryModeCopy,
+		PackageInputDeliveryModeDownload,
+	}
+}
+
+// PackageInputType - Type of the inputs.
+type PackageInputType string
+
+const (
+	PackageInputTypeURIFile PackageInputType = "UriFile"
+	PackageInputTypeURIFolder PackageInputType = "UriFolder"
+)
+
+// PossiblePackageInputTypeValues returns the possible values for the PackageInputType const type.
+func PossiblePackageInputTypeValues() []PackageInputType {
+	return []PackageInputType{	
+		PackageInputTypeURIFile,
+		PackageInputTypeURIFolder,
+	}
+}
+
+// PatchStatus - The os patching status.
+type PatchStatus string
+
+const (
+	PatchStatusCompletedWithWarnings PatchStatus = "CompletedWithWarnings"
+	PatchStatusFailed PatchStatus = "Failed"
+	PatchStatusInProgress PatchStatus = "InProgress"
+	PatchStatusSucceeded PatchStatus = "Succeeded"
+	PatchStatusUnknown PatchStatus = "Unknown"
+)
+
+// PossiblePatchStatusValues returns the possible values for the PatchStatus const type.
+func PossiblePatchStatusValues() []PatchStatus {
+	return []PatchStatus{	
+		PatchStatusCompletedWithWarnings,
+		PatchStatusFailed,
+		PatchStatusInProgress,
+		PatchStatusSucceeded,
+		PatchStatusUnknown,
+	}
+}
+
+// PendingUploadCredentialType - Enum to determine the PendingUpload credentials type.
+type PendingUploadCredentialType string
+
+const (
+	PendingUploadCredentialTypeSAS PendingUploadCredentialType = "SAS"
+)
+
+// PossiblePendingUploadCredentialTypeValues returns the possible values for the PendingUploadCredentialType const type.
+func PossiblePendingUploadCredentialTypeValues() []PendingUploadCredentialType {
+	return []PendingUploadCredentialType{	
+		PendingUploadCredentialTypeSAS,
+	}
+}
+
+// PendingUploadType - Type of storage to use for the pending upload location
+type PendingUploadType string
+
+const (
+	PendingUploadTypeNone PendingUploadType = "None"
+	PendingUploadTypeTemporaryBlobReference PendingUploadType = "TemporaryBlobReference"
+)
+
+// PossiblePendingUploadTypeValues returns the possible values for the PendingUploadType const type.
+func PossiblePendingUploadTypeValues() []PendingUploadType {
+	return []PendingUploadType{	
+		PendingUploadTypeNone,
+		PendingUploadTypeTemporaryBlobReference,
+	}
+}
+
+// PoolProvisioningState - State of pool related resources provisioning.
+type PoolProvisioningState string
+
+const (
+	PoolProvisioningStateCanceled PoolProvisioningState = "Canceled"
+	PoolProvisioningStateCreating PoolProvisioningState = "Creating"
+	PoolProvisioningStateDeleting PoolProvisioningState = "Deleting"
+	PoolProvisioningStateFailed PoolProvisioningState = "Failed"
+	PoolProvisioningStateSucceeded PoolProvisioningState = "Succeeded"
+	PoolProvisioningStateUpdating PoolProvisioningState = "Updating"
+)
+
+// PossiblePoolProvisioningStateValues returns the possible values for the PoolProvisioningState const type.
+func PossiblePoolProvisioningStateValues() []PoolProvisioningState {
+	return []PoolProvisioningState{	
+		PoolProvisioningStateCanceled,
+		PoolProvisioningStateCreating,
+		PoolProvisioningStateDeleting,
+		PoolProvisioningStateFailed,
+		PoolProvisioningStateSucceeded,
+		PoolProvisioningStateUpdating,
 	}
 }
 
@@ -1591,15 +3313,15 @@ func PossibleOutputDeliveryModeValues() []OutputDeliveryMode {
 type PrivateEndpointConnectionProvisioningState string
 
 const (
-	PrivateEndpointConnectionProvisioningStateCreating  PrivateEndpointConnectionProvisioningState = "Creating"
-	PrivateEndpointConnectionProvisioningStateDeleting  PrivateEndpointConnectionProvisioningState = "Deleting"
-	PrivateEndpointConnectionProvisioningStateFailed    PrivateEndpointConnectionProvisioningState = "Failed"
+	PrivateEndpointConnectionProvisioningStateCreating PrivateEndpointConnectionProvisioningState = "Creating"
+	PrivateEndpointConnectionProvisioningStateDeleting PrivateEndpointConnectionProvisioningState = "Deleting"
+	PrivateEndpointConnectionProvisioningStateFailed PrivateEndpointConnectionProvisioningState = "Failed"
 	PrivateEndpointConnectionProvisioningStateSucceeded PrivateEndpointConnectionProvisioningState = "Succeeded"
 )
 
 // PossiblePrivateEndpointConnectionProvisioningStateValues returns the possible values for the PrivateEndpointConnectionProvisioningState const type.
 func PossiblePrivateEndpointConnectionProvisioningStateValues() []PrivateEndpointConnectionProvisioningState {
-	return []PrivateEndpointConnectionProvisioningState{
+	return []PrivateEndpointConnectionProvisioningState{	
 		PrivateEndpointConnectionProvisioningStateCreating,
 		PrivateEndpointConnectionProvisioningStateDeleting,
 		PrivateEndpointConnectionProvisioningStateFailed,
@@ -1607,45 +3329,59 @@ func PossiblePrivateEndpointConnectionProvisioningStateValues() []PrivateEndpoin
 	}
 }
 
-// PrivateEndpointServiceConnectionStatus - The private endpoint connection status.
-type PrivateEndpointServiceConnectionStatus string
+// ProtectionLevel - Protection level associated with the Intellectual Property.
+type ProtectionLevel string
 
 const (
-	PrivateEndpointServiceConnectionStatusApproved     PrivateEndpointServiceConnectionStatus = "Approved"
-	PrivateEndpointServiceConnectionStatusDisconnected PrivateEndpointServiceConnectionStatus = "Disconnected"
-	PrivateEndpointServiceConnectionStatusPending      PrivateEndpointServiceConnectionStatus = "Pending"
-	PrivateEndpointServiceConnectionStatusRejected     PrivateEndpointServiceConnectionStatus = "Rejected"
-	PrivateEndpointServiceConnectionStatusTimeout      PrivateEndpointServiceConnectionStatus = "Timeout"
+	// ProtectionLevelAll - All means Intellectual Property is fully protected.
+	ProtectionLevelAll ProtectionLevel = "All"
+	// ProtectionLevelNone - None means it is not an Intellectual Property.
+	ProtectionLevelNone ProtectionLevel = "None"
 )
 
-// PossiblePrivateEndpointServiceConnectionStatusValues returns the possible values for the PrivateEndpointServiceConnectionStatus const type.
-func PossiblePrivateEndpointServiceConnectionStatusValues() []PrivateEndpointServiceConnectionStatus {
-	return []PrivateEndpointServiceConnectionStatus{
-		PrivateEndpointServiceConnectionStatusApproved,
-		PrivateEndpointServiceConnectionStatusDisconnected,
-		PrivateEndpointServiceConnectionStatusPending,
-		PrivateEndpointServiceConnectionStatusRejected,
-		PrivateEndpointServiceConnectionStatusTimeout,
+// PossibleProtectionLevelValues returns the possible values for the ProtectionLevel const type.
+func PossibleProtectionLevelValues() []ProtectionLevel {
+	return []ProtectionLevel{	
+		ProtectionLevelAll,
+		ProtectionLevelNone,
 	}
 }
 
-// ProvisioningState - The current deployment state of workspace resource. The provisioningState is to indicate states for
-// resource provisioning.
+// Protocol - Protocol over which communication will happen over this endpoint
+type Protocol string
+
+const (
+	ProtocolHTTP Protocol = "http"
+	ProtocolTCP Protocol = "tcp"
+	ProtocolUDP Protocol = "udp"
+)
+
+// PossibleProtocolValues returns the possible values for the Protocol const type.
+func PossibleProtocolValues() []Protocol {
+	return []Protocol{	
+		ProtocolHTTP,
+		ProtocolTCP,
+		ProtocolUDP,
+	}
+}
+
+// ProvisioningState - The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and
+// Failed.
 type ProvisioningState string
 
 const (
-	ProvisioningStateCanceled  ProvisioningState = "Canceled"
-	ProvisioningStateCreating  ProvisioningState = "Creating"
-	ProvisioningStateDeleting  ProvisioningState = "Deleting"
-	ProvisioningStateFailed    ProvisioningState = "Failed"
+	ProvisioningStateCanceled ProvisioningState = "Canceled"
+	ProvisioningStateCreating ProvisioningState = "Creating"
+	ProvisioningStateDeleting ProvisioningState = "Deleting"
+	ProvisioningStateFailed ProvisioningState = "Failed"
 	ProvisioningStateSucceeded ProvisioningState = "Succeeded"
-	ProvisioningStateUnknown   ProvisioningState = "Unknown"
-	ProvisioningStateUpdating  ProvisioningState = "Updating"
+	ProvisioningStateUnknown ProvisioningState = "Unknown"
+	ProvisioningStateUpdating ProvisioningState = "Updating"
 )
 
 // PossibleProvisioningStateValues returns the possible values for the ProvisioningState const type.
 func PossibleProvisioningStateValues() []ProvisioningState {
-	return []ProvisioningState{
+	return []ProvisioningState{	
 		ProvisioningStateCanceled,
 		ProvisioningStateCreating,
 		ProvisioningStateDeleting,
@@ -1660,33 +3396,17 @@ func PossibleProvisioningStateValues() []ProvisioningState {
 type ProvisioningStatus string
 
 const (
-	ProvisioningStatusCompleted    ProvisioningStatus = "Completed"
-	ProvisioningStatusFailed       ProvisioningStatus = "Failed"
+	ProvisioningStatusCompleted ProvisioningStatus = "Completed"
+	ProvisioningStatusFailed ProvisioningStatus = "Failed"
 	ProvisioningStatusProvisioning ProvisioningStatus = "Provisioning"
 )
 
 // PossibleProvisioningStatusValues returns the possible values for the ProvisioningStatus const type.
 func PossibleProvisioningStatusValues() []ProvisioningStatus {
-	return []ProvisioningStatus{
+	return []ProvisioningStatus{	
 		ProvisioningStatusCompleted,
 		ProvisioningStatusFailed,
 		ProvisioningStatusProvisioning,
-	}
-}
-
-// PublicNetworkAccess - Whether requests from Public Network are allowed.
-type PublicNetworkAccess string
-
-const (
-	PublicNetworkAccessDisabled PublicNetworkAccess = "Disabled"
-	PublicNetworkAccessEnabled  PublicNetworkAccess = "Enabled"
-)
-
-// PossiblePublicNetworkAccessValues returns the possible values for the PublicNetworkAccess const type.
-func PossiblePublicNetworkAccessValues() []PublicNetworkAccess {
-	return []PublicNetworkAccess{
-		PublicNetworkAccessDisabled,
-		PublicNetworkAccessEnabled,
 	}
 }
 
@@ -1695,12 +3415,12 @@ type PublicNetworkAccessType string
 
 const (
 	PublicNetworkAccessTypeDisabled PublicNetworkAccessType = "Disabled"
-	PublicNetworkAccessTypeEnabled  PublicNetworkAccessType = "Enabled"
+	PublicNetworkAccessTypeEnabled PublicNetworkAccessType = "Enabled"
 )
 
 // PossiblePublicNetworkAccessTypeValues returns the possible values for the PublicNetworkAccessType const type.
 func PossiblePublicNetworkAccessTypeValues() []PublicNetworkAccessType {
-	return []PublicNetworkAccessType{
+	return []PublicNetworkAccessType{	
 		PublicNetworkAccessTypeDisabled,
 		PublicNetworkAccessTypeEnabled,
 	}
@@ -1715,7 +3435,7 @@ const (
 
 // PossibleQuotaUnitValues returns the possible values for the QuotaUnit const type.
 func PossibleQuotaUnitValues() []QuotaUnit {
-	return []QuotaUnit{
+	return []QuotaUnit{	
 		QuotaUnitCount,
 	}
 }
@@ -1725,12 +3445,12 @@ type RandomSamplingAlgorithmRule string
 
 const (
 	RandomSamplingAlgorithmRuleRandom RandomSamplingAlgorithmRule = "Random"
-	RandomSamplingAlgorithmRuleSobol  RandomSamplingAlgorithmRule = "Sobol"
+	RandomSamplingAlgorithmRuleSobol RandomSamplingAlgorithmRule = "Sobol"
 )
 
 // PossibleRandomSamplingAlgorithmRuleValues returns the possible values for the RandomSamplingAlgorithmRule const type.
 func PossibleRandomSamplingAlgorithmRuleValues() []RandomSamplingAlgorithmRule {
-	return []RandomSamplingAlgorithmRule{
+	return []RandomSamplingAlgorithmRule{	
 		RandomSamplingAlgorithmRuleRandom,
 		RandomSamplingAlgorithmRuleSobol,
 	}
@@ -1754,7 +3474,7 @@ const (
 
 // PossibleRecurrenceFrequencyValues returns the possible values for the RecurrenceFrequency const type.
 func PossibleRecurrenceFrequencyValues() []RecurrenceFrequency {
-	return []RecurrenceFrequency{
+	return []RecurrenceFrequency{	
 		RecurrenceFrequencyDay,
 		RecurrenceFrequencyHour,
 		RecurrenceFrequencyMinute,
@@ -1767,17 +3487,37 @@ func PossibleRecurrenceFrequencyValues() []RecurrenceFrequency {
 type ReferenceType string
 
 const (
-	ReferenceTypeDataPath   ReferenceType = "DataPath"
-	ReferenceTypeID         ReferenceType = "Id"
+	ReferenceTypeDataPath ReferenceType = "DataPath"
+	ReferenceTypeID ReferenceType = "Id"
 	ReferenceTypeOutputPath ReferenceType = "OutputPath"
 )
 
 // PossibleReferenceTypeValues returns the possible values for the ReferenceType const type.
 func PossibleReferenceTypeValues() []ReferenceType {
-	return []ReferenceType{
+	return []ReferenceType{	
 		ReferenceTypeDataPath,
 		ReferenceTypeID,
 		ReferenceTypeOutputPath,
+	}
+}
+
+type RegressionModelPerformanceMetric string
+
+const (
+	// RegressionModelPerformanceMetricMeanAbsoluteError - The Mean Absolute Error (MAE) metric.
+	RegressionModelPerformanceMetricMeanAbsoluteError RegressionModelPerformanceMetric = "MeanAbsoluteError"
+	// RegressionModelPerformanceMetricMeanSquaredError - The Mean Squared Error (MSE) metric.
+	RegressionModelPerformanceMetricMeanSquaredError RegressionModelPerformanceMetric = "MeanSquaredError"
+	// RegressionModelPerformanceMetricRootMeanSquaredError - The Root Mean Squared Error (RMSE) metric.
+	RegressionModelPerformanceMetricRootMeanSquaredError RegressionModelPerformanceMetric = "RootMeanSquaredError"
+)
+
+// PossibleRegressionModelPerformanceMetricValues returns the possible values for the RegressionModelPerformanceMetric const type.
+func PossibleRegressionModelPerformanceMetricValues() []RegressionModelPerformanceMetric {
+	return []RegressionModelPerformanceMetric{	
+		RegressionModelPerformanceMetricMeanAbsoluteError,
+		RegressionModelPerformanceMetricMeanSquaredError,
+		RegressionModelPerformanceMetricRootMeanSquaredError,
 	}
 }
 
@@ -1786,44 +3526,44 @@ type RegressionModels string
 
 const (
 	// RegressionModelsDecisionTree - Decision Trees are a non-parametric supervised learning method used for both classification
-	// and regression tasks.
-	// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from
-	// the data features.
+// and regression tasks.
+// The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from
+// the data features.
 	RegressionModelsDecisionTree RegressionModels = "DecisionTree"
 	// RegressionModelsElasticNet - Elastic net is a popular type of regularized linear regression that combines two popular penalties,
-	// specifically the L1 and L2 penalty functions.
+// specifically the L1 and L2 penalty functions.
 	RegressionModelsElasticNet RegressionModels = "ElasticNet"
 	// RegressionModelsExtremeRandomTrees - Extreme Trees is an ensemble machine learning algorithm that combines the predictions
-	// from many decision trees. It is related to the widely used random forest algorithm.
+// from many decision trees. It is related to the widely used random forest algorithm.
 	RegressionModelsExtremeRandomTrees RegressionModels = "ExtremeRandomTrees"
 	// RegressionModelsGradientBoosting - The technique of transiting week learners into a strong learner is called Boosting.
-	// The gradient boosting algorithm process works on this theory of execution.
+// The gradient boosting algorithm process works on this theory of execution.
 	RegressionModelsGradientBoosting RegressionModels = "GradientBoosting"
 	// RegressionModelsKNN - K-nearest neighbors (KNN) algorithm uses 'feature similarity' to predict the values of new datapoints
-	// which further means that the new data point will be assigned a value based on how closely it matches the points in the
-	// training set.
+// which further means that the new data point will be assigned a value based on how closely it matches the points in the
+// training set.
 	RegressionModelsKNN RegressionModels = "KNN"
 	// RegressionModelsLassoLars - Lasso model fit with Least Angle Regression a.k.a. Lars. It is a Linear Model trained with
-	// an L1 prior as regularizer.
+// an L1 prior as regularizer.
 	RegressionModelsLassoLars RegressionModels = "LassoLars"
 	// RegressionModelsLightGBM - LightGBM is a gradient boosting framework that uses tree based learning algorithms.
 	RegressionModelsLightGBM RegressionModels = "LightGBM"
 	// RegressionModelsRandomForest - Random forest is a supervised learning algorithm.
-	// The "forest" it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
-	// The general idea of the bagging method is that a combination of learning models increases the overall result.
+// The "forest" it builds, is an ensemble of decision trees, usually trained with the bagging method.
+// The general idea of the bagging method is that a combination of learning models increases the overall result.
 	RegressionModelsRandomForest RegressionModels = "RandomForest"
 	// RegressionModelsSGD - SGD: Stochastic gradient descent is an optimization algorithm often used in machine learning applications
-	// to find the model parameters that correspond to the best fit between predicted and actual outputs.
-	// It's an inexact but powerful technique.
+// to find the model parameters that correspond to the best fit between predicted and actual outputs.
+// It's an inexact but powerful technique.
 	RegressionModelsSGD RegressionModels = "SGD"
 	// RegressionModelsXGBoostRegressor - XGBoostRegressor: Extreme Gradient Boosting Regressor is a supervised machine learning
-	// model using ensemble of base learners.
+// model using ensemble of base learners.
 	RegressionModelsXGBoostRegressor RegressionModels = "XGBoostRegressor"
 )
 
 // PossibleRegressionModelsValues returns the possible values for the RegressionModels const type.
 func PossibleRegressionModelsValues() []RegressionModels {
-	return []RegressionModels{
+	return []RegressionModels{	
 		RegressionModelsDecisionTree,
 		RegressionModelsElasticNet,
 		RegressionModelsExtremeRandomTrees,
@@ -1842,22 +3582,22 @@ type RegressionPrimaryMetrics string
 
 const (
 	// RegressionPrimaryMetricsNormalizedMeanAbsoluteError - The Normalized Mean Absolute Error (NMAE) is a validation metric
-	// to compare the Mean Absolute Error (MAE) of (time) series with different scales.
+// to compare the Mean Absolute Error (MAE) of (time) series with different scales.
 	RegressionPrimaryMetricsNormalizedMeanAbsoluteError RegressionPrimaryMetrics = "NormalizedMeanAbsoluteError"
 	// RegressionPrimaryMetricsNormalizedRootMeanSquaredError - The Normalized Root Mean Squared Error (NRMSE) the RMSE facilitates
-	// the comparison between models with different scales.
+// the comparison between models with different scales.
 	RegressionPrimaryMetricsNormalizedRootMeanSquaredError RegressionPrimaryMetrics = "NormalizedRootMeanSquaredError"
 	// RegressionPrimaryMetricsR2Score - The R2 score is one of the performance evaluation measures for forecasting-based machine
-	// learning models.
+// learning models.
 	RegressionPrimaryMetricsR2Score RegressionPrimaryMetrics = "R2Score"
 	// RegressionPrimaryMetricsSpearmanCorrelation - The Spearman's rank coefficient of correlation is a nonparametric measure
-	// of rank correlation.
+// of rank correlation.
 	RegressionPrimaryMetricsSpearmanCorrelation RegressionPrimaryMetrics = "SpearmanCorrelation"
 )
 
 // PossibleRegressionPrimaryMetricsValues returns the possible values for the RegressionPrimaryMetrics const type.
 func PossibleRegressionPrimaryMetricsValues() []RegressionPrimaryMetrics {
-	return []RegressionPrimaryMetrics{
+	return []RegressionPrimaryMetrics{	
 		RegressionPrimaryMetricsNormalizedMeanAbsoluteError,
 		RegressionPrimaryMetricsNormalizedRootMeanSquaredError,
 		RegressionPrimaryMetricsR2Score,
@@ -1873,17 +3613,106 @@ func PossibleRegressionPrimaryMetricsValues() []RegressionPrimaryMetrics {
 type RemoteLoginPortPublicAccess string
 
 const (
-	RemoteLoginPortPublicAccessDisabled     RemoteLoginPortPublicAccess = "Disabled"
-	RemoteLoginPortPublicAccessEnabled      RemoteLoginPortPublicAccess = "Enabled"
+	RemoteLoginPortPublicAccessDisabled RemoteLoginPortPublicAccess = "Disabled"
+	RemoteLoginPortPublicAccessEnabled RemoteLoginPortPublicAccess = "Enabled"
 	RemoteLoginPortPublicAccessNotSpecified RemoteLoginPortPublicAccess = "NotSpecified"
 )
 
 // PossibleRemoteLoginPortPublicAccessValues returns the possible values for the RemoteLoginPortPublicAccess const type.
 func PossibleRemoteLoginPortPublicAccessValues() []RemoteLoginPortPublicAccess {
-	return []RemoteLoginPortPublicAccess{
+	return []RemoteLoginPortPublicAccess{	
 		RemoteLoginPortPublicAccessDisabled,
 		RemoteLoginPortPublicAccessEnabled,
 		RemoteLoginPortPublicAccessNotSpecified,
+	}
+}
+
+type RollingRateType string
+
+const (
+	RollingRateTypeDay RollingRateType = "Day"
+	RollingRateTypeHour RollingRateType = "Hour"
+	RollingRateTypeMinute RollingRateType = "Minute"
+	RollingRateTypeMonth RollingRateType = "Month"
+	RollingRateTypeYear RollingRateType = "Year"
+)
+
+// PossibleRollingRateTypeValues returns the possible values for the RollingRateType const type.
+func PossibleRollingRateTypeValues() []RollingRateType {
+	return []RollingRateType{	
+		RollingRateTypeDay,
+		RollingRateTypeHour,
+		RollingRateTypeMinute,
+		RollingRateTypeMonth,
+		RollingRateTypeYear,
+	}
+}
+
+// RuleAction - The action enum for networking rule.
+type RuleAction string
+
+const (
+	RuleActionAllow RuleAction = "Allow"
+	RuleActionDeny RuleAction = "Deny"
+)
+
+// PossibleRuleActionValues returns the possible values for the RuleAction const type.
+func PossibleRuleActionValues() []RuleAction {
+	return []RuleAction{	
+		RuleActionAllow,
+		RuleActionDeny,
+	}
+}
+
+// RuleCategory - Category of a managed network Outbound Rule of a machine learning workspace.
+type RuleCategory string
+
+const (
+	RuleCategoryRecommended RuleCategory = "Recommended"
+	RuleCategoryRequired RuleCategory = "Required"
+	RuleCategoryUserDefined RuleCategory = "UserDefined"
+)
+
+// PossibleRuleCategoryValues returns the possible values for the RuleCategory const type.
+func PossibleRuleCategoryValues() []RuleCategory {
+	return []RuleCategory{	
+		RuleCategoryRecommended,
+		RuleCategoryRequired,
+		RuleCategoryUserDefined,
+	}
+}
+
+// RuleStatus - Type of a managed network Outbound Rule of a machine learning workspace.
+type RuleStatus string
+
+const (
+	RuleStatusActive RuleStatus = "Active"
+	RuleStatusInactive RuleStatus = "Inactive"
+)
+
+// PossibleRuleStatusValues returns the possible values for the RuleStatus const type.
+func PossibleRuleStatusValues() []RuleStatus {
+	return []RuleStatus{	
+		RuleStatusActive,
+		RuleStatusInactive,
+	}
+}
+
+// RuleType - Type of a managed network Outbound Rule of a machine learning workspace.
+type RuleType string
+
+const (
+	RuleTypeFQDN RuleType = "FQDN"
+	RuleTypePrivateEndpoint RuleType = "PrivateEndpoint"
+	RuleTypeServiceTag RuleType = "ServiceTag"
+)
+
+// PossibleRuleTypeValues returns the possible values for the RuleType const type.
+func PossibleRuleTypeValues() []RuleType {
+	return []RuleType{	
+		RuleTypeFQDN,
+		RuleTypePrivateEndpoint,
+		RuleTypeServiceTag,
 	}
 }
 
@@ -1901,7 +3730,7 @@ const (
 
 // PossibleSKUScaleTypeValues returns the possible values for the SKUScaleType const type.
 func PossibleSKUScaleTypeValues() []SKUScaleType {
-	return []SKUScaleType{
+	return []SKUScaleType{	
 		SKUScaleTypeAutomatic,
 		SKUScaleTypeManual,
 		SKUScaleTypeNone,
@@ -1913,15 +3742,15 @@ func PossibleSKUScaleTypeValues() []SKUScaleType {
 type SKUTier string
 
 const (
-	SKUTierBasic    SKUTier = "Basic"
-	SKUTierFree     SKUTier = "Free"
-	SKUTierPremium  SKUTier = "Premium"
+	SKUTierBasic SKUTier = "Basic"
+	SKUTierFree SKUTier = "Free"
+	SKUTierPremium SKUTier = "Premium"
 	SKUTierStandard SKUTier = "Standard"
 )
 
 // PossibleSKUTierValues returns the possible values for the SKUTier const type.
 func PossibleSKUTierValues() []SKUTier {
-	return []SKUTier{
+	return []SKUTier{	
 		SKUTierBasic,
 		SKUTierFree,
 		SKUTierPremium,
@@ -1936,12 +3765,12 @@ type SSHPublicAccess string
 
 const (
 	SSHPublicAccessDisabled SSHPublicAccess = "Disabled"
-	SSHPublicAccessEnabled  SSHPublicAccess = "Enabled"
+	SSHPublicAccessEnabled SSHPublicAccess = "Enabled"
 )
 
 // PossibleSSHPublicAccessValues returns the possible values for the SSHPublicAccess const type.
 func PossibleSSHPublicAccessValues() []SSHPublicAccess {
-	return []SSHPublicAccess{
+	return []SSHPublicAccess{	
 		SSHPublicAccessDisabled,
 		SSHPublicAccessEnabled,
 	}
@@ -1951,14 +3780,14 @@ func PossibleSSHPublicAccessValues() []SSHPublicAccess {
 type SSLConfigStatus string
 
 const (
-	SSLConfigStatusAuto     SSLConfigStatus = "Auto"
+	SSLConfigStatusAuto SSLConfigStatus = "Auto"
 	SSLConfigStatusDisabled SSLConfigStatus = "Disabled"
-	SSLConfigStatusEnabled  SSLConfigStatus = "Enabled"
+	SSLConfigStatusEnabled SSLConfigStatus = "Enabled"
 )
 
 // PossibleSSLConfigStatusValues returns the possible values for the SSLConfigStatus const type.
 func PossibleSSLConfigStatusValues() []SSLConfigStatus {
-	return []SSLConfigStatus{
+	return []SSLConfigStatus{	
 		SSLConfigStatusAuto,
 		SSLConfigStatusDisabled,
 		SSLConfigStatusEnabled,
@@ -1969,13 +3798,13 @@ type SamplingAlgorithmType string
 
 const (
 	SamplingAlgorithmTypeBayesian SamplingAlgorithmType = "Bayesian"
-	SamplingAlgorithmTypeGrid     SamplingAlgorithmType = "Grid"
-	SamplingAlgorithmTypeRandom   SamplingAlgorithmType = "Random"
+	SamplingAlgorithmTypeGrid SamplingAlgorithmType = "Grid"
+	SamplingAlgorithmTypeRandom SamplingAlgorithmType = "Random"
 )
 
 // PossibleSamplingAlgorithmTypeValues returns the possible values for the SamplingAlgorithmType const type.
 func PossibleSamplingAlgorithmTypeValues() []SamplingAlgorithmType {
-	return []SamplingAlgorithmType{
+	return []SamplingAlgorithmType{	
 		SamplingAlgorithmTypeBayesian,
 		SamplingAlgorithmTypeGrid,
 		SamplingAlgorithmTypeRandom,
@@ -1985,13 +3814,13 @@ func PossibleSamplingAlgorithmTypeValues() []SamplingAlgorithmType {
 type ScaleType string
 
 const (
-	ScaleTypeDefault           ScaleType = "Default"
+	ScaleTypeDefault ScaleType = "Default"
 	ScaleTypeTargetUtilization ScaleType = "TargetUtilization"
 )
 
 // PossibleScaleTypeValues returns the possible values for the ScaleType const type.
 func PossibleScaleTypeValues() []ScaleType {
-	return []ScaleType{
+	return []ScaleType{	
 		ScaleTypeDefault,
 		ScaleTypeTargetUtilization,
 	}
@@ -2000,14 +3829,18 @@ func PossibleScaleTypeValues() []ScaleType {
 type ScheduleActionType string
 
 const (
-	ScheduleActionTypeCreateJob           ScheduleActionType = "CreateJob"
+	ScheduleActionTypeCreateJob ScheduleActionType = "CreateJob"
+	ScheduleActionTypeCreateMonitor ScheduleActionType = "CreateMonitor"
+	ScheduleActionTypeImportData ScheduleActionType = "ImportData"
 	ScheduleActionTypeInvokeBatchEndpoint ScheduleActionType = "InvokeBatchEndpoint"
 )
 
 // PossibleScheduleActionTypeValues returns the possible values for the ScheduleActionType const type.
 func PossibleScheduleActionTypeValues() []ScheduleActionType {
-	return []ScheduleActionType{
+	return []ScheduleActionType{	
 		ScheduleActionTypeCreateJob,
+		ScheduleActionTypeCreateMonitor,
+		ScheduleActionTypeImportData,
 		ScheduleActionTypeInvokeBatchEndpoint,
 	}
 }
@@ -2015,14 +3848,14 @@ func PossibleScheduleActionTypeValues() []ScheduleActionType {
 type ScheduleListViewType string
 
 const (
-	ScheduleListViewTypeAll          ScheduleListViewType = "All"
+	ScheduleListViewTypeAll ScheduleListViewType = "All"
 	ScheduleListViewTypeDisabledOnly ScheduleListViewType = "DisabledOnly"
-	ScheduleListViewTypeEnabledOnly  ScheduleListViewType = "EnabledOnly"
+	ScheduleListViewTypeEnabledOnly ScheduleListViewType = "EnabledOnly"
 )
 
 // PossibleScheduleListViewTypeValues returns the possible values for the ScheduleListViewType const type.
 func PossibleScheduleListViewTypeValues() []ScheduleListViewType {
-	return []ScheduleListViewType{
+	return []ScheduleListViewType{	
 		ScheduleListViewTypeAll,
 		ScheduleListViewTypeDisabledOnly,
 		ScheduleListViewTypeEnabledOnly,
@@ -2033,14 +3866,14 @@ func PossibleScheduleListViewTypeValues() []ScheduleListViewType {
 type ScheduleProvisioningState string
 
 const (
-	ScheduleProvisioningStateCompleted    ScheduleProvisioningState = "Completed"
-	ScheduleProvisioningStateFailed       ScheduleProvisioningState = "Failed"
+	ScheduleProvisioningStateCompleted ScheduleProvisioningState = "Completed"
+	ScheduleProvisioningStateFailed ScheduleProvisioningState = "Failed"
 	ScheduleProvisioningStateProvisioning ScheduleProvisioningState = "Provisioning"
 )
 
 // PossibleScheduleProvisioningStateValues returns the possible values for the ScheduleProvisioningState const type.
 func PossibleScheduleProvisioningStateValues() []ScheduleProvisioningState {
-	return []ScheduleProvisioningState{
+	return []ScheduleProvisioningState{	
 		ScheduleProvisioningStateCompleted,
 		ScheduleProvisioningStateFailed,
 		ScheduleProvisioningStateProvisioning,
@@ -2050,17 +3883,17 @@ func PossibleScheduleProvisioningStateValues() []ScheduleProvisioningState {
 type ScheduleProvisioningStatus string
 
 const (
-	ScheduleProvisioningStatusCanceled  ScheduleProvisioningStatus = "Canceled"
-	ScheduleProvisioningStatusCreating  ScheduleProvisioningStatus = "Creating"
-	ScheduleProvisioningStatusDeleting  ScheduleProvisioningStatus = "Deleting"
-	ScheduleProvisioningStatusFailed    ScheduleProvisioningStatus = "Failed"
+	ScheduleProvisioningStatusCanceled ScheduleProvisioningStatus = "Canceled"
+	ScheduleProvisioningStatusCreating ScheduleProvisioningStatus = "Creating"
+	ScheduleProvisioningStatusDeleting ScheduleProvisioningStatus = "Deleting"
+	ScheduleProvisioningStatusFailed ScheduleProvisioningStatus = "Failed"
 	ScheduleProvisioningStatusSucceeded ScheduleProvisioningStatus = "Succeeded"
-	ScheduleProvisioningStatusUpdating  ScheduleProvisioningStatus = "Updating"
+	ScheduleProvisioningStatusUpdating ScheduleProvisioningStatus = "Updating"
 )
 
 // PossibleScheduleProvisioningStatusValues returns the possible values for the ScheduleProvisioningStatus const type.
 func PossibleScheduleProvisioningStatusValues() []ScheduleProvisioningStatus {
-	return []ScheduleProvisioningStatus{
+	return []ScheduleProvisioningStatus{	
 		ScheduleProvisioningStatusCanceled,
 		ScheduleProvisioningStatusCreating,
 		ScheduleProvisioningStatusDeleting,
@@ -2075,14 +3908,37 @@ type ScheduleStatus string
 
 const (
 	ScheduleStatusDisabled ScheduleStatus = "Disabled"
-	ScheduleStatusEnabled  ScheduleStatus = "Enabled"
+	ScheduleStatusEnabled ScheduleStatus = "Enabled"
 )
 
 // PossibleScheduleStatusValues returns the possible values for the ScheduleStatus const type.
 func PossibleScheduleStatusValues() []ScheduleStatus {
-	return []ScheduleStatus{
+	return []ScheduleStatus{	
 		ScheduleStatusDisabled,
 		ScheduleStatusEnabled,
+	}
+}
+
+type ScheduleType string
+
+const (
+	ScheduleTypeComputeStartStop ScheduleType = "ComputeStartStop"
+	ScheduleTypeCreateJob ScheduleType = "CreateJob"
+	ScheduleTypeCreateMonitor ScheduleType = "CreateMonitor"
+	ScheduleTypeFeatureStoreMaterialization ScheduleType = "FeatureStoreMaterialization"
+	ScheduleTypeImportData ScheduleType = "ImportData"
+	ScheduleTypeInvokeBatchEndpoint ScheduleType = "InvokeBatchEndpoint"
+)
+
+// PossibleScheduleTypeValues returns the possible values for the ScheduleType const type.
+func PossibleScheduleTypeValues() []ScheduleType {
+	return []ScheduleType{	
+		ScheduleTypeComputeStartStop,
+		ScheduleTypeCreateJob,
+		ScheduleTypeCreateMonitor,
+		ScheduleTypeFeatureStoreMaterialization,
+		ScheduleTypeImportData,
+		ScheduleTypeInvokeBatchEndpoint,
 	}
 }
 
@@ -2098,7 +3954,7 @@ const (
 
 // PossibleSeasonalityModeValues returns the possible values for the SeasonalityMode const type.
 func PossibleSeasonalityModeValues() []SeasonalityMode {
-	return []SeasonalityMode{
+	return []SeasonalityMode{	
 		SeasonalityModeAuto,
 		SeasonalityModeCustom,
 	}
@@ -2108,19 +3964,83 @@ func PossibleSeasonalityModeValues() []SeasonalityMode {
 type SecretsType string
 
 const (
-	SecretsTypeAccountKey       SecretsType = "AccountKey"
-	SecretsTypeCertificate      SecretsType = "Certificate"
-	SecretsTypeSas              SecretsType = "Sas"
+	SecretsTypeAccountKey SecretsType = "AccountKey"
+	SecretsTypeCertificate SecretsType = "Certificate"
+	SecretsTypeKerberosKeytab SecretsType = "KerberosKeytab"
+	SecretsTypeKerberosPassword SecretsType = "KerberosPassword"
+	SecretsTypeSas SecretsType = "Sas"
 	SecretsTypeServicePrincipal SecretsType = "ServicePrincipal"
 )
 
 // PossibleSecretsTypeValues returns the possible values for the SecretsType const type.
 func PossibleSecretsTypeValues() []SecretsType {
-	return []SecretsType{
+	return []SecretsType{	
 		SecretsTypeAccountKey,
 		SecretsTypeCertificate,
+		SecretsTypeKerberosKeytab,
+		SecretsTypeKerberosPassword,
 		SecretsTypeSas,
 		SecretsTypeServicePrincipal,
+	}
+}
+
+// ServerlessEndpointState - State of the Serverless Endpoint.
+type ServerlessEndpointState string
+
+const (
+	ServerlessEndpointStateCreating ServerlessEndpointState = "Creating"
+	ServerlessEndpointStateCreationFailed ServerlessEndpointState = "CreationFailed"
+	ServerlessEndpointStateDeleting ServerlessEndpointState = "Deleting"
+	ServerlessEndpointStateDeletionFailed ServerlessEndpointState = "DeletionFailed"
+	ServerlessEndpointStateOnline ServerlessEndpointState = "Online"
+	ServerlessEndpointStateReinstating ServerlessEndpointState = "Reinstating"
+	ServerlessEndpointStateSuspended ServerlessEndpointState = "Suspended"
+	ServerlessEndpointStateSuspending ServerlessEndpointState = "Suspending"
+	ServerlessEndpointStateUnknown ServerlessEndpointState = "Unknown"
+)
+
+// PossibleServerlessEndpointStateValues returns the possible values for the ServerlessEndpointState const type.
+func PossibleServerlessEndpointStateValues() []ServerlessEndpointState {
+	return []ServerlessEndpointState{	
+		ServerlessEndpointStateCreating,
+		ServerlessEndpointStateCreationFailed,
+		ServerlessEndpointStateDeleting,
+		ServerlessEndpointStateDeletionFailed,
+		ServerlessEndpointStateOnline,
+		ServerlessEndpointStateReinstating,
+		ServerlessEndpointStateSuspended,
+		ServerlessEndpointStateSuspending,
+		ServerlessEndpointStateUnknown,
+	}
+}
+
+type ServerlessInferenceEndpointAuthMode string
+
+const (
+	ServerlessInferenceEndpointAuthModeAAD ServerlessInferenceEndpointAuthMode = "AAD"
+	ServerlessInferenceEndpointAuthModeKey ServerlessInferenceEndpointAuthMode = "Key"
+)
+
+// PossibleServerlessInferenceEndpointAuthModeValues returns the possible values for the ServerlessInferenceEndpointAuthMode const type.
+func PossibleServerlessInferenceEndpointAuthModeValues() []ServerlessInferenceEndpointAuthMode {
+	return []ServerlessInferenceEndpointAuthMode{	
+		ServerlessInferenceEndpointAuthModeAAD,
+		ServerlessInferenceEndpointAuthModeKey,
+	}
+}
+
+type ServiceAccountKeyName string
+
+const (
+	ServiceAccountKeyNameKey1 ServiceAccountKeyName = "Key1"
+	ServiceAccountKeyNameKey2 ServiceAccountKeyName = "Key2"
+)
+
+// PossibleServiceAccountKeyNameValues returns the possible values for the ServiceAccountKeyName const type.
+func PossibleServiceAccountKeyNameValues() []ServiceAccountKeyName {
+	return []ServiceAccountKeyName{	
+		ServiceAccountKeyNameKey1,
+		ServiceAccountKeyNameKey2,
 	}
 }
 
@@ -2130,16 +4050,16 @@ const (
 	// ServiceDataAccessAuthIdentityNone - Do not use any identity for service data access.
 	ServiceDataAccessAuthIdentityNone ServiceDataAccessAuthIdentity = "None"
 	// ServiceDataAccessAuthIdentityWorkspaceSystemAssignedIdentity - Use the system assigned managed identity of the Workspace
-	// to authenticate service data access.
+// to authenticate service data access.
 	ServiceDataAccessAuthIdentityWorkspaceSystemAssignedIdentity ServiceDataAccessAuthIdentity = "WorkspaceSystemAssignedIdentity"
 	// ServiceDataAccessAuthIdentityWorkspaceUserAssignedIdentity - Use the user assigned managed identity of the Workspace to
-	// authenticate service data access.
+// authenticate service data access.
 	ServiceDataAccessAuthIdentityWorkspaceUserAssignedIdentity ServiceDataAccessAuthIdentity = "WorkspaceUserAssignedIdentity"
 )
 
 // PossibleServiceDataAccessAuthIdentityValues returns the possible values for the ServiceDataAccessAuthIdentity const type.
 func PossibleServiceDataAccessAuthIdentityValues() []ServiceDataAccessAuthIdentity {
-	return []ServiceDataAccessAuthIdentity{
+	return []ServiceDataAccessAuthIdentity{	
 		ServiceDataAccessAuthIdentityNone,
 		ServiceDataAccessAuthIdentityWorkspaceSystemAssignedIdentity,
 		ServiceDataAccessAuthIdentityWorkspaceUserAssignedIdentity,
@@ -2151,7 +4071,7 @@ type ShortSeriesHandlingConfiguration string
 
 const (
 	// ShortSeriesHandlingConfigurationAuto - Short series will be padded if there are no long series, otherwise short series
-	// will be dropped.
+// will be dropped.
 	ShortSeriesHandlingConfigurationAuto ShortSeriesHandlingConfiguration = "Auto"
 	// ShortSeriesHandlingConfigurationDrop - All the short series will be dropped.
 	ShortSeriesHandlingConfigurationDrop ShortSeriesHandlingConfiguration = "Drop"
@@ -2163,7 +4083,7 @@ const (
 
 // PossibleShortSeriesHandlingConfigurationValues returns the possible values for the ShortSeriesHandlingConfiguration const type.
 func PossibleShortSeriesHandlingConfigurationValues() []ShortSeriesHandlingConfiguration {
-	return []ShortSeriesHandlingConfiguration{
+	return []ShortSeriesHandlingConfiguration{	
 		ShortSeriesHandlingConfigurationAuto,
 		ShortSeriesHandlingConfigurationDrop,
 		ShortSeriesHandlingConfigurationNone,
@@ -2175,17 +4095,32 @@ func PossibleShortSeriesHandlingConfigurationValues() []ShortSeriesHandlingConfi
 type SourceType string
 
 const (
-	SourceTypeDataset   SourceType = "Dataset"
+	SourceTypeDataset SourceType = "Dataset"
 	SourceTypeDatastore SourceType = "Datastore"
-	SourceTypeURI       SourceType = "URI"
+	SourceTypeURI SourceType = "URI"
 )
 
 // PossibleSourceTypeValues returns the possible values for the SourceType const type.
 func PossibleSourceTypeValues() []SourceType {
-	return []SourceType{
+	return []SourceType{	
 		SourceTypeDataset,
 		SourceTypeDatastore,
 		SourceTypeURI,
+	}
+}
+
+type SparkJobEntryType string
+
+const (
+	SparkJobEntryTypeSparkJobPythonEntry SparkJobEntryType = "SparkJobPythonEntry"
+	SparkJobEntryTypeSparkJobScalaEntry SparkJobEntryType = "SparkJobScalaEntry"
+)
+
+// PossibleSparkJobEntryTypeValues returns the possible values for the SparkJobEntryType const type.
+func PossibleSparkJobEntryTypeValues() []SparkJobEntryType {
+	return []SparkJobEntryType{	
+		SparkJobEntryTypeSparkJobPythonEntry,
+		SparkJobEntryTypeSparkJobScalaEntry,
 	}
 }
 
@@ -2200,21 +4135,21 @@ const (
 	// StackMetaLearnerTypeElasticNet - Default meta-learners are LogisticRegression for regression task.
 	StackMetaLearnerTypeElasticNet StackMetaLearnerType = "ElasticNet"
 	// StackMetaLearnerTypeElasticNetCV - Default meta-learners are LogisticRegression for regression task when CV is on.
-	StackMetaLearnerTypeElasticNetCV       StackMetaLearnerType = "ElasticNetCV"
+	StackMetaLearnerTypeElasticNetCV StackMetaLearnerType = "ElasticNetCV"
 	StackMetaLearnerTypeLightGBMClassifier StackMetaLearnerType = "LightGBMClassifier"
-	StackMetaLearnerTypeLightGBMRegressor  StackMetaLearnerType = "LightGBMRegressor"
-	StackMetaLearnerTypeLinearRegression   StackMetaLearnerType = "LinearRegression"
+	StackMetaLearnerTypeLightGBMRegressor StackMetaLearnerType = "LightGBMRegressor"
+	StackMetaLearnerTypeLinearRegression StackMetaLearnerType = "LinearRegression"
 	// StackMetaLearnerTypeLogisticRegression - Default meta-learners are LogisticRegression for classification tasks.
 	StackMetaLearnerTypeLogisticRegression StackMetaLearnerType = "LogisticRegression"
 	// StackMetaLearnerTypeLogisticRegressionCV - Default meta-learners are LogisticRegression for classification task when CV
-	// is on.
+// is on.
 	StackMetaLearnerTypeLogisticRegressionCV StackMetaLearnerType = "LogisticRegressionCV"
-	StackMetaLearnerTypeNone                 StackMetaLearnerType = "None"
+	StackMetaLearnerTypeNone StackMetaLearnerType = "None"
 )
 
 // PossibleStackMetaLearnerTypeValues returns the possible values for the StackMetaLearnerType const type.
 func PossibleStackMetaLearnerTypeValues() []StackMetaLearnerType {
-	return []StackMetaLearnerType{
+	return []StackMetaLearnerType{	
 		StackMetaLearnerTypeElasticNet,
 		StackMetaLearnerTypeElasticNetCV,
 		StackMetaLearnerTypeLightGBMClassifier,
@@ -2230,19 +4165,19 @@ func PossibleStackMetaLearnerTypeValues() []StackMetaLearnerType {
 type Status string
 
 const (
-	StatusFailure                              Status = "Failure"
-	StatusInvalidQuotaBelowClusterMinimum      Status = "InvalidQuotaBelowClusterMinimum"
+	StatusFailure Status = "Failure"
+	StatusInvalidQuotaBelowClusterMinimum Status = "InvalidQuotaBelowClusterMinimum"
 	StatusInvalidQuotaExceedsSubscriptionLimit Status = "InvalidQuotaExceedsSubscriptionLimit"
-	StatusInvalidVMFamilyName                  Status = "InvalidVMFamilyName"
-	StatusOperationNotEnabledForRegion         Status = "OperationNotEnabledForRegion"
-	StatusOperationNotSupportedForSKU          Status = "OperationNotSupportedForSku"
-	StatusSuccess                              Status = "Success"
-	StatusUndefined                            Status = "Undefined"
+	StatusInvalidVMFamilyName Status = "InvalidVMFamilyName"
+	StatusOperationNotEnabledForRegion Status = "OperationNotEnabledForRegion"
+	StatusOperationNotSupportedForSKU Status = "OperationNotSupportedForSku"
+	StatusSuccess Status = "Success"
+	StatusUndefined Status = "Undefined"
 )
 
 // PossibleStatusValues returns the possible values for the Status const type.
 func PossibleStatusValues() []Status {
-	return []Status{
+	return []Status{	
 		StatusFailure,
 		StatusInvalidQuotaBelowClusterMinimum,
 		StatusInvalidQuotaExceedsSubscriptionLimit,
@@ -2254,12 +4189,29 @@ func PossibleStatusValues() []Status {
 	}
 }
 
+type StatusMessageLevel string
+
+const (
+	StatusMessageLevelError StatusMessageLevel = "Error"
+	StatusMessageLevelInformation StatusMessageLevel = "Information"
+	StatusMessageLevelWarning StatusMessageLevel = "Warning"
+)
+
+// PossibleStatusMessageLevelValues returns the possible values for the StatusMessageLevel const type.
+func PossibleStatusMessageLevelValues() []StatusMessageLevel {
+	return []StatusMessageLevel{	
+		StatusMessageLevelError,
+		StatusMessageLevelInformation,
+		StatusMessageLevelWarning,
+	}
+}
+
 // StochasticOptimizer - Stochastic optimizer for image models.
 type StochasticOptimizer string
 
 const (
 	// StochasticOptimizerAdam - Adam is algorithm the optimizes stochastic objective functions based on adaptive estimates of
-	// moments
+// moments
 	StochasticOptimizerAdam StochasticOptimizer = "Adam"
 	// StochasticOptimizerAdamw - AdamW is a variant of the optimizer Adam that has an improved implementation of weight decay.
 	StochasticOptimizerAdamw StochasticOptimizer = "Adamw"
@@ -2271,7 +4223,7 @@ const (
 
 // PossibleStochasticOptimizerValues returns the possible values for the StochasticOptimizer const type.
 func PossibleStochasticOptimizerValues() []StochasticOptimizer {
-	return []StochasticOptimizer{
+	return []StochasticOptimizer{	
 		StochasticOptimizerAdam,
 		StochasticOptimizerAdamw,
 		StochasticOptimizerNone,
@@ -2283,13 +4235,13 @@ func PossibleStochasticOptimizerValues() []StochasticOptimizer {
 type StorageAccountType string
 
 const (
-	StorageAccountTypePremiumLRS  StorageAccountType = "Premium_LRS"
+	StorageAccountTypePremiumLRS StorageAccountType = "Premium_LRS"
 	StorageAccountTypeStandardLRS StorageAccountType = "Standard_LRS"
 )
 
 // PossibleStorageAccountTypeValues returns the possible values for the StorageAccountType const type.
 func PossibleStorageAccountTypeValues() []StorageAccountType {
-	return []StorageAccountType{
+	return []StorageAccountType{	
 		StorageAccountTypePremiumLRS,
 		StorageAccountTypeStandardLRS,
 	}
@@ -2299,17 +4251,17 @@ func PossibleStorageAccountTypeValues() []StorageAccountType {
 type TargetAggregationFunction string
 
 const (
-	TargetAggregationFunctionMax  TargetAggregationFunction = "Max"
+	TargetAggregationFunctionMax TargetAggregationFunction = "Max"
 	TargetAggregationFunctionMean TargetAggregationFunction = "Mean"
-	TargetAggregationFunctionMin  TargetAggregationFunction = "Min"
+	TargetAggregationFunctionMin TargetAggregationFunction = "Min"
 	// TargetAggregationFunctionNone - Represent no value set.
 	TargetAggregationFunctionNone TargetAggregationFunction = "None"
-	TargetAggregationFunctionSum  TargetAggregationFunction = "Sum"
+	TargetAggregationFunctionSum TargetAggregationFunction = "Sum"
 )
 
 // PossibleTargetAggregationFunctionValues returns the possible values for the TargetAggregationFunction const type.
 func PossibleTargetAggregationFunctionValues() []TargetAggregationFunction {
-	return []TargetAggregationFunction{
+	return []TargetAggregationFunction{	
 		TargetAggregationFunctionMax,
 		TargetAggregationFunctionMean,
 		TargetAggregationFunctionMin,
@@ -2330,7 +4282,7 @@ const (
 
 // PossibleTargetLagsModeValues returns the possible values for the TargetLagsMode const type.
 func PossibleTargetLagsModeValues() []TargetLagsMode {
-	return []TargetLagsMode{
+	return []TargetLagsMode{	
 		TargetLagsModeAuto,
 		TargetLagsModeCustom,
 	}
@@ -2348,7 +4300,7 @@ const (
 
 // PossibleTargetRollingWindowSizeModeValues returns the possible values for the TargetRollingWindowSizeMode const type.
 func PossibleTargetRollingWindowSizeModeValues() []TargetRollingWindowSizeMode {
-	return []TargetRollingWindowSizeMode{
+	return []TargetRollingWindowSizeMode{	
 		TargetRollingWindowSizeModeAuto,
 		TargetRollingWindowSizeModeCustom,
 	}
@@ -2359,47 +4311,47 @@ type TaskType string
 
 const (
 	// TaskTypeClassification - Classification in machine learning and statistics is a supervised learning approach in which
-	// the computer program learns from the data given to it and make new observations or classifications.
+// the computer program learns from the data given to it and make new observations or classifications.
 	TaskTypeClassification TaskType = "Classification"
 	// TaskTypeForecasting - Forecasting is a special kind of regression task that deals with time-series data and creates forecasting
-	// model
-	// that can be used to predict the near future values based on the inputs.
+// model
+// that can be used to predict the near future values based on the inputs.
 	TaskTypeForecasting TaskType = "Forecasting"
 	// TaskTypeImageClassification - Image Classification. Multi-class image classification is used when an image is classified
-	// with only a single label
-	// from a set of classes - e.g. each image is classified as either an image of a 'cat' or a 'dog' or a 'duck'.
+// with only a single label
+// from a set of classes - e.g. each image is classified as either an image of a 'cat' or a 'dog' or a 'duck'.
 	TaskTypeImageClassification TaskType = "ImageClassification"
 	// TaskTypeImageClassificationMultilabel - Image Classification Multilabel. Multi-label image classification is used when
-	// an image could have one or more labels
-	// from a set of labels - e.g. an image could be labeled with both 'cat' and 'dog'.
+// an image could have one or more labels
+// from a set of labels - e.g. an image could be labeled with both 'cat' and 'dog'.
 	TaskTypeImageClassificationMultilabel TaskType = "ImageClassificationMultilabel"
 	// TaskTypeImageInstanceSegmentation - Image Instance Segmentation. Instance segmentation is used to identify objects in an
-	// image at the pixel level,
-	// drawing a polygon around each object in the image.
+// image at the pixel level,
+// drawing a polygon around each object in the image.
 	TaskTypeImageInstanceSegmentation TaskType = "ImageInstanceSegmentation"
 	// TaskTypeImageObjectDetection - Image Object Detection. Object detection is used to identify objects in an image and locate
-	// each object with a
-	// bounding box e.g. locate all dogs and cats in an image and draw a bounding box around each.
+// each object with a
+// bounding box e.g. locate all dogs and cats in an image and draw a bounding box around each.
 	TaskTypeImageObjectDetection TaskType = "ImageObjectDetection"
 	// TaskTypeRegression - Regression means to predict the value using the input data. Regression models are used to predict
-	// a continuous value.
+// a continuous value.
 	TaskTypeRegression TaskType = "Regression"
 	// TaskTypeTextClassification - Text classification (also known as text tagging or text categorization) is the process of
-	// sorting texts into categories.
-	// Categories are mutually exclusive.
+// sorting texts into categories.
+// Categories are mutually exclusive.
 	TaskTypeTextClassification TaskType = "TextClassification"
 	// TaskTypeTextClassificationMultilabel - Multilabel classification task assigns each sample to a group (zero or more) of
-	// target labels.
+// target labels.
 	TaskTypeTextClassificationMultilabel TaskType = "TextClassificationMultilabel"
 	// TaskTypeTextNER - Text Named Entity Recognition a.k.a. TextNER.
-	// Named Entity Recognition (NER) is the ability to take free-form text and identify the occurrences of entities such as people,
-	// locations, organizations, and more.
+// Named Entity Recognition (NER) is the ability to take free-form text and identify the occurrences of entities such as people,
+// locations, organizations, and more.
 	TaskTypeTextNER TaskType = "TextNER"
 )
 
 // PossibleTaskTypeValues returns the possible values for the TaskType const type.
 func PossibleTaskTypeValues() []TaskType {
-	return []TaskType{
+	return []TaskType{	
 		TaskTypeClassification,
 		TaskTypeForecasting,
 		TaskTypeImageClassification,
@@ -2413,16 +4365,53 @@ func PossibleTaskTypeValues() []TaskType {
 	}
 }
 
+// TextAnnotationType - Annotation type of text data.
+type TextAnnotationType string
+
+const (
+	TextAnnotationTypeClassification TextAnnotationType = "Classification"
+	TextAnnotationTypeNamedEntityRecognition TextAnnotationType = "NamedEntityRecognition"
+)
+
+// PossibleTextAnnotationTypeValues returns the possible values for the TextAnnotationType const type.
+func PossibleTextAnnotationTypeValues() []TextAnnotationType {
+	return []TextAnnotationType{	
+		TextAnnotationTypeClassification,
+		TextAnnotationTypeNamedEntityRecognition,
+	}
+}
+
+// TrainingMode - Training mode dictates whether to use distributed training or not
+type TrainingMode string
+
+const (
+	// TrainingModeAuto - Auto mode
+	TrainingModeAuto TrainingMode = "Auto"
+	// TrainingModeDistributed - Distributed training mode
+	TrainingModeDistributed TrainingMode = "Distributed"
+	// TrainingModeNonDistributed - Non distributed training mode
+	TrainingModeNonDistributed TrainingMode = "NonDistributed"
+)
+
+// PossibleTrainingModeValues returns the possible values for the TrainingMode const type.
+func PossibleTrainingModeValues() []TrainingMode {
+	return []TrainingMode{	
+		TrainingModeAuto,
+		TrainingModeDistributed,
+		TrainingModeNonDistributed,
+	}
+}
+
 type TriggerType string
 
 const (
-	TriggerTypeCron       TriggerType = "Cron"
+	TriggerTypeCron TriggerType = "Cron"
 	TriggerTypeRecurrence TriggerType = "Recurrence"
 )
 
 // PossibleTriggerTypeValues returns the possible values for the TriggerType const type.
 func PossibleTriggerTypeValues() []TriggerType {
-	return []TriggerType{
+	return []TriggerType{	
 		TriggerTypeCron,
 		TriggerTypeRecurrence,
 	}
@@ -2437,7 +4426,7 @@ const (
 
 // PossibleUnderlyingResourceActionValues returns the possible values for the UnderlyingResourceAction const type.
 func PossibleUnderlyingResourceActionValues() []UnderlyingResourceAction {
-	return []UnderlyingResourceAction{
+	return []UnderlyingResourceAction{	
 		UnderlyingResourceActionDelete,
 		UnderlyingResourceActionDetach,
 	}
@@ -2452,7 +4441,7 @@ const (
 
 // PossibleUnitOfMeasureValues returns the possible values for the UnitOfMeasure const type.
 func PossibleUnitOfMeasureValues() []UnitOfMeasure {
-	return []UnitOfMeasure{
+	return []UnitOfMeasure{	
 		UnitOfMeasureOneHour,
 	}
 }
@@ -2466,7 +4455,7 @@ const (
 
 // PossibleUsageUnitValues returns the possible values for the UsageUnit const type.
 func PossibleUsageUnitValues() []UsageUnit {
-	return []UsageUnit{
+	return []UsageUnit{	
 		UsageUnitCount,
 	}
 }
@@ -2476,14 +4465,14 @@ type UseStl string
 
 const (
 	// UseStlNone - No stl decomposition.
-	UseStlNone        UseStl = "None"
-	UseStlSeason      UseStl = "Season"
+	UseStlNone UseStl = "None"
+	UseStlSeason UseStl = "Season"
 	UseStlSeasonTrend UseStl = "SeasonTrend"
 )
 
 // PossibleUseStlValues returns the possible values for the UseStl const type.
 func PossibleUseStlValues() []UseStl {
-	return []UseStl{
+	return []UseStl{	
 		UseStlNone,
 		UseStlSeason,
 		UseStlSeasonTrend,
@@ -2494,13 +4483,13 @@ func PossibleUseStlValues() []UseStl {
 type VMPriceOSType string
 
 const (
-	VMPriceOSTypeLinux   VMPriceOSType = "Linux"
+	VMPriceOSTypeLinux VMPriceOSType = "Linux"
 	VMPriceOSTypeWindows VMPriceOSType = "Windows"
 )
 
 // PossibleVMPriceOSTypeValues returns the possible values for the VMPriceOSType const type.
 func PossibleVMPriceOSTypeValues() []VMPriceOSType {
-	return []VMPriceOSType{
+	return []VMPriceOSType{	
 		VMPriceOSTypeLinux,
 		VMPriceOSTypeWindows,
 	}
@@ -2510,13 +4499,13 @@ func PossibleVMPriceOSTypeValues() []VMPriceOSType {
 type VMPriority string
 
 const (
-	VMPriorityDedicated   VMPriority = "Dedicated"
+	VMPriorityDedicated VMPriority = "Dedicated"
 	VMPriorityLowPriority VMPriority = "LowPriority"
 )
 
 // PossibleVMPriorityValues returns the possible values for the VMPriority const type.
 func PossibleVMPriorityValues() []VMPriority {
-	return []VMPriority{
+	return []VMPriority{	
 		VMPriorityDedicated,
 		VMPriorityLowPriority,
 	}
@@ -2527,13 +4516,13 @@ type VMTier string
 
 const (
 	VMTierLowPriority VMTier = "LowPriority"
-	VMTierSpot        VMTier = "Spot"
-	VMTierStandard    VMTier = "Standard"
+	VMTierSpot VMTier = "Spot"
+	VMTierStandard VMTier = "Standard"
 )
 
 // PossibleVMTierValues returns the possible values for the VMTier const type.
 func PossibleVMTierValues() []VMTier {
-	return []VMTier{
+	return []VMTier{	
 		VMTierLowPriority,
 		VMTierSpot,
 		VMTierStandard,
@@ -2556,7 +4545,7 @@ const (
 
 // PossibleValidationMetricTypeValues returns the possible values for the ValidationMetricType const type.
 func PossibleValidationMetricTypeValues() []ValidationMetricType {
-	return []ValidationMetricType{
+	return []ValidationMetricType{	
 		ValidationMetricTypeCoco,
 		ValidationMetricTypeCocoVoc,
 		ValidationMetricTypeNone,
@@ -2564,17 +4553,37 @@ func PossibleValidationMetricTypeValues() []ValidationMetricType {
 	}
 }
 
-// ValueFormat - format for the workspace connection value
-type ValueFormat string
+// VolumeDefinitionType - Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe
+type VolumeDefinitionType string
 
 const (
-	ValueFormatJSON ValueFormat = "JSON"
+	VolumeDefinitionTypeBind VolumeDefinitionType = "bind"
+	VolumeDefinitionTypeNpipe VolumeDefinitionType = "npipe"
+	VolumeDefinitionTypeTmpfs VolumeDefinitionType = "tmpfs"
+	VolumeDefinitionTypeVolume VolumeDefinitionType = "volume"
 )
 
-// PossibleValueFormatValues returns the possible values for the ValueFormat const type.
-func PossibleValueFormatValues() []ValueFormat {
-	return []ValueFormat{
-		ValueFormatJSON,
+// PossibleVolumeDefinitionTypeValues returns the possible values for the VolumeDefinitionType const type.
+func PossibleVolumeDefinitionTypeValues() []VolumeDefinitionType {
+	return []VolumeDefinitionType{	
+		VolumeDefinitionTypeBind,
+		VolumeDefinitionTypeNpipe,
+		VolumeDefinitionTypeTmpfs,
+		VolumeDefinitionTypeVolume,
+	}
+}
+
+// WebhookType - Enum to determine the webhook callback service type.
+type WebhookType string
+
+const (
+	WebhookTypeAzureDevOps WebhookType = "AzureDevOps"
+)
+
+// PossibleWebhookTypeValues returns the possible values for the WebhookType const type.
+func PossibleWebhookTypeValues() []WebhookType {
+	return []WebhookType{	
+		WebhookTypeAzureDevOps,
 	}
 }
 
@@ -2600,7 +4609,7 @@ const (
 
 // PossibleWeekDayValues returns the possible values for the WeekDay const type.
 func PossibleWeekDayValues() []WeekDay {
-	return []WeekDay{
+	return []WeekDay{	
 		WeekDayFriday,
 		WeekDayMonday,
 		WeekDaySaturday,
@@ -2610,3 +4619,4 @@ func PossibleWeekDayValues() []WeekDay {
 		WeekDayWednesday,
 	}
 }
+

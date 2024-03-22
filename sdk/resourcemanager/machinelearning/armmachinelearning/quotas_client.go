@@ -23,7 +23,7 @@ import (
 // QuotasClient contains the methods for the Quotas group.
 // Don't use this type directly, use NewQuotasClient() instead.
 type QuotasClient struct {
-	internal       *arm.Client
+	internal *arm.Client
 	subscriptionID string
 }
 
@@ -38,23 +38,23 @@ func NewQuotasClient(subscriptionID string, credential azcore.TokenCredential, o
 	}
 	client := &QuotasClient{
 		subscriptionID: subscriptionID,
-		internal:       cl,
+	internal: cl,
 	}
 	return client, nil
 }
 
 // NewListPager - Gets the currently assigned Workspace Quotas based on VMFamily.
 //
-// Generated from API version 2022-10-01
+// Generated from API version 2024-01-01-preview
 //   - location - The location for which resource usage is queried.
 //   - options - QuotasClientListOptions contains the optional parameters for the QuotasClient.NewListPager method.
-func (client *QuotasClient) NewListPager(location string, options *QuotasClientListOptions) *runtime.Pager[QuotasClientListResponse] {
+func (client *QuotasClient) NewListPager(location string, options *QuotasClientListOptions) (*runtime.Pager[QuotasClientListResponse]) {
 	return runtime.NewPager(runtime.PagingHandler[QuotasClientListResponse]{
 		More: func(page QuotasClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *QuotasClientListResponse) (QuotasClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "QuotasClient.NewListPager")
+		ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "QuotasClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -66,7 +66,7 @@ func (client *QuotasClient) NewListPager(location string, options *QuotasClientL
 				return QuotasClientListResponse{}, err
 			}
 			return client.listHandleResponse(resp)
-		},
+			},
 		Tracer: client.internal.Tracer(),
 	})
 }
@@ -87,7 +87,7 @@ func (client *QuotasClient) listCreateRequest(ctx context.Context, location stri
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-10-01")
+	reqQP.Set("api-version", "2024-01-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -105,7 +105,7 @@ func (client *QuotasClient) listHandleResponse(resp *http.Response) (QuotasClien
 // Update - Update quota for each VM family in workspace.
 // If the operation fails it returns an *azcore.ResponseError type.
 //
-// Generated from API version 2022-10-01
+// Generated from API version 2024-01-01-preview
 //   - location - The location for update quota is queried.
 //   - parameters - Quota update parameters.
 //   - options - QuotasClientUpdateOptions contains the optional parameters for the QuotasClient.Update method.
@@ -147,12 +147,12 @@ func (client *QuotasClient) updateCreateRequest(ctx context.Context, location st
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-10-01")
+	reqQP.Set("api-version", "2024-01-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	if err := runtime.MarshalAsJSON(req, parameters); err != nil {
-		return nil, err
-	}
+	return nil, err
+}
 	return req, nil
 }
 
@@ -164,3 +164,4 @@ func (client *QuotasClient) updateHandleResponse(resp *http.Response) (QuotasCli
 	}
 	return result, nil
 }
+

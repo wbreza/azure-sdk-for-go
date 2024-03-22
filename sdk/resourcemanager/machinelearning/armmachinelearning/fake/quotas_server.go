@@ -16,14 +16,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
 )
 
 // QuotasServer is a fake server for instances of the armmachinelearning.QuotasClient type.
-type QuotasServer struct {
+type QuotasServer struct{
 	// NewListPager is the fake for method QuotasClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(location string, options *armmachinelearning.QuotasClientListOptions) (resp azfake.PagerResponder[armmachinelearning.QuotasClientListResponse])
@@ -31,6 +31,7 @@ type QuotasServer struct {
 	// Update is the fake for method QuotasClient.Update
 	// HTTP status codes to indicate success: http.StatusOK
 	Update func(ctx context.Context, location string, parameters armmachinelearning.QuotaUpdateParameters, options *armmachinelearning.QuotasClientUpdateOptions) (resp azfake.Responder[armmachinelearning.QuotasClientUpdateResponse], errResp azfake.ErrorResponder)
+
 }
 
 // NewQuotasServerTransport creates a new instance of QuotasServerTransport with the provided implementation.
@@ -38,7 +39,7 @@ type QuotasServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewQuotasServerTransport(srv *QuotasServer) *QuotasServerTransport {
 	return &QuotasServerTransport{
-		srv:          srv,
+		srv: srv,
 		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.QuotasClientListResponse]](),
 	}
 }
@@ -46,7 +47,7 @@ func NewQuotasServerTransport(srv *QuotasServer) *QuotasServerTransport {
 // QuotasServerTransport connects instances of armmachinelearning.QuotasClient to instances of QuotasServer.
 // Don't use this type directly, use NewQuotasServerTransport instead.
 type QuotasServerTransport struct {
-	srv          *QuotasServer
+	srv *QuotasServer
 	newListPager *tracker[azfake.PagerResponder[armmachinelearning.QuotasClientListResponse]]
 }
 
@@ -83,17 +84,17 @@ func (q *QuotasServerTransport) dispatchNewListPager(req *http.Request) (*http.R
 	}
 	newListPager := q.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/locations/(?P<location>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/quotas`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 2 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
-		if err != nil {
-			return nil, err
-		}
-		resp := q.srv.NewListPager(locationParam, nil)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/locations/(?P<location>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/quotas`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 2 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	if err != nil {
+		return nil, err
+	}
+resp := q.srv.NewListPager(locationParam, nil)
 		newListPager = &resp
 		q.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armmachinelearning.QuotasClientListResponse, createLink func() string) {
@@ -146,3 +147,4 @@ func (q *QuotasServerTransport) dispatchUpdate(req *http.Request) (*http.Respons
 	}
 	return resp, nil
 }
+

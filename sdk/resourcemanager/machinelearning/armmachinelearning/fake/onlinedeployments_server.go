@@ -16,7 +16,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -24,7 +24,7 @@ import (
 )
 
 // OnlineDeploymentsServer is a fake server for instances of the armmachinelearning.OnlineDeploymentsClient type.
-type OnlineDeploymentsServer struct {
+type OnlineDeploymentsServer struct{
 	// BeginCreateOrUpdate is the fake for method OnlineDeploymentsClient.BeginCreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	BeginCreateOrUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearning.OnlineDeployment, options *armmachinelearning.OnlineDeploymentsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
@@ -52,6 +52,7 @@ type OnlineDeploymentsServer struct {
 	// BeginUpdate is the fake for method OnlineDeploymentsClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
 	BeginUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, deploymentName string, body armmachinelearning.PartialMinimalTrackedResourceWithSKU, options *armmachinelearning.OnlineDeploymentsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientUpdateResponse], errResp azfake.ErrorResponder)
+
 }
 
 // NewOnlineDeploymentsServerTransport creates a new instance of OnlineDeploymentsServerTransport with the provided implementation.
@@ -59,24 +60,24 @@ type OnlineDeploymentsServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewOnlineDeploymentsServerTransport(srv *OnlineDeploymentsServer) *OnlineDeploymentsServerTransport {
 	return &OnlineDeploymentsServerTransport{
-		srv:                 srv,
+		srv: srv,
 		beginCreateOrUpdate: newTracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientCreateOrUpdateResponse]](),
-		beginDelete:         newTracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientDeleteResponse]](),
-		newListPager:        newTracker[azfake.PagerResponder[armmachinelearning.OnlineDeploymentsClientListResponse]](),
-		newListSKUsPager:    newTracker[azfake.PagerResponder[armmachinelearning.OnlineDeploymentsClientListSKUsResponse]](),
-		beginUpdate:         newTracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientUpdateResponse]](),
+		beginDelete: newTracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientDeleteResponse]](),
+		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.OnlineDeploymentsClientListResponse]](),
+		newListSKUsPager: newTracker[azfake.PagerResponder[armmachinelearning.OnlineDeploymentsClientListSKUsResponse]](),
+		beginUpdate: newTracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientUpdateResponse]](),
 	}
 }
 
 // OnlineDeploymentsServerTransport connects instances of armmachinelearning.OnlineDeploymentsClient to instances of OnlineDeploymentsServer.
 // Don't use this type directly, use NewOnlineDeploymentsServerTransport instead.
 type OnlineDeploymentsServerTransport struct {
-	srv                 *OnlineDeploymentsServer
+	srv *OnlineDeploymentsServer
 	beginCreateOrUpdate *tracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientCreateOrUpdateResponse]]
-	beginDelete         *tracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientDeleteResponse]]
-	newListPager        *tracker[azfake.PagerResponder[armmachinelearning.OnlineDeploymentsClientListResponse]]
-	newListSKUsPager    *tracker[azfake.PagerResponder[armmachinelearning.OnlineDeploymentsClientListSKUsResponse]]
-	beginUpdate         *tracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientUpdateResponse]]
+	beginDelete *tracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientDeleteResponse]]
+	newListPager *tracker[azfake.PagerResponder[armmachinelearning.OnlineDeploymentsClientListResponse]]
+	newListSKUsPager *tracker[azfake.PagerResponder[armmachinelearning.OnlineDeploymentsClientListSKUsResponse]]
+	beginUpdate *tracker[azfake.PollerResponder[armmachinelearning.OnlineDeploymentsClientUpdateResponse]]
 }
 
 // Do implements the policy.Transporter interface for OnlineDeploymentsServerTransport.
@@ -122,36 +123,36 @@ func (o *OnlineDeploymentsServerTransport) dispatchBeginCreateOrUpdate(req *http
 	}
 	beginCreateOrUpdate := o.beginCreateOrUpdate.get(req)
 	if beginCreateOrUpdate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 5 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		body, err := server.UnmarshalRequestAsJSON[armmachinelearning.OnlineDeployment](req)
-		if err != nil {
-			return nil, err
-		}
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
-		if err != nil {
-			return nil, err
-		}
-		deploymentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deploymentName")])
-		if err != nil {
-			return nil, err
-		}
-		respr, errRespr := o.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, deploymentNameParam, body, nil)
-		if respErr := server.GetError(errRespr, req); respErr != nil {
-			return nil, respErr
-		}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 5 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armmachinelearning.OnlineDeployment](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
+	if err != nil {
+		return nil, err
+	}
+	deploymentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deploymentName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := o.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, deploymentNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
 		beginCreateOrUpdate = &respr
 		o.beginCreateOrUpdate.add(req, beginCreateOrUpdate)
 	}
@@ -178,32 +179,32 @@ func (o *OnlineDeploymentsServerTransport) dispatchBeginDelete(req *http.Request
 	}
 	beginDelete := o.beginDelete.get(req)
 	if beginDelete == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 5 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
-		if err != nil {
-			return nil, err
-		}
-		deploymentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deploymentName")])
-		if err != nil {
-			return nil, err
-		}
-		respr, errRespr := o.srv.BeginDelete(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, deploymentNameParam, nil)
-		if respErr := server.GetError(errRespr, req); respErr != nil {
-			return nil, respErr
-		}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 5 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
+	if err != nil {
+		return nil, err
+	}
+	deploymentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deploymentName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := o.srv.BeginDelete(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, deploymentNameParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
 		beginDelete = &respr
 		o.beginDelete.add(req, beginDelete)
 	}
@@ -316,58 +317,58 @@ func (o *OnlineDeploymentsServerTransport) dispatchNewListPager(req *http.Reques
 	}
 	newListPager := o.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 4 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	qp := req.URL.Query()
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
+	if err != nil {
+		return nil, err
+	}
+	orderByUnescaped, err := url.QueryUnescape(qp.Get("$orderBy"))
+	if err != nil {
+		return nil, err
+	}
+	orderByParam := getOptional(orderByUnescaped)
+	topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
+	if err != nil {
+		return nil, err
+	}
+	topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
-		qp := req.URL.Query()
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
+	if err != nil {
+		return nil, err
+	}
+	skipParam := getOptional(skipUnescaped)
+	var options *armmachinelearning.OnlineDeploymentsClientListOptions
+	if orderByParam != nil || topParam != nil || skipParam != nil {
+		options = &armmachinelearning.OnlineDeploymentsClientListOptions{
+			OrderBy: orderByParam,
+			Top: topParam,
+			Skip: skipParam,
 		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
-		if err != nil {
-			return nil, err
-		}
-		orderByUnescaped, err := url.QueryUnescape(qp.Get("$orderBy"))
-		if err != nil {
-			return nil, err
-		}
-		orderByParam := getOptional(orderByUnescaped)
-		topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
-		if err != nil {
-			return nil, err
-		}
-		topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
-			p, parseErr := strconv.ParseInt(v, 10, 32)
-			if parseErr != nil {
-				return 0, parseErr
-			}
-			return int32(p), nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
-		if err != nil {
-			return nil, err
-		}
-		skipParam := getOptional(skipUnescaped)
-		var options *armmachinelearning.OnlineDeploymentsClientListOptions
-		if orderByParam != nil || topParam != nil || skipParam != nil {
-			options = &armmachinelearning.OnlineDeploymentsClientListOptions{
-				OrderBy: orderByParam,
-				Top:     topParam,
-				Skip:    skipParam,
-			}
-		}
-		resp := o.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, endpointNameParam, options)
+	}
+resp := o.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, endpointNameParam, options)
 		newListPager = &resp
 		o.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armmachinelearning.OnlineDeploymentsClientListResponse, createLink func() string) {
@@ -394,56 +395,56 @@ func (o *OnlineDeploymentsServerTransport) dispatchNewListSKUsPager(req *http.Re
 	}
 	newListSKUsPager := o.newListSKUsPager.get(req)
 	if newListSKUsPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/skus`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 5 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/skus`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 5 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	qp := req.URL.Query()
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
+	if err != nil {
+		return nil, err
+	}
+	deploymentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deploymentName")])
+	if err != nil {
+		return nil, err
+	}
+	countUnescaped, err := url.QueryUnescape(qp.Get("count"))
+	if err != nil {
+		return nil, err
+	}
+	countParam, err := parseOptional(countUnescaped, func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
-		qp := req.URL.Query()
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
+	if err != nil {
+		return nil, err
+	}
+	skipParam := getOptional(skipUnescaped)
+	var options *armmachinelearning.OnlineDeploymentsClientListSKUsOptions
+	if countParam != nil || skipParam != nil {
+		options = &armmachinelearning.OnlineDeploymentsClientListSKUsOptions{
+			Count: countParam,
+			Skip: skipParam,
 		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
-		if err != nil {
-			return nil, err
-		}
-		deploymentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deploymentName")])
-		if err != nil {
-			return nil, err
-		}
-		countUnescaped, err := url.QueryUnescape(qp.Get("count"))
-		if err != nil {
-			return nil, err
-		}
-		countParam, err := parseOptional(countUnescaped, func(v string) (int32, error) {
-			p, parseErr := strconv.ParseInt(v, 10, 32)
-			if parseErr != nil {
-				return 0, parseErr
-			}
-			return int32(p), nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
-		if err != nil {
-			return nil, err
-		}
-		skipParam := getOptional(skipUnescaped)
-		var options *armmachinelearning.OnlineDeploymentsClientListSKUsOptions
-		if countParam != nil || skipParam != nil {
-			options = &armmachinelearning.OnlineDeploymentsClientListSKUsOptions{
-				Count: countParam,
-				Skip:  skipParam,
-			}
-		}
-		resp := o.srv.NewListSKUsPager(resourceGroupNameParam, workspaceNameParam, endpointNameParam, deploymentNameParam, options)
+	}
+resp := o.srv.NewListSKUsPager(resourceGroupNameParam, workspaceNameParam, endpointNameParam, deploymentNameParam, options)
 		newListSKUsPager = &resp
 		o.newListSKUsPager.add(req, newListSKUsPager)
 		server.PagerResponderInjectNextLinks(newListSKUsPager, req, func(page *armmachinelearning.OnlineDeploymentsClientListSKUsResponse, createLink func() string) {
@@ -470,36 +471,36 @@ func (o *OnlineDeploymentsServerTransport) dispatchBeginUpdate(req *http.Request
 	}
 	beginUpdate := o.beginUpdate.get(req)
 	if beginUpdate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 5 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		body, err := server.UnmarshalRequestAsJSON[armmachinelearning.PartialMinimalTrackedResourceWithSKU](req)
-		if err != nil {
-			return nil, err
-		}
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
-		if err != nil {
-			return nil, err
-		}
-		deploymentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deploymentName")])
-		if err != nil {
-			return nil, err
-		}
-		respr, errRespr := o.srv.BeginUpdate(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, deploymentNameParam, body, nil)
-		if respErr := server.GetError(errRespr, req); respErr != nil {
-			return nil, respErr
-		}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/deployments/(?P<deploymentName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 5 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armmachinelearning.PartialMinimalTrackedResourceWithSKU](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
+	if err != nil {
+		return nil, err
+	}
+	deploymentNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("deploymentName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := o.srv.BeginUpdate(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, deploymentNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
 		beginUpdate = &respr
 		o.beginUpdate.add(req, beginUpdate)
 	}
@@ -519,3 +520,4 @@ func (o *OnlineDeploymentsServerTransport) dispatchBeginUpdate(req *http.Request
 
 	return resp, nil
 }
+

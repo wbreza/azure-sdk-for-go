@@ -16,14 +16,14 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
 )
 
 // ComponentContainersServer is a fake server for instances of the armmachinelearning.ComponentContainersClient type.
-type ComponentContainersServer struct {
+type ComponentContainersServer struct{
 	// CreateOrUpdate is the fake for method ComponentContainersClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	CreateOrUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, name string, body armmachinelearning.ComponentContainer, options *armmachinelearning.ComponentContainersClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearning.ComponentContainersClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
@@ -39,6 +39,7 @@ type ComponentContainersServer struct {
 	// NewListPager is the fake for method ComponentContainersClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(resourceGroupName string, workspaceName string, options *armmachinelearning.ComponentContainersClientListOptions) (resp azfake.PagerResponder[armmachinelearning.ComponentContainersClientListResponse])
+
 }
 
 // NewComponentContainersServerTransport creates a new instance of ComponentContainersServerTransport with the provided implementation.
@@ -46,7 +47,7 @@ type ComponentContainersServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewComponentContainersServerTransport(srv *ComponentContainersServer) *ComponentContainersServerTransport {
 	return &ComponentContainersServerTransport{
-		srv:          srv,
+		srv: srv,
 		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.ComponentContainersClientListResponse]](),
 	}
 }
@@ -54,7 +55,7 @@ func NewComponentContainersServerTransport(srv *ComponentContainersServer) *Comp
 // ComponentContainersServerTransport connects instances of armmachinelearning.ComponentContainersClient to instances of ComponentContainersServer.
 // Don't use this type directly, use NewComponentContainersServerTransport instead.
 type ComponentContainersServerTransport struct {
-	srv          *ComponentContainersServer
+	srv *ComponentContainersServer
 	newListPager *tracker[azfake.PagerResponder[armmachinelearning.ComponentContainersClientListResponse]]
 }
 
@@ -210,39 +211,39 @@ func (c *ComponentContainersServerTransport) dispatchNewListPager(req *http.Requ
 	}
 	newListPager := c.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/components`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 3 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/components`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	qp := req.URL.Query()
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
+	if err != nil {
+		return nil, err
+	}
+	skipParam := getOptional(skipUnescaped)
+	listViewTypeUnescaped, err := url.QueryUnescape(qp.Get("listViewType"))
+	if err != nil {
+		return nil, err
+	}
+	listViewTypeParam := getOptional(armmachinelearning.ListViewType(listViewTypeUnescaped))
+	var options *armmachinelearning.ComponentContainersClientListOptions
+	if skipParam != nil || listViewTypeParam != nil {
+		options = &armmachinelearning.ComponentContainersClientListOptions{
+			Skip: skipParam,
+			ListViewType: listViewTypeParam,
 		}
-		qp := req.URL.Query()
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
-		if err != nil {
-			return nil, err
-		}
-		skipParam := getOptional(skipUnescaped)
-		listViewTypeUnescaped, err := url.QueryUnescape(qp.Get("listViewType"))
-		if err != nil {
-			return nil, err
-		}
-		listViewTypeParam := getOptional(armmachinelearning.ListViewType(listViewTypeUnescaped))
-		var options *armmachinelearning.ComponentContainersClientListOptions
-		if skipParam != nil || listViewTypeParam != nil {
-			options = &armmachinelearning.ComponentContainersClientListOptions{
-				Skip:         skipParam,
-				ListViewType: listViewTypeParam,
-			}
-		}
-		resp := c.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, options)
+	}
+resp := c.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, options)
 		newListPager = &resp
 		c.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armmachinelearning.ComponentContainersClientListResponse, createLink func() string) {
@@ -262,3 +263,4 @@ func (c *ComponentContainersServerTransport) dispatchNewListPager(req *http.Requ
 	}
 	return resp, nil
 }
+

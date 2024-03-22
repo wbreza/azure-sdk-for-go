@@ -9,36 +9,40 @@
 package fake
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
 )
 
 // PrivateLinkResourcesServer is a fake server for instances of the armmachinelearning.PrivateLinkResourcesClient type.
-type PrivateLinkResourcesServer struct {
-	// List is the fake for method PrivateLinkResourcesClient.List
+type PrivateLinkResourcesServer struct{
+	// NewListPager is the fake for method PrivateLinkResourcesClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
-	List func(ctx context.Context, resourceGroupName string, workspaceName string, options *armmachinelearning.PrivateLinkResourcesClientListOptions) (resp azfake.Responder[armmachinelearning.PrivateLinkResourcesClientListResponse], errResp azfake.ErrorResponder)
+	NewListPager func(resourceGroupName string, workspaceName string, options *armmachinelearning.PrivateLinkResourcesClientListOptions) (resp azfake.PagerResponder[armmachinelearning.PrivateLinkResourcesClientListResponse])
+
 }
 
 // NewPrivateLinkResourcesServerTransport creates a new instance of PrivateLinkResourcesServerTransport with the provided implementation.
 // The returned PrivateLinkResourcesServerTransport instance is connected to an instance of armmachinelearning.PrivateLinkResourcesClient via the
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPrivateLinkResourcesServerTransport(srv *PrivateLinkResourcesServer) *PrivateLinkResourcesServerTransport {
-	return &PrivateLinkResourcesServerTransport{srv: srv}
+	return &PrivateLinkResourcesServerTransport{
+		srv: srv,
+		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.PrivateLinkResourcesClientListResponse]](),
+	}
 }
 
 // PrivateLinkResourcesServerTransport connects instances of armmachinelearning.PrivateLinkResourcesClient to instances of PrivateLinkResourcesServer.
 // Don't use this type directly, use NewPrivateLinkResourcesServerTransport instead.
 type PrivateLinkResourcesServerTransport struct {
 	srv *PrivateLinkResourcesServer
+	newListPager *tracker[azfake.PagerResponder[armmachinelearning.PrivateLinkResourcesClientListResponse]]
 }
 
 // Do implements the policy.Transporter interface for PrivateLinkResourcesServerTransport.
@@ -53,8 +57,8 @@ func (p *PrivateLinkResourcesServerTransport) Do(req *http.Request) (*http.Respo
 	var err error
 
 	switch method {
-	case "PrivateLinkResourcesClient.List":
-		resp, err = p.dispatchList(req)
+	case "PrivateLinkResourcesClient.NewListPager":
+		resp, err = p.dispatchNewListPager(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
 	}
@@ -66,10 +70,12 @@ func (p *PrivateLinkResourcesServerTransport) Do(req *http.Request) (*http.Respo
 	return resp, nil
 }
 
-func (p *PrivateLinkResourcesServerTransport) dispatchList(req *http.Request) (*http.Response, error) {
-	if p.srv.List == nil {
-		return nil, &nonRetriableError{errors.New("fake for method List not implemented")}
+func (p *PrivateLinkResourcesServerTransport) dispatchNewListPager(req *http.Request) (*http.Response, error) {
+	if p.srv.NewListPager == nil {
+		return nil, &nonRetriableError{errors.New("fake for method NewListPager not implemented")}
 	}
+	newListPager := p.newListPager.get(req)
+	if newListPager == nil {
 	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/privateLinkResources`
 	regex := regexp.MustCompile(regexStr)
 	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
@@ -84,17 +90,21 @@ func (p *PrivateLinkResourcesServerTransport) dispatchList(req *http.Request) (*
 	if err != nil {
 		return nil, err
 	}
-	respr, errRespr := p.srv.List(req.Context(), resourceGroupNameParam, workspaceNameParam, nil)
-	if respErr := server.GetError(errRespr, req); respErr != nil {
-		return nil, respErr
+resp := p.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, nil)
+		newListPager = &resp
+		p.newListPager.add(req, newListPager)
 	}
-	respContent := server.GetResponseContent(respr)
-	if !contains([]int{http.StatusOK}, respContent.HTTPStatus) {
-		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", respContent.HTTPStatus)}
-	}
-	resp, err := server.MarshalResponseAsJSON(respContent, server.GetResponse(respr).PrivateLinkResourceListResult, req)
+	resp, err := server.PagerResponderNext(newListPager, req)
 	if err != nil {
 		return nil, err
 	}
+	if !contains([]int{http.StatusOK}, resp.StatusCode) {
+		p.newListPager.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK", resp.StatusCode)}
+	}
+	if !server.PagerResponderMore(newListPager) {
+		p.newListPager.remove(req)
+	}
 	return resp, nil
 }
+

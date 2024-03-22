@@ -23,7 +23,7 @@ import (
 // WorkspaceFeaturesClient contains the methods for the WorkspaceFeatures group.
 // Don't use this type directly, use NewWorkspaceFeaturesClient() instead.
 type WorkspaceFeaturesClient struct {
-	internal       *arm.Client
+	internal *arm.Client
 	subscriptionID string
 }
 
@@ -38,25 +38,25 @@ func NewWorkspaceFeaturesClient(subscriptionID string, credential azcore.TokenCr
 	}
 	client := &WorkspaceFeaturesClient{
 		subscriptionID: subscriptionID,
-		internal:       cl,
+	internal: cl,
 	}
 	return client, nil
 }
 
 // NewListPager - Lists all enabled features for a workspace
 //
-// Generated from API version 2022-10-01
+// Generated from API version 2024-01-01-preview
 //   - resourceGroupName - The name of the resource group. The name is case insensitive.
 //   - workspaceName - Name of Azure Machine Learning workspace.
 //   - options - WorkspaceFeaturesClientListOptions contains the optional parameters for the WorkspaceFeaturesClient.NewListPager
 //     method.
-func (client *WorkspaceFeaturesClient) NewListPager(resourceGroupName string, workspaceName string, options *WorkspaceFeaturesClientListOptions) *runtime.Pager[WorkspaceFeaturesClientListResponse] {
+func (client *WorkspaceFeaturesClient) NewListPager(resourceGroupName string, workspaceName string, options *WorkspaceFeaturesClientListOptions) (*runtime.Pager[WorkspaceFeaturesClientListResponse]) {
 	return runtime.NewPager(runtime.PagingHandler[WorkspaceFeaturesClientListResponse]{
 		More: func(page WorkspaceFeaturesClientListResponse) bool {
 			return page.NextLink != nil && len(*page.NextLink) > 0
 		},
 		Fetcher: func(ctx context.Context, page *WorkspaceFeaturesClientListResponse) (WorkspaceFeaturesClientListResponse, error) {
-			ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "WorkspaceFeaturesClient.NewListPager")
+		ctx = context.WithValue(ctx, runtime.CtxAPINameKey{}, "WorkspaceFeaturesClient.NewListPager")
 			nextLink := ""
 			if page != nil {
 				nextLink = *page.NextLink
@@ -68,7 +68,7 @@ func (client *WorkspaceFeaturesClient) NewListPager(resourceGroupName string, wo
 				return WorkspaceFeaturesClientListResponse{}, err
 			}
 			return client.listHandleResponse(resp)
-		},
+			},
 		Tracer: client.internal.Tracer(),
 	})
 }
@@ -93,7 +93,7 @@ func (client *WorkspaceFeaturesClient) listCreateRequest(ctx context.Context, re
 		return nil, err
 	}
 	reqQP := req.Raw().URL.Query()
-	reqQP.Set("api-version", "2022-10-01")
+	reqQP.Set("api-version", "2024-01-01-preview")
 	req.Raw().URL.RawQuery = reqQP.Encode()
 	req.Raw().Header["Accept"] = []string{"application/json"}
 	return req, nil
@@ -107,3 +107,4 @@ func (client *WorkspaceFeaturesClient) listHandleResponse(resp *http.Response) (
 	}
 	return result, nil
 }
+

@@ -14,15 +14,16 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 )
 
 // OperationsServer is a fake server for instances of the armmachinelearning.OperationsClient type.
-type OperationsServer struct {
+type OperationsServer struct{
 	// NewListPager is the fake for method OperationsClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(options *armmachinelearning.OperationsClientListOptions) (resp azfake.PagerResponder[armmachinelearning.OperationsClientListResponse])
+
 }
 
 // NewOperationsServerTransport creates a new instance of OperationsServerTransport with the provided implementation.
@@ -30,7 +31,7 @@ type OperationsServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewOperationsServerTransport(srv *OperationsServer) *OperationsServerTransport {
 	return &OperationsServerTransport{
-		srv:          srv,
+		srv: srv,
 		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.OperationsClientListResponse]](),
 	}
 }
@@ -38,7 +39,7 @@ func NewOperationsServerTransport(srv *OperationsServer) *OperationsServerTransp
 // OperationsServerTransport connects instances of armmachinelearning.OperationsClient to instances of OperationsServer.
 // Don't use this type directly, use NewOperationsServerTransport instead.
 type OperationsServerTransport struct {
-	srv          *OperationsServer
+	srv *OperationsServer
 	newListPager *tracker[azfake.PagerResponder[armmachinelearning.OperationsClientListResponse]]
 }
 
@@ -73,7 +74,7 @@ func (o *OperationsServerTransport) dispatchNewListPager(req *http.Request) (*ht
 	}
 	newListPager := o.newListPager.get(req)
 	if newListPager == nil {
-		resp := o.srv.NewListPager(nil)
+resp := o.srv.NewListPager(nil)
 		newListPager = &resp
 		o.newListPager.add(req, newListPager)
 	}
@@ -90,3 +91,4 @@ func (o *OperationsServerTransport) dispatchNewListPager(req *http.Request) (*ht
 	}
 	return resp, nil
 }
+

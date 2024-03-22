@@ -16,7 +16,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -24,7 +24,7 @@ import (
 )
 
 // OnlineEndpointsServer is a fake server for instances of the armmachinelearning.OnlineEndpointsClient type.
-type OnlineEndpointsServer struct {
+type OnlineEndpointsServer struct{
 	// BeginCreateOrUpdate is the fake for method OnlineEndpointsClient.BeginCreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	BeginCreateOrUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearning.OnlineEndpoint, options *armmachinelearning.OnlineEndpointsClientBeginCreateOrUpdateOptions) (resp azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
@@ -56,6 +56,7 @@ type OnlineEndpointsServer struct {
 	// BeginUpdate is the fake for method OnlineEndpointsClient.BeginUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
 	BeginUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, endpointName string, body armmachinelearning.PartialMinimalTrackedResourceWithIdentity, options *armmachinelearning.OnlineEndpointsClientBeginUpdateOptions) (resp azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientUpdateResponse], errResp azfake.ErrorResponder)
+
 }
 
 // NewOnlineEndpointsServerTransport creates a new instance of OnlineEndpointsServerTransport with the provided implementation.
@@ -63,24 +64,24 @@ type OnlineEndpointsServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewOnlineEndpointsServerTransport(srv *OnlineEndpointsServer) *OnlineEndpointsServerTransport {
 	return &OnlineEndpointsServerTransport{
-		srv:                 srv,
+		srv: srv,
 		beginCreateOrUpdate: newTracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientCreateOrUpdateResponse]](),
-		beginDelete:         newTracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientDeleteResponse]](),
-		newListPager:        newTracker[azfake.PagerResponder[armmachinelearning.OnlineEndpointsClientListResponse]](),
+		beginDelete: newTracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientDeleteResponse]](),
+		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.OnlineEndpointsClientListResponse]](),
 		beginRegenerateKeys: newTracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientRegenerateKeysResponse]](),
-		beginUpdate:         newTracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientUpdateResponse]](),
+		beginUpdate: newTracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientUpdateResponse]](),
 	}
 }
 
 // OnlineEndpointsServerTransport connects instances of armmachinelearning.OnlineEndpointsClient to instances of OnlineEndpointsServer.
 // Don't use this type directly, use NewOnlineEndpointsServerTransport instead.
 type OnlineEndpointsServerTransport struct {
-	srv                 *OnlineEndpointsServer
+	srv *OnlineEndpointsServer
 	beginCreateOrUpdate *tracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientCreateOrUpdateResponse]]
-	beginDelete         *tracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientDeleteResponse]]
-	newListPager        *tracker[azfake.PagerResponder[armmachinelearning.OnlineEndpointsClientListResponse]]
+	beginDelete *tracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientDeleteResponse]]
+	newListPager *tracker[azfake.PagerResponder[armmachinelearning.OnlineEndpointsClientListResponse]]
 	beginRegenerateKeys *tracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientRegenerateKeysResponse]]
-	beginUpdate         *tracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientUpdateResponse]]
+	beginUpdate *tracker[azfake.PollerResponder[armmachinelearning.OnlineEndpointsClientUpdateResponse]]
 }
 
 // Do implements the policy.Transporter interface for OnlineEndpointsServerTransport.
@@ -128,32 +129,32 @@ func (o *OnlineEndpointsServerTransport) dispatchBeginCreateOrUpdate(req *http.R
 	}
 	beginCreateOrUpdate := o.beginCreateOrUpdate.get(req)
 	if beginCreateOrUpdate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 4 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		body, err := server.UnmarshalRequestAsJSON[armmachinelearning.OnlineEndpoint](req)
-		if err != nil {
-			return nil, err
-		}
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
-		if err != nil {
-			return nil, err
-		}
-		respr, errRespr := o.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, body, nil)
-		if respErr := server.GetError(errRespr, req); respErr != nil {
-			return nil, respErr
-		}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armmachinelearning.OnlineEndpoint](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := o.srv.BeginCreateOrUpdate(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
 		beginCreateOrUpdate = &respr
 		o.beginCreateOrUpdate.add(req, beginCreateOrUpdate)
 	}
@@ -180,28 +181,28 @@ func (o *OnlineEndpointsServerTransport) dispatchBeginDelete(req *http.Request) 
 	}
 	beginDelete := o.beginDelete.get(req)
 	if beginDelete == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 4 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
-		if err != nil {
-			return nil, err
-		}
-		respr, errRespr := o.srv.BeginDelete(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, nil)
-		if respErr := server.GetError(errRespr, req); respErr != nil {
-			return nil, respErr
-		}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := o.srv.BeginDelete(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
 		beginDelete = &respr
 		o.beginDelete.add(req, beginDelete)
 	}
@@ -302,78 +303,78 @@ func (o *OnlineEndpointsServerTransport) dispatchNewListPager(req *http.Request)
 	}
 	newListPager := o.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 3 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	qp := req.URL.Query()
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	nameUnescaped, err := url.QueryUnescape(qp.Get("name"))
+	if err != nil {
+		return nil, err
+	}
+	nameParam := getOptional(nameUnescaped)
+	countUnescaped, err := url.QueryUnescape(qp.Get("count"))
+	if err != nil {
+		return nil, err
+	}
+	countParam, err := parseOptional(countUnescaped, func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
-		qp := req.URL.Query()
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	computeTypeUnescaped, err := url.QueryUnescape(qp.Get("computeType"))
+	if err != nil {
+		return nil, err
+	}
+	computeTypeParam := getOptional(armmachinelearning.EndpointComputeType(computeTypeUnescaped))
+	skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
+	if err != nil {
+		return nil, err
+	}
+	skipParam := getOptional(skipUnescaped)
+	tagsUnescaped, err := url.QueryUnescape(qp.Get("tags"))
+	if err != nil {
+		return nil, err
+	}
+	tagsParam := getOptional(tagsUnescaped)
+	propertiesUnescaped, err := url.QueryUnescape(qp.Get("properties"))
+	if err != nil {
+		return nil, err
+	}
+	propertiesParam := getOptional(propertiesUnescaped)
+	orderByUnescaped, err := url.QueryUnescape(qp.Get("orderBy"))
+	if err != nil {
+		return nil, err
+	}
+	orderByParam := getOptional(armmachinelearning.OrderString(orderByUnescaped))
+	var options *armmachinelearning.OnlineEndpointsClientListOptions
+	if nameParam != nil || countParam != nil || computeTypeParam != nil || skipParam != nil || tagsParam != nil || propertiesParam != nil || orderByParam != nil {
+		options = &armmachinelearning.OnlineEndpointsClientListOptions{
+			Name: nameParam,
+			Count: countParam,
+			ComputeType: computeTypeParam,
+			Skip: skipParam,
+			Tags: tagsParam,
+			Properties: propertiesParam,
+			OrderBy: orderByParam,
 		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		nameUnescaped, err := url.QueryUnescape(qp.Get("name"))
-		if err != nil {
-			return nil, err
-		}
-		nameParam := getOptional(nameUnescaped)
-		countUnescaped, err := url.QueryUnescape(qp.Get("count"))
-		if err != nil {
-			return nil, err
-		}
-		countParam, err := parseOptional(countUnescaped, func(v string) (int32, error) {
-			p, parseErr := strconv.ParseInt(v, 10, 32)
-			if parseErr != nil {
-				return 0, parseErr
-			}
-			return int32(p), nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		computeTypeUnescaped, err := url.QueryUnescape(qp.Get("computeType"))
-		if err != nil {
-			return nil, err
-		}
-		computeTypeParam := getOptional(armmachinelearning.EndpointComputeType(computeTypeUnescaped))
-		skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
-		if err != nil {
-			return nil, err
-		}
-		skipParam := getOptional(skipUnescaped)
-		tagsUnescaped, err := url.QueryUnescape(qp.Get("tags"))
-		if err != nil {
-			return nil, err
-		}
-		tagsParam := getOptional(tagsUnescaped)
-		propertiesUnescaped, err := url.QueryUnescape(qp.Get("properties"))
-		if err != nil {
-			return nil, err
-		}
-		propertiesParam := getOptional(propertiesUnescaped)
-		orderByUnescaped, err := url.QueryUnescape(qp.Get("orderBy"))
-		if err != nil {
-			return nil, err
-		}
-		orderByParam := getOptional(armmachinelearning.OrderString(orderByUnescaped))
-		var options *armmachinelearning.OnlineEndpointsClientListOptions
-		if nameParam != nil || countParam != nil || computeTypeParam != nil || skipParam != nil || tagsParam != nil || propertiesParam != nil || orderByParam != nil {
-			options = &armmachinelearning.OnlineEndpointsClientListOptions{
-				Name:        nameParam,
-				Count:       countParam,
-				ComputeType: computeTypeParam,
-				Skip:        skipParam,
-				Tags:        tagsParam,
-				Properties:  propertiesParam,
-				OrderBy:     orderByParam,
-			}
-		}
-		resp := o.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, options)
+	}
+resp := o.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, options)
 		newListPager = &resp
 		o.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armmachinelearning.OnlineEndpointsClientListResponse, createLink func() string) {
@@ -437,32 +438,32 @@ func (o *OnlineEndpointsServerTransport) dispatchBeginRegenerateKeys(req *http.R
 	}
 	beginRegenerateKeys := o.beginRegenerateKeys.get(req)
 	if beginRegenerateKeys == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/regenerateKeys`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 4 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		body, err := server.UnmarshalRequestAsJSON[armmachinelearning.RegenerateEndpointKeysRequest](req)
-		if err != nil {
-			return nil, err
-		}
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
-		if err != nil {
-			return nil, err
-		}
-		respr, errRespr := o.srv.BeginRegenerateKeys(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, body, nil)
-		if respErr := server.GetError(errRespr, req); respErr != nil {
-			return nil, respErr
-		}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/regenerateKeys`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armmachinelearning.RegenerateEndpointKeysRequest](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := o.srv.BeginRegenerateKeys(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
 		beginRegenerateKeys = &respr
 		o.beginRegenerateKeys.add(req, beginRegenerateKeys)
 	}
@@ -489,32 +490,32 @@ func (o *OnlineEndpointsServerTransport) dispatchBeginUpdate(req *http.Request) 
 	}
 	beginUpdate := o.beginUpdate.get(req)
 	if beginUpdate == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 4 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		body, err := server.UnmarshalRequestAsJSON[armmachinelearning.PartialMinimalTrackedResourceWithIdentity](req)
-		if err != nil {
-			return nil, err
-		}
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
-		if err != nil {
-			return nil, err
-		}
-		respr, errRespr := o.srv.BeginUpdate(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, body, nil)
-		if respErr := server.GetError(errRespr, req); respErr != nil {
-			return nil, respErr
-		}
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/onlineEndpoints/(?P<endpointName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armmachinelearning.PartialMinimalTrackedResourceWithIdentity](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	endpointNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("endpointName")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := o.srv.BeginUpdate(req.Context(), resourceGroupNameParam, workspaceNameParam, endpointNameParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
 		beginUpdate = &respr
 		o.beginUpdate.add(req, beginUpdate)
 	}
@@ -534,3 +535,4 @@ func (o *OnlineEndpointsServerTransport) dispatchBeginUpdate(req *http.Request) 
 
 	return resp, nil
 }
+

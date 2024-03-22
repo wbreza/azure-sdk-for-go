@@ -16,7 +16,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -24,7 +24,7 @@ import (
 )
 
 // ModelVersionsServer is a fake server for instances of the armmachinelearning.ModelVersionsClient type.
-type ModelVersionsServer struct {
+type ModelVersionsServer struct{
 	// CreateOrUpdate is the fake for method ModelVersionsClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusCreated
 	CreateOrUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearning.ModelVersion, options *armmachinelearning.ModelVersionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearning.ModelVersionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
@@ -40,6 +40,15 @@ type ModelVersionsServer struct {
 	// NewListPager is the fake for method ModelVersionsClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(resourceGroupName string, workspaceName string, name string, options *armmachinelearning.ModelVersionsClientListOptions) (resp azfake.PagerResponder[armmachinelearning.ModelVersionsClientListResponse])
+
+	// BeginPackage is the fake for method ModelVersionsClient.BeginPackage
+	// HTTP status codes to indicate success: http.StatusOK, http.StatusAccepted
+	BeginPackage func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearning.PackageRequest, options *armmachinelearning.ModelVersionsClientBeginPackageOptions) (resp azfake.PollerResponder[armmachinelearning.ModelVersionsClientPackageResponse], errResp azfake.ErrorResponder)
+
+	// BeginPublish is the fake for method ModelVersionsClient.BeginPublish
+	// HTTP status codes to indicate success: http.StatusAccepted
+	BeginPublish func(ctx context.Context, resourceGroupName string, workspaceName string, name string, version string, body armmachinelearning.DestinationAsset, options *armmachinelearning.ModelVersionsClientBeginPublishOptions) (resp azfake.PollerResponder[armmachinelearning.ModelVersionsClientPublishResponse], errResp azfake.ErrorResponder)
+
 }
 
 // NewModelVersionsServerTransport creates a new instance of ModelVersionsServerTransport with the provided implementation.
@@ -47,16 +56,20 @@ type ModelVersionsServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewModelVersionsServerTransport(srv *ModelVersionsServer) *ModelVersionsServerTransport {
 	return &ModelVersionsServerTransport{
-		srv:          srv,
+		srv: srv,
 		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.ModelVersionsClientListResponse]](),
+		beginPackage: newTracker[azfake.PollerResponder[armmachinelearning.ModelVersionsClientPackageResponse]](),
+		beginPublish: newTracker[azfake.PollerResponder[armmachinelearning.ModelVersionsClientPublishResponse]](),
 	}
 }
 
 // ModelVersionsServerTransport connects instances of armmachinelearning.ModelVersionsClient to instances of ModelVersionsServer.
 // Don't use this type directly, use NewModelVersionsServerTransport instead.
 type ModelVersionsServerTransport struct {
-	srv          *ModelVersionsServer
+	srv *ModelVersionsServer
 	newListPager *tracker[azfake.PagerResponder[armmachinelearning.ModelVersionsClientListResponse]]
+	beginPackage *tracker[azfake.PollerResponder[armmachinelearning.ModelVersionsClientPackageResponse]]
+	beginPublish *tracker[azfake.PollerResponder[armmachinelearning.ModelVersionsClientPublishResponse]]
 }
 
 // Do implements the policy.Transporter interface for ModelVersionsServerTransport.
@@ -79,6 +92,10 @@ func (m *ModelVersionsServerTransport) Do(req *http.Request) (*http.Response, er
 		resp, err = m.dispatchGet(req)
 	case "ModelVersionsClient.NewListPager":
 		resp, err = m.dispatchNewListPager(req)
+	case "ModelVersionsClient.BeginPackage":
+		resp, err = m.dispatchBeginPackage(req)
+	case "ModelVersionsClient.BeginPublish":
+		resp, err = m.dispatchBeginPublish(req)
 	default:
 		err = fmt.Errorf("unhandled API %s", method)
 	}
@@ -223,109 +240,115 @@ func (m *ModelVersionsServerTransport) dispatchNewListPager(req *http.Request) (
 	}
 	newListPager := m.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/models/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/versions`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 4 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/models/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/versions`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 4 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	qp := req.URL.Query()
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
+	if err != nil {
+		return nil, err
+	}
+	skipParam := getOptional(skipUnescaped)
+	orderByUnescaped, err := url.QueryUnescape(qp.Get("$orderBy"))
+	if err != nil {
+		return nil, err
+	}
+	orderByParam := getOptional(orderByUnescaped)
+	topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
+	if err != nil {
+		return nil, err
+	}
+	topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
-		qp := req.URL.Query()
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	versionUnescaped, err := url.QueryUnescape(qp.Get("version"))
+	if err != nil {
+		return nil, err
+	}
+	versionParam := getOptional(versionUnescaped)
+	descriptionUnescaped, err := url.QueryUnescape(qp.Get("description"))
+	if err != nil {
+		return nil, err
+	}
+	descriptionParam := getOptional(descriptionUnescaped)
+	offsetUnescaped, err := url.QueryUnescape(qp.Get("offset"))
+	if err != nil {
+		return nil, err
+	}
+	offsetParam, err := parseOptional(offsetUnescaped, func(v string) (int32, error) {
+		p, parseErr := strconv.ParseInt(v, 10, 32)
+		if parseErr != nil {
+			return 0, parseErr
 		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
+		return int32(p), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	tagsUnescaped, err := url.QueryUnescape(qp.Get("tags"))
+	if err != nil {
+		return nil, err
+	}
+	tagsParam := getOptional(tagsUnescaped)
+	propertiesUnescaped, err := url.QueryUnescape(qp.Get("properties"))
+	if err != nil {
+		return nil, err
+	}
+	propertiesParam := getOptional(propertiesUnescaped)
+	feedUnescaped, err := url.QueryUnescape(qp.Get("feed"))
+	if err != nil {
+		return nil, err
+	}
+	feedParam := getOptional(feedUnescaped)
+	listViewTypeUnescaped, err := url.QueryUnescape(qp.Get("listViewType"))
+	if err != nil {
+		return nil, err
+	}
+	listViewTypeParam := getOptional(armmachinelearning.ListViewType(listViewTypeUnescaped))
+	stageUnescaped, err := url.QueryUnescape(qp.Get("stage"))
+	if err != nil {
+		return nil, err
+	}
+	stageParam := getOptional(stageUnescaped)
+	var options *armmachinelearning.ModelVersionsClientListOptions
+	if skipParam != nil || orderByParam != nil || topParam != nil || versionParam != nil || descriptionParam != nil || offsetParam != nil || tagsParam != nil || propertiesParam != nil || feedParam != nil || listViewTypeParam != nil || stageParam != nil {
+		options = &armmachinelearning.ModelVersionsClientListOptions{
+			Skip: skipParam,
+			OrderBy: orderByParam,
+			Top: topParam,
+			Version: versionParam,
+			Description: descriptionParam,
+			Offset: offsetParam,
+			Tags: tagsParam,
+			Properties: propertiesParam,
+			Feed: feedParam,
+			ListViewType: listViewTypeParam,
+			Stage: stageParam,
 		}
-		nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
-		if err != nil {
-			return nil, err
-		}
-		skipUnescaped, err := url.QueryUnescape(qp.Get("$skip"))
-		if err != nil {
-			return nil, err
-		}
-		skipParam := getOptional(skipUnescaped)
-		orderByUnescaped, err := url.QueryUnescape(qp.Get("$orderBy"))
-		if err != nil {
-			return nil, err
-		}
-		orderByParam := getOptional(orderByUnescaped)
-		topUnescaped, err := url.QueryUnescape(qp.Get("$top"))
-		if err != nil {
-			return nil, err
-		}
-		topParam, err := parseOptional(topUnescaped, func(v string) (int32, error) {
-			p, parseErr := strconv.ParseInt(v, 10, 32)
-			if parseErr != nil {
-				return 0, parseErr
-			}
-			return int32(p), nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		versionUnescaped, err := url.QueryUnescape(qp.Get("version"))
-		if err != nil {
-			return nil, err
-		}
-		versionParam := getOptional(versionUnescaped)
-		descriptionUnescaped, err := url.QueryUnescape(qp.Get("description"))
-		if err != nil {
-			return nil, err
-		}
-		descriptionParam := getOptional(descriptionUnescaped)
-		offsetUnescaped, err := url.QueryUnescape(qp.Get("offset"))
-		if err != nil {
-			return nil, err
-		}
-		offsetParam, err := parseOptional(offsetUnescaped, func(v string) (int32, error) {
-			p, parseErr := strconv.ParseInt(v, 10, 32)
-			if parseErr != nil {
-				return 0, parseErr
-			}
-			return int32(p), nil
-		})
-		if err != nil {
-			return nil, err
-		}
-		tagsUnescaped, err := url.QueryUnescape(qp.Get("tags"))
-		if err != nil {
-			return nil, err
-		}
-		tagsParam := getOptional(tagsUnescaped)
-		propertiesUnescaped, err := url.QueryUnescape(qp.Get("properties"))
-		if err != nil {
-			return nil, err
-		}
-		propertiesParam := getOptional(propertiesUnescaped)
-		feedUnescaped, err := url.QueryUnescape(qp.Get("feed"))
-		if err != nil {
-			return nil, err
-		}
-		feedParam := getOptional(feedUnescaped)
-		listViewTypeUnescaped, err := url.QueryUnescape(qp.Get("listViewType"))
-		if err != nil {
-			return nil, err
-		}
-		listViewTypeParam := getOptional(armmachinelearning.ListViewType(listViewTypeUnescaped))
-		var options *armmachinelearning.ModelVersionsClientListOptions
-		if skipParam != nil || orderByParam != nil || topParam != nil || versionParam != nil || descriptionParam != nil || offsetParam != nil || tagsParam != nil || propertiesParam != nil || feedParam != nil || listViewTypeParam != nil {
-			options = &armmachinelearning.ModelVersionsClientListOptions{
-				Skip:         skipParam,
-				OrderBy:      orderByParam,
-				Top:          topParam,
-				Version:      versionParam,
-				Description:  descriptionParam,
-				Offset:       offsetParam,
-				Tags:         tagsParam,
-				Properties:   propertiesParam,
-				Feed:         feedParam,
-				ListViewType: listViewTypeParam,
-			}
-		}
-		resp := m.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, nameParam, options)
+	}
+resp := m.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, nameParam, options)
 		newListPager = &resp
 		m.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armmachinelearning.ModelVersionsClientListResponse, createLink func() string) {
@@ -345,3 +368,116 @@ func (m *ModelVersionsServerTransport) dispatchNewListPager(req *http.Request) (
 	}
 	return resp, nil
 }
+
+func (m *ModelVersionsServerTransport) dispatchBeginPackage(req *http.Request) (*http.Response, error) {
+	if m.srv.BeginPackage == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BeginPackage not implemented")}
+	}
+	beginPackage := m.beginPackage.get(req)
+	if beginPackage == nil {
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/models/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/versions/(?P<version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/package`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 5 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armmachinelearning.PackageRequest](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("version")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := m.srv.BeginPackage(req.Context(), resourceGroupNameParam, workspaceNameParam, nameParam, versionParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+		beginPackage = &respr
+		m.beginPackage.add(req, beginPackage)
+	}
+
+	resp, err := server.PollerResponderNext(beginPackage, req)
+	if err != nil {
+		return nil, err
+	}
+
+	if !contains([]int{http.StatusOK, http.StatusAccepted}, resp.StatusCode) {
+		m.beginPackage.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusOK, http.StatusAccepted", resp.StatusCode)}
+	}
+	if !server.PollerResponderMore(beginPackage) {
+		m.beginPackage.remove(req)
+	}
+
+	return resp, nil
+}
+
+func (m *ModelVersionsServerTransport) dispatchBeginPublish(req *http.Request) (*http.Response, error) {
+	if m.srv.BeginPublish == nil {
+		return nil, &nonRetriableError{errors.New("fake for method BeginPublish not implemented")}
+	}
+	beginPublish := m.beginPublish.get(req)
+	if beginPublish == nil {
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/models/(?P<name>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/versions/(?P<version>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/publish`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 5 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	body, err := server.UnmarshalRequestAsJSON[armmachinelearning.DestinationAsset](req)
+	if err != nil {
+		return nil, err
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+	nameParam, err := url.PathUnescape(matches[regex.SubexpIndex("name")])
+	if err != nil {
+		return nil, err
+	}
+	versionParam, err := url.PathUnescape(matches[regex.SubexpIndex("version")])
+	if err != nil {
+		return nil, err
+	}
+	respr, errRespr := m.srv.BeginPublish(req.Context(), resourceGroupNameParam, workspaceNameParam, nameParam, versionParam, body, nil)
+	if respErr := server.GetError(errRespr, req); respErr != nil {
+		return nil, respErr
+	}
+		beginPublish = &respr
+		m.beginPublish.add(req, beginPublish)
+	}
+
+	resp, err := server.PollerResponderNext(beginPublish, req)
+	if err != nil {
+		return nil, err
+	}
+
+	if !contains([]int{http.StatusAccepted}, resp.StatusCode) {
+		m.beginPublish.remove(req)
+		return nil, &nonRetriableError{fmt.Errorf("unexpected status code %d. acceptable values are http.StatusAccepted", resp.StatusCode)}
+	}
+	if !server.PollerResponderMore(beginPublish) {
+		m.beginPublish.remove(req)
+	}
+
+	return resp, nil
+}
+

@@ -15,17 +15,18 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
 )
 
 // UsagesServer is a fake server for instances of the armmachinelearning.UsagesClient type.
-type UsagesServer struct {
+type UsagesServer struct{
 	// NewListPager is the fake for method UsagesClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(location string, options *armmachinelearning.UsagesClientListOptions) (resp azfake.PagerResponder[armmachinelearning.UsagesClientListResponse])
+
 }
 
 // NewUsagesServerTransport creates a new instance of UsagesServerTransport with the provided implementation.
@@ -33,7 +34,7 @@ type UsagesServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewUsagesServerTransport(srv *UsagesServer) *UsagesServerTransport {
 	return &UsagesServerTransport{
-		srv:          srv,
+		srv: srv,
 		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.UsagesClientListResponse]](),
 	}
 }
@@ -41,7 +42,7 @@ func NewUsagesServerTransport(srv *UsagesServer) *UsagesServerTransport {
 // UsagesServerTransport connects instances of armmachinelearning.UsagesClient to instances of UsagesServer.
 // Don't use this type directly, use NewUsagesServerTransport instead.
 type UsagesServerTransport struct {
-	srv          *UsagesServer
+	srv *UsagesServer
 	newListPager *tracker[azfake.PagerResponder[armmachinelearning.UsagesClientListResponse]]
 }
 
@@ -76,17 +77,17 @@ func (u *UsagesServerTransport) dispatchNewListPager(req *http.Request) (*http.R
 	}
 	newListPager := u.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/locations/(?P<location>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/usages`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 2 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
-		if err != nil {
-			return nil, err
-		}
-		resp := u.srv.NewListPager(locationParam, nil)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/locations/(?P<location>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/usages`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 2 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	locationParam, err := url.PathUnescape(matches[regex.SubexpIndex("location")])
+	if err != nil {
+		return nil, err
+	}
+resp := u.srv.NewListPager(locationParam, nil)
 		newListPager = &resp
 		u.newListPager.add(req, newListPager)
 		server.PagerResponderInjectNextLinks(newListPager, req, func(page *armmachinelearning.UsagesClientListResponse, createLink func() string) {
@@ -106,3 +107,4 @@ func (u *UsagesServerTransport) dispatchNewListPager(req *http.Request) (*http.R
 	}
 	return resp, nil
 }
+

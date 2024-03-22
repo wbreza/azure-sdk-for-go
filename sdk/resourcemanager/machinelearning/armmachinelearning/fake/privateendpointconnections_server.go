@@ -15,17 +15,17 @@ import (
 	azfake "github.com/Azure/azure-sdk-for-go/sdk/azcore/fake"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/fake/server"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
-	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
+	"github.com/wbreza/azure-sdk-for-go/sdk/resourcemanager/machinelearning/armmachinelearning/v3"
 	"net/http"
 	"net/url"
 	"regexp"
 )
 
 // PrivateEndpointConnectionsServer is a fake server for instances of the armmachinelearning.PrivateEndpointConnectionsClient type.
-type PrivateEndpointConnectionsServer struct {
+type PrivateEndpointConnectionsServer struct{
 	// CreateOrUpdate is the fake for method PrivateEndpointConnectionsClient.CreateOrUpdate
 	// HTTP status codes to indicate success: http.StatusOK
-	CreateOrUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, privateEndpointConnectionName string, properties armmachinelearning.PrivateEndpointConnection, options *armmachinelearning.PrivateEndpointConnectionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearning.PrivateEndpointConnectionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
+	CreateOrUpdate func(ctx context.Context, resourceGroupName string, workspaceName string, privateEndpointConnectionName string, body armmachinelearning.PrivateEndpointConnection, options *armmachinelearning.PrivateEndpointConnectionsClientCreateOrUpdateOptions) (resp azfake.Responder[armmachinelearning.PrivateEndpointConnectionsClientCreateOrUpdateResponse], errResp azfake.ErrorResponder)
 
 	// Delete is the fake for method PrivateEndpointConnectionsClient.Delete
 	// HTTP status codes to indicate success: http.StatusOK, http.StatusNoContent
@@ -38,6 +38,7 @@ type PrivateEndpointConnectionsServer struct {
 	// NewListPager is the fake for method PrivateEndpointConnectionsClient.NewListPager
 	// HTTP status codes to indicate success: http.StatusOK
 	NewListPager func(resourceGroupName string, workspaceName string, options *armmachinelearning.PrivateEndpointConnectionsClientListOptions) (resp azfake.PagerResponder[armmachinelearning.PrivateEndpointConnectionsClientListResponse])
+
 }
 
 // NewPrivateEndpointConnectionsServerTransport creates a new instance of PrivateEndpointConnectionsServerTransport with the provided implementation.
@@ -45,7 +46,7 @@ type PrivateEndpointConnectionsServer struct {
 // azcore.ClientOptions.Transporter field in the client's constructor parameters.
 func NewPrivateEndpointConnectionsServerTransport(srv *PrivateEndpointConnectionsServer) *PrivateEndpointConnectionsServerTransport {
 	return &PrivateEndpointConnectionsServerTransport{
-		srv:          srv,
+		srv: srv,
 		newListPager: newTracker[azfake.PagerResponder[armmachinelearning.PrivateEndpointConnectionsClientListResponse]](),
 	}
 }
@@ -53,7 +54,7 @@ func NewPrivateEndpointConnectionsServerTransport(srv *PrivateEndpointConnection
 // PrivateEndpointConnectionsServerTransport connects instances of armmachinelearning.PrivateEndpointConnectionsClient to instances of PrivateEndpointConnectionsServer.
 // Don't use this type directly, use NewPrivateEndpointConnectionsServerTransport instead.
 type PrivateEndpointConnectionsServerTransport struct {
-	srv          *PrivateEndpointConnectionsServer
+	srv *PrivateEndpointConnectionsServer
 	newListPager *tracker[azfake.PagerResponder[armmachinelearning.PrivateEndpointConnectionsClientListResponse]]
 }
 
@@ -209,21 +210,21 @@ func (p *PrivateEndpointConnectionsServerTransport) dispatchNewListPager(req *ht
 	}
 	newListPager := p.newListPager.get(req)
 	if newListPager == nil {
-		const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/privateEndpointConnections`
-		regex := regexp.MustCompile(regexStr)
-		matches := regex.FindStringSubmatch(req.URL.EscapedPath())
-		if matches == nil || len(matches) < 3 {
-			return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
-		}
-		resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
-		if err != nil {
-			return nil, err
-		}
-		workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
-		if err != nil {
-			return nil, err
-		}
-		resp := p.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, nil)
+	const regexStr = `/subscriptions/(?P<subscriptionId>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/resourceGroups/(?P<resourceGroupName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/providers/Microsoft\.MachineLearningServices/workspaces/(?P<workspaceName>[!#&$-;=?-\[\]_a-zA-Z0-9~%@]+)/privateEndpointConnections`
+	regex := regexp.MustCompile(regexStr)
+	matches := regex.FindStringSubmatch(req.URL.EscapedPath())
+	if matches == nil || len(matches) < 3 {
+		return nil, fmt.Errorf("failed to parse path %s", req.URL.Path)
+	}
+	resourceGroupNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("resourceGroupName")])
+	if err != nil {
+		return nil, err
+	}
+	workspaceNameParam, err := url.PathUnescape(matches[regex.SubexpIndex("workspaceName")])
+	if err != nil {
+		return nil, err
+	}
+resp := p.srv.NewListPager(resourceGroupNameParam, workspaceNameParam, nil)
 		newListPager = &resp
 		p.newListPager.add(req, newListPager)
 	}
@@ -240,3 +241,4 @@ func (p *PrivateEndpointConnectionsServerTransport) dispatchNewListPager(req *ht
 	}
 	return resp, nil
 }
+
