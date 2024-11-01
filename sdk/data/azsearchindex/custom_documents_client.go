@@ -1,4 +1,4 @@
-package azsearch
+package azsearchindex
 
 import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
@@ -6,7 +6,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewServiceClient(endpoint string, credential azcore.TokenCredential, options *azcore.ClientOptions) (*ServiceClient, error) {
+func NewDocumentsClient(endpoint string, credential azcore.TokenCredential, options *azcore.ClientOptions) (*DocumentsClient, error) {
 	if options == nil {
 		options = &azcore.ClientOptions{}
 	}
@@ -21,7 +21,7 @@ func NewServiceClient(endpoint string, credential azcore.TokenCredential, option
 		return nil, err
 	}
 
-	return &ServiceClient{
+	return &DocumentsClient{
 		endpoint: endpoint,
 		internal: azcoreClient,
 	}, nil

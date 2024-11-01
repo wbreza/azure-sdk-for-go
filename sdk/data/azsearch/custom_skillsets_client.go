@@ -11,14 +11,12 @@ func NewSkillsetsClient(endpoint string, credential azcore.TokenCredential, opti
 		options = &azcore.ClientOptions{}
 	}
 
-	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{tokenScope}, &policy.BearerTokenOptions{
-		InsecureAllowCredentialWithHTTP: false,
-	})
-
-	azcoreClient, err := azcore.NewClient(clientName, moduleVersion, runtime.PipelineOptions{
+	authPolicy := runtime.NewBearerTokenPolicy(credential, []string{tokenScope}, nil)
+	pipelineOptions := runtime.PipelineOptions{
 		PerRetry: []policy.Policy{authPolicy},
-	}, options)
+	}
 
+	azcoreClient, err := azcore.NewClient(clientName, moduleVersion, pipelineOptions, options)
 	if err != nil {
 		return nil, err
 	}
