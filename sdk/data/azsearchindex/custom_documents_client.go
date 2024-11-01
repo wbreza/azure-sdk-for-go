@@ -6,7 +6,7 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore/runtime"
 )
 
-func NewDocumentsClient(endpoint string, credential azcore.TokenCredential, options *azcore.ClientOptions) (*DocumentsClient, error) {
+func NewDocumentsClient(endpoint string, indexName string, credential azcore.TokenCredential, options *azcore.ClientOptions) (*DocumentsClient, error) {
 	if options == nil {
 		options = &azcore.ClientOptions{}
 	}
@@ -22,7 +22,8 @@ func NewDocumentsClient(endpoint string, credential azcore.TokenCredential, opti
 	}
 
 	return &DocumentsClient{
-		endpoint: endpoint,
-		internal: azcoreClient,
+		endpoint:  endpoint,
+		indexName: indexName,
+		internal:  azcoreClient,
 	}, nil
 }
